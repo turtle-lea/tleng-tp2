@@ -13,7 +13,7 @@ VOICELIST->{VOICE}{VOICELIST}
 VOICELIST->{VOICE}
 
 VOICE->{voicebegin}{leftpar}{num}{rightpar}{leftcurl}{VOICECONTENT}{rightcurl}
-VOICE->{voicebegin}{leftpar}{const}{rightpar}{leftcurl}{VOICECONTENT}{rightcurl}
+VOICE->{voicebegin}{leftpar}{cname}{rightpar}{leftcurl}{VOICECONTENT}{rightcurl}
 
 VOICECONTENT -> {COMPAS}
 VOICECONTENT -> {COMPASLOOP}
