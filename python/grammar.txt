@@ -20,13 +20,13 @@ VOICECONTENT -> {COMPASLOOP}
 VOICECONTENT -> {COMPAS}{VOICECONTENT}
 VOICECONTENT -> {COMPASLOOP}{VOICECONTENT}
 
-COMPAS->{compasbegin}{leftcurl}{NOTELIST}{rightcurl}
-
 COMPASLOOP->{loopbegin}{leftpar}{cname}{rightpar}{leftcurl}{COMPASLIST}{rightcurl}
 COMPASLOOP->{loopbegin}{leftpar}{num}{rightpar}{leftcurl}{COMPASLIST}{rightcurl}
 
 COMPASLIST->{COMPAS}
 COMPASLIST->{COMPAS}{COMPASLIST}
+
+COMPAS->{compasbegin}{leftcurl}{NOTELIST}{rightcurl}
 
 NOTELIST->{NOTE}
 NOTELIST->{SILENCE}
