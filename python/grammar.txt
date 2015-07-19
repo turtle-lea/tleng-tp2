@@ -1,39 +1,39 @@
-H-> {TEMPO}{COMPASHEADER}{CONST}{VOICELIST}
-TEMPO-> {#tempo}{shape}{num}{newline}
+H-> {TEMPO}{COMPASHEADER}{CONSTLIST}{VOICELIST}
+H-> {TEMPO}{COMPASHEADER}{VOICELIST}
+TEMPO-> {#tempo}{shape}{num}
 
-COMPASHEADER-> {compasheaderbegin}{num}{slash}{num}{newline}
+COMPASHEADER-> {compasheaderbegin}{num}{slash}{num}
 
-CONST-> {const}{cname}{equals}{cname}{semicolon}{newline}CONST
-CONST-> {const}{cname}{equals}{num}{semicolon}{newline}CONST
-CONST-> {const}{cname}{equals}{cname}{semicolon}{newline}
-CONST-> {const}{cname}{equals}{num}{semicolon}{newline}
+CONSTLIST -> {CONST}
+CONSTLIST -> {CONSTLIST}{CONST}
+CONST-> {const}{cname}{equals}{cname}{semicolon}
+CONST-> {const}{cname}{equals}{num}{semicolon}
 
-
-VOICELIST->{VOICE}{VOICELIST}
 VOICELIST->{VOICE}
+VOICELIST->{VOICELIST}{VOICE}
 
 VOICE->{voicebegin}{leftpar}{num}{rightpar}{leftcurl}{VOICECONTENT}{rightcurl}
 VOICE->{voicebegin}{leftpar}{cname}{rightpar}{leftcurl}{VOICECONTENT}{rightcurl}
 
 VOICECONTENT -> {COMPAS}
 VOICECONTENT -> {COMPASLOOP}
-VOICECONTENT -> {COMPAS}{VOICECONTENT}
-VOICECONTENT -> {COMPASLOOP}{VOICECONTENT}
+VOICECONTENT -> {VOICECONTENT}{COMPAS}
+VOICECONTENT -> {VOICECONTENT}{COMPASLOOP}
 
 COMPASLOOP->{loopbegin}{leftpar}{cname}{rightpar}{leftcurl}{COMPASLIST}{rightcurl}
 COMPASLOOP->{loopbegin}{leftpar}{num}{rightpar}{leftcurl}{COMPASLIST}{rightcurl}
 
 COMPASLIST->{COMPAS}
-COMPASLIST->{COMPAS}{COMPASLIST}
+COMPASLIST->{COMPASLIST}{COMPAS}
 
 COMPAS->{compasbegin}{leftcurl}{NOTELIST}{rightcurl}
 
 NOTELIST->{NOTE}
 NOTELIST->{SILENCE}
-NOTELIST->{NOTE}{NOTELIST}
-NOTELIST->{SILENCE}{NOTELIST}
+NOTELIST->{NOTELIST}{NOTE}
+NOTELIST->{NOTELIST}{SILENCE}
 
 NOTE->{notebegin}{leftpar}{notename}{comma}{num}{comma}{shape}{rightpar}{semicolon}
-NOTE->{notebegin}{leftpar}{notename}{comma}{const}{comma}{shape}{rightpar}{semicolon}
+NOTE->{notebegin}{leftpar}{notename}{comma}{cname}{comma}{shape}{rightpar}{semicolon}
 SILENCE ->{silencebegin}{num}{comma}{shape}{rightpar}{semicolon}
-SILENCE ->{silencebegin}{const}{comma}{shape}{rightpar}{semicolon}
+SILENCE ->{silencebegin}{cname}{comma}{shape}{rightpar}{semicolon}
