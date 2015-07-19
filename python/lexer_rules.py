@@ -18,7 +18,8 @@ tokens = [
    'COMMA',
    'NEWLINE',
    'TEMPOBEGIN',
-   'NOTENAME'
+   'NOTENAME',
+   'COMMENT'
 ]
 
 #Ojo, probar que esto ande bien
@@ -34,17 +35,17 @@ def t_NEWLINE(token):
 #Chequear regexs con: https://regex101.com/#python
 # Tener en cuenta poner las expresiones que matchean strings mas largos primero cuando hay ambiguedad.
 t_TEMPOBEGIN = r"\#tempo"
-t_CONST = r"(const)"
+t_CONST = r"const "
 t_EQUALS = r"\="
 t_SEMICOLON = r"\;"
-t_VOZBEGIN = r"(voz)"
+t_VOZBEGIN = r"voz"
 t_LEFTPAR = r"\("
 t_RIGHTPAR =r"\)"
 t_LEFTCURL =r"\{"
 t_RIGHTCURL =r"\}"
 t_COMPASHEADERBEGIN =r"\#compas"
-t_COMPASBEGIN =r"(compas)"
-t_LOOPBEGIN =r"(repetir)"
+t_COMPASBEGIN =r"compas"
+t_LOOPBEGIN =r"repetir"
 t_SLASH =r"/"
 t_NOTEBEGIN =r"(nota)"
 t_SHAPE = r"blanca|negra|redonda|semicorchea|corchea|semifusa|fusa"
