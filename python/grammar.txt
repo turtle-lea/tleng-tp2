@@ -1,12 +1,12 @@
 H-> {TEMPO}{COMPASHEADER}{CONST}{VOICELIST}
-TEMPO-> {#tempo}{space}{shape}{space}{num}{newline}
+TEMPO-> {#tempo}{shape}{num}{newline}
 
-COMPASHEADER-> {compasheaderbegin}{space}{num}{slash}{num}{newline}
+COMPASHEADER-> {compasheaderbegin}{num}{slash}{num}{newline}
 
-CONST-> {const}{space}{cname}{equals}{cname}{semicolon}{newline}CONST
-CONST-> {const}{space}{cname}{equals}{num}{semicolon}{newline}CONST
-CONST-> {const}{space}{cname}{equals}{cname}{semicolon}{newline}
-CONST-> {const}{space}{cname}{equals}{num}{semicolon}{newline}
+CONST-> {const}{cname}{equals}{cname}{semicolon}{newline}CONST
+CONST-> {const}{cname}{equals}{num}{semicolon}{newline}CONST
+CONST-> {const}{cname}{equals}{cname}{semicolon}{newline}
+CONST-> {const}{cname}{equals}{num}{semicolon}{newline}
 
 
 VOICELIST->{VOICE}{VOICELIST}
@@ -33,9 +33,3 @@ NOTELIST->{NOTE}{NOTELIST}
 
 NOTE->{notebegin}{leftpar}{notename}{comma}{num}{comma}{shape}{rightpar}{semicolon}
 NOTE->{notebegin}{leftpar}{notename}{comma}{const}{comma}{shape}{rightpar}{semicolon}
-
-COMMENT -> {commenttoken}{anything}{newline}
-COMMENT -> {commenttoken}{anything}{eof}
-
-// Donde se pueden usar las constantes?
-// Los nombres de las constantes pueden empezar CON numeros?

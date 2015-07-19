@@ -16,14 +16,20 @@ tokens = [
    'NOTEBEGIN',
    'SHAPE',
    'COMMA',
-   'NEWLINE'
+   'NEWLINE',
+   'TEMPOBEGIN'
+
 ]
 
-
-
+#Ojo, probar que esto ande bien
+#Ignorar comoentarios
+t_ignore_COMMENT = r'//.*'
+#Ignoro espacios y tabs
+t_ignore  = ' \t'
 
 #Chequear regexs con: https://regex101.com/#python
 # Tener en cuenta poner las expresiones que matchean strings mas largos primero cuando hay ambiguedad.
+t_TEMPOBEGIN = r"(#tempo)",
 t_CONST = r"(const)",
 t_EQUALS = r"\=",
 t_SEMICOLON = r"\;",
@@ -40,7 +46,7 @@ t_NOTEBEGIN =r"(nota)",
 t_SHAPE = r"(blanca|negra|redonda|semicorchea|corchea|semifusa|fusa)",
 t_NOTENAME=r"(do|re|mi|fa|sol|la|si)?(\+|\-)",
 t_COMMA =r"\,",
-t_CNAME =r"([a-z]|[A-Z])+([0-9][a-z][A-Z])*"
+t_CNAME =r"([a-z]|[A-Z])([0-9][a-z][A-Z])*"
 
 def t_NUM(token):
 	r"[1-9][0-9]*"
