@@ -12,8 +12,8 @@ CONST-> {const}{cname}{equals}{num}{semicolon}{newline}
 VOICELIST->{VOICE}{VOICELIST}
 VOICELIST->{VOICE}
 
-VOICE->{vozbegin}{leftpar}{num}{rightpar}{leftcurl}{VOICECONTENT}{rightcurl}
-VOICE->{vozbegin}{leftpar}{const}{rightpar}{leftcurl}{VOICECONTENT}{rightcurl}
+VOICE->{voicebegin}{leftpar}{num}{rightpar}{leftcurl}{VOICECONTENT}{rightcurl}
+VOICE->{voicebegin}{leftpar}{const}{rightpar}{leftcurl}{VOICECONTENT}{rightcurl}
 
 VOICECONTENT -> {COMPAS}
 VOICECONTENT -> {COMPASLOOP}
