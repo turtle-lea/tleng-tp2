@@ -33,6 +33,11 @@ if __name__ == "__main__":
 
     lexer.input(text)
 
+    token = lexer.token()
+    while token is not None:
+        print token.value
+        token = lexer.token()
+
     output_file = open(argv[2], "w")
     #dump_tokens(lexer, output_file)
     #output_file.close()
