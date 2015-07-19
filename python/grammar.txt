@@ -29,7 +29,11 @@ COMPASLIST->{COMPAS}
 COMPASLIST->{COMPAS}{COMPASLIST}
 
 NOTELIST->{NOTE}
+NOTELIST->{SILENCE}
 NOTELIST->{NOTE}{NOTELIST}
+NOTELIST->{SILENCE}{NOTELIST}
 
 NOTE->{notebegin}{leftpar}{notename}{comma}{num}{comma}{shape}{rightpar}{semicolon}
 NOTE->{notebegin}{leftpar}{notename}{comma}{const}{comma}{shape}{rightpar}{semicolon}
+SILENCE ->{silencebegin}{num}{comma}{shape}{rightpar}{semicolon}
+SILENCE ->{silencebegin}{const}{comma}{shape}{rightpar}{semicolon}
