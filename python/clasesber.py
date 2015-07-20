@@ -28,15 +28,23 @@ class ExpressionList(Expression):
 
 
 class Const(Expression):
-    def _init(self, cname, val):
+    def _init(self, cname, val, isPointer):
         self._cname = cname
         self._value = val
+        self._isPointer = isPointer
 
     def getName(self):
         return self._cname
 
     def getValue(self):
         return self._value
+
+    def setValue(self, value):
+        self._value = value
+
+
+    def isPointer(self):
+        return self.isPointer()
 
 
 class ConstList(ExpressionList):
@@ -61,6 +69,53 @@ class Silence(Expression):
         return self._shape
 
 
+class ConstantManager:
+    _instance = None
+    @staticmethod
+    def GetInstance():
+        if ConstantManager._instance == None:
+            ConstantManager._instance = ConstantManager()
 
+        return ConstantManager._instance
 
+    def __init__(self):
+        self.dictConst = {}
 
+    def Add(self, cname, const):
+        self.dictConst[cname] = const
+
+    #Devuelve el valor de una constante. Si es una referencia a otra constante, calcula primero el valor recursivamente (y lo cachea)
+    def GetValue(self, cname):
+        const = self.dictConst.get(cname)
+        if const == None:
+            raise Exception("Constante no definida")
+        else:
+            constVal = self.resolveVal(const)
+
+        return constVal
+
+    #Calcula el valor de una constante. Si es numérica (caso base), devuelve su valor.
+    #Si es un puntero, busca el valor de la constante a la que apunta (recursivamente), chequeando que no hayan loops.
+    def resolveVal(self, const):
+        if  const.isPointer():
+            visited = [const.getName()]
+            next = const.getValue()
+            found = False
+            while(not found):
+                if visited.count(next) > 0:
+                    raise Exception("Definición circular de constante {0}")
+
+                visited.append(next)
+
+                constnext = self.dictConst.get(next)
+
+                if (constnext == None):
+                    raise Exception("La constante {0} apunta al nombre {1} que no está definido")
+
+                if (constnext.isPointer):
+                    next = constnext.getValue()
+                else:
+                    const.setValue(next.getValue())
+                    found = True
+
+        return const.getValue()
