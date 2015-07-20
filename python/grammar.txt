@@ -46,5 +46,6 @@ NOTE->{notebegin}{leftpar}{notename}{alter}{comma}{cname}{comma}{shape}{rightpar
 NOTE->{notebegin}{leftpar}{notename}{comma}{cname}{comma}{shape}{alter]{puntillo}{rightpar}{semicolon}
 NOTE->{notebegin}{leftpar}{notename}{comma}{cname}{comma}{shape}{alter]{rightpar}{semicolon}
 
+/** 2 combinaciones: puntillo **/
 SILENCE ->{silencebegin}{leftpar}{shape}{rightpar}{semicolon}
-SILENCE ->{silencebegin}{leftpar}{shape}{rightpar}{semicolon}
+SILENCE ->{silencebegin}{leftpar}{shape}{puntillo}{rightpar}{semicolon}
