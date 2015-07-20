@@ -33,7 +33,18 @@ NOTELIST->{SILENCE}
 NOTELIST->{NOTELIST}{NOTE}
 NOTELIST->{NOTELIST}{SILENCE}
 
+/** 8 combinaciones: num/cname, puntillo y alter **/
+/** 4 combinaciones de num **/
+NOTE->{notebegin}{leftpar}{notename}{alter}{comma}{num}{comma}{shape}{puntillo}{rightpar}{semicolon}
+NOTE->{notebegin}{leftpar}{notename}{alter}{comma}{num}{comma}{shape}{rightpar}{semicolon}
+NOTE->{notebegin}{leftpar}{notename}{comma}{num}{comma}{shape}{puntillo}{rightpar}{semicolon}
 NOTE->{notebegin}{leftpar}{notename}{comma}{num}{comma}{shape}{rightpar}{semicolon}
-NOTE->{notebegin}{leftpar}{notename}{comma}{cname}{comma}{shape}{rightpar}{semicolon}
-SILENCE ->{silencebegin}{num}{comma}{shape}{rightpar}{semicolon}
-SILENCE ->{silencebegin}{cname}{comma}{shape}{rightpar}{semicolon}
+
+/** 4 combinaciones de cname **/
+NOTE->{notebegin}{leftpar}{notename}{alter}{comma}{cname}{comma}{shape}{puntillo}{rightpar}{semicolon}
+NOTE->{notebegin}{leftpar}{notename}{alter}{comma}{cname}{comma}{shape}{rightpar}{semicolon}
+NOTE->{notebegin}{leftpar}{notename}{comma}{cname}{comma}{shape}{alter]{puntillo}{rightpar}{semicolon}
+NOTE->{notebegin}{leftpar}{notename}{comma}{cname}{comma}{shape}{alter]{rightpar}{semicolon}
+
+SILENCE ->{silencebegin}{leftpar}{shape}{rightpar}{semicolon}
+SILENCE ->{silencebegin}{leftpar}{shape}{rightpar}{semicolon}
