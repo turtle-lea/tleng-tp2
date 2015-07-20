@@ -1,8 +1,9 @@
 tokens = [
+   'COMMENT',
    'NUM',
    'CONST',
    'EQUALS',
-   #'CNAME',
+   'CNAME',
    'SILENCEBEGIN',
    'SEMICOLON',
    'VOICEBEGIN',
@@ -15,22 +16,22 @@ tokens = [
    'LOOPBEGIN',
    'SLASH',
    'NOTEBEGIN',
-   #'SHAPE',
-   'SHAPE2',
+   'SHAPE',
    'NOTENAME',
    'COMMA',
    'NEWLINE',
    'TEMPOBEGIN',
    'COMODIN',
-   'COMMENT',
    'PUNTO'
 ]
 
 #Ojo, probar que esto ande bien
 #Ignorar comoentarios
-t_ignore_COMMENT = r'//.*'
 #Ignoro espacios y tabs
 t_ignore  = ' \t'
+
+def t_COMMENT(token):
+  r'//.*'
 
 def t_NEWLINE(token):
   r"\n+"
