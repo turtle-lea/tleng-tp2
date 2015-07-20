@@ -17,12 +17,12 @@ tokens = [
    'SLASH',
    'NOTEBEGIN',
    'SHAPE',
+   'PUNTO',
+   'ALTER',
    'NOTENAME',
    'COMMA',
    'NEWLINE',
-   'TEMPOBEGIN',
-   'COMODIN',
-   'PUNTO'
+   'TEMPOBEGIN'
 ]
 
 #Ojo, probar que esto ande bien
@@ -100,12 +100,18 @@ def t_SILENCEBEGIN(token):
   r"silencio"
   return token
 
+def t_PUNTO(token):
+  r"."
+
+def t_ALTER(token):
+  r"\+|\-"
+
 def t_SHAPE(token):
-  r"((blanca|negra|redonda|semicorchea|corchea|semifusa|fusa)(\.)?)"
+  r"blanca|negra|redonda|semicorchea|corchea|semifusa|fusa"
   return token
 
 def t_NOTENAME(token):
-  r"((do|re|mi|fa|sol|la|si)(\+|\-)?)"
+  r"do|re|mi|fa|sol|la|si"
   return token
 
 def t_COMMA(token):
