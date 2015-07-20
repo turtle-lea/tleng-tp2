@@ -6,22 +6,22 @@ COMPASHEADER-> {compasheaderbegin}{num}{slash}{num}
 
 CONSTLIST -> {CONST}
 CONSTLIST -> {CONSTLIST}{CONST}
-CONST-> {const}{cname}{equals}{cname}{semicolon}
-CONST-> {const}{cname}{equals}{num}{semicolon}
+CONST-> {const}{cname}{equals}{VALUE}{semicolon}
+CONST-> {const}{num}{equals}{VALUE}{semicolon}
+
 
 VOICELIST->{VOICE}
 VOICELIST->{VOICELIST}{VOICE}
 
-VOICE->{voicebegin}{leftpar}{num}{rightpar}{leftcurl}{VOICECONTENT}{rightcurl}
-VOICE->{voicebegin}{leftpar}{cname}{rightpar}{leftcurl}{VOICECONTENT}{rightcurl}
+VOICE->{voicebegin}{leftpar}{VALUE}{rightpar}{leftcurl}{VOICECONTENT}{rightcurl}
+VOICE->{voicebegin}{leftpar}{VALUE}{rightpar}{leftcurl}{VOICECONTENT}{rightcurl}
 
 VOICECONTENT -> {COMPAS}
 VOICECONTENT -> {COMPASLOOP}
 VOICECONTENT -> {VOICECONTENT}{COMPAS}
 VOICECONTENT -> {VOICECONTENT}{COMPASLOOP}
 
-COMPASLOOP->{loopbegin}{leftpar}{cname}{rightpar}{leftcurl}{COMPASLIST}{rightcurl}
-COMPASLOOP->{loopbegin}{leftpar}{num}{rightpar}{leftcurl}{COMPASLIST}{rightcurl}
+COMPASLOOP->{loopbegin}{leftpar}{VALUE}{rightpar}{leftcurl}{COMPASLIST}{rightcurl}
 
 COMPASLIST->{COMPAS}
 COMPASLIST->{COMPASLIST}{COMPAS}
@@ -33,19 +33,16 @@ NOTELIST->{SILENCE}
 NOTELIST->{NOTELIST}{NOTE}
 NOTELIST->{NOTELIST}{SILENCE}
 
-/** 8 combinaciones: num/cname, puntillo y alter **/
-/** 4 combinaciones de num **/
-NOTE->{notebegin}{leftpar}{notename}{alter}{comma}{num}{comma}{shape}{puntillo}{rightpar}{semicolon}
-NOTE->{notebegin}{leftpar}{notename}{alter}{comma}{num}{comma}{shape}{rightpar}{semicolon}
-NOTE->{notebegin}{leftpar}{notename}{comma}{num}{comma}{shape}{puntillo}{rightpar}{semicolon}
-NOTE->{notebegin}{leftpar}{notename}{comma}{num}{comma}{shape}{rightpar}{semicolon}
+/** 4 combinaciones: num/cname, puntillo y alter **/
 
-/** 4 combinaciones de cname **/
-NOTE->{notebegin}{leftpar}{notename}{alter}{comma}{cname}{comma}{shape}{puntillo}{rightpar}{semicolon}
-NOTE->{notebegin}{leftpar}{notename}{alter}{comma}{cname}{comma}{shape}{rightpar}{semicolon}
-NOTE->{notebegin}{leftpar}{notename}{comma}{cname}{comma}{shape}{alter]{puntillo}{rightpar}{semicolon}
-NOTE->{notebegin}{leftpar}{notename}{comma}{cname}{comma}{shape}{alter]{rightpar}{semicolon}
+NOTE->{notebegin}{leftpar}{notename}{alter}{comma}{VALUE}{comma}{shape}{puntillo}{rightpar}{semicolon}
+NOTE->{notebegin}{leftpar}{notename}{alter}{comma}{VALUE}{comma}{shape}{rightpar}{semicolon}
+NOTE->{notebegin}{leftpar}{notename}{comma}{VALUE}{comma}{shape}{alter]{puntillo}{rightpar}{semicolon}
+NOTE->{notebegin}{leftpar}{notename}{comma}{VALUE}{comma}{shape}{alter]{rightpar}{semicolon}
 
 /** 2 combinaciones: puntillo **/
 SILENCE ->{silencebegin}{leftpar}{shape}{rightpar}{semicolon}
 SILENCE ->{silencebegin}{leftpar}{shape}{puntillo}{rightpar}{semicolon}
+
+VALUE -> {cname}
+VALUE -> {num}

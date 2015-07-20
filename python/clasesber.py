@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: latin-1 -*-
 #1)H
 #2)TEMPO
 #3)CONST
@@ -16,9 +18,9 @@ class Expression(object):
 
 
 #Representa una lista como un valor y un puntero a otra lista
-#Por ejemplo, A -> id, A -> A id. Notar que los elementos de la lista est√°n en orden inverso
+#Por ejemplo, A -> id, A -> A id. Notar que los elementos de la lista est·n en orden inverso
 class ExpressionList(Expression):
-    def _init(self, current, nextList):
+    def __init__(self, current, nextList):
         self._current = current
         self._nextList = nextList
 
@@ -26,11 +28,11 @@ class ExpressionList(Expression):
     def getCurrent(self):
         return self._current
 
-    #Devuelve la recuesi√≥n (cola de la lista)
+    #Devuelve la recuesiÛn (cola de la lista)
     def getNext(self):
         return self._nextList
 
-    #Hace la recursi√≥n sobre un nodo de una producci√≥n recursiva a izquierda y devuelve una lista lineal
+    #Hace la recursiÛn sobre un nodo de una producciÛn recursiva a izquierda y devuelve una lista lineal
     def getList(self):
         ret = [self._current]
         next = self._nextList
@@ -42,7 +44,7 @@ class ExpressionList(Expression):
 
 
 class Const(Expression):
-    def _init(self, cname, val, isPointer):
+    def __init__(self, cname, val, isPointer):
         self._cname = cname
         self._value = val
         self._isPointer = isPointer
@@ -58,7 +60,25 @@ class Const(Expression):
 
 
     def isPointer(self):
-        return self.isPointer()
+        return self._isPointer
+
+class LexerValue(Expression):
+    def getValue(self):
+        pass
+
+class ConstValue(LexerValue):
+    def __init__(self, cname):
+        self._cname = cname
+    def getValue(self):
+        #Devolver el valor de la constante usando constant manager
+        pass
+
+
+class NumValue(LexerValue):
+    def __init__(self, val):
+        self._val = val
+    def getValue(self):
+        return self._val
 
 
 class ConstList(ExpressionList):
@@ -72,7 +92,7 @@ class CompasList(ExpressionList):
 
 
 class Silence(Expression):
-    def _init(self,time, shape):
+    def __init__(self,time, shape):
         self._shape = shape
         self._time = time
 
@@ -84,16 +104,18 @@ class Silence(Expression):
 
 
 class ConstantManager:
-    _instance = None
-    @staticmethod
-    def GetInstance():
-        if ConstantManager._instance == None:
-            ConstantManager._instance = ConstantManager()
-
-        return ConstantManager._instance
-
-    def __init__(self):
+    def __init__(self, constList, reserved):
         self.dictConst = {}
+        for c in constList:
+            if reserved.count(c.getName()) > 0:
+                raise Exception("El nombre de constante <{0}> es una palabra reservada".format(c.getName()))
+
+            self.Add (c.getName(), c)
+
+        #Fuerzo a que se evaluen las constantes
+        for c in constList:
+            self.GetValue(c.getName())
+
 
     def Add(self, cname, const):
         self.dictConst[cname] = const
@@ -108,7 +130,7 @@ class ConstantManager:
 
         return constVal
 
-    #Calcula el valor de una constante. Si es num√©rica (caso base), devuelve su valor.
+    #Calcula el valor de una constante. Si es numÈrica (caso base), devuelve su valor.
     #Si es un puntero, busca el valor de la constante a la que apunta (recursivamente), chequeando que no hayan loops.
     def resolveVal(self, const):
         if  const.isPointer():
@@ -117,19 +139,19 @@ class ConstantManager:
             found = False
             while(not found):
                 if visited.count(next) > 0:
-                    raise Exception("Definici√≥n circular de constante {0}")
+                    raise Exception("DefiniciÛn circular de constante <{0}>".format(const.getName()))
 
                 visited.append(next)
 
                 constnext = self.dictConst.get(next)
 
                 if (constnext == None):
-                    raise Exception("La constante {0} apunta al nombre {1} que no est√° definido")
+                    raise Exception("La constante <{0}> apunta al nombre <{1}> que no est· definido".format(const.getName(),next))
 
-                if (constnext.isPointer):
+                if (constnext.isPointer()):
                     next = constnext.getValue()
                 else:
-                    const.setValue(next.getValue())
+                    const.setValue(constnext.getValue())
                     found = True
 
         return const.getValue()
