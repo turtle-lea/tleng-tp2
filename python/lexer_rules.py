@@ -2,7 +2,8 @@ tokens = [
    'NUM',
    'CONST',
    'EQUALS',
-   'CNAME',
+   #'CNAME',
+   'SILENCEBEGIN',
    'SEMICOLON',
    'VOICEBEGIN',
    'LEFTPAR',
@@ -14,13 +15,15 @@ tokens = [
    'LOOPBEGIN',
    'SLASH',
    'NOTEBEGIN',
-   'SILENCEBEGIN',
-   'SHAPE',
+   #'SHAPE',
+   'SHAPE2',
+   'NOTENAME',
    'COMMA',
    'NEWLINE',
    'TEMPOBEGIN',
-   'NOTENAME',
-   'COMMENT'
+   'COMODIN',
+   'COMMENT',
+   'PUNTO'
 ]
 
 #Ojo, probar que esto ande bien
@@ -36,6 +39,7 @@ def t_NEWLINE(token):
 #Chequear regexs con: https://regex101.com/#python
 # Tener en cuenta poner las expresiones que matchean strings mas largos primero cuando hay ambiguedad.
 # Usamos '\s' para matchear espacios en blanco
+t_COMODIN = r"oct1|oct2|oct3|oct4|violin|piano"
 t_TEMPOBEGIN = r"\#tempo"
 t_CONST = r"const"
 t_EQUALS = r"\="
@@ -50,11 +54,13 @@ t_COMPASBEGIN =r"compas"
 t_LOOPBEGIN =r"repetir"
 t_SLASH =r"/"
 t_NOTEBEGIN =r"nota"
-t_SILENCEBEGIN =r"silencio"
-t_SHAPE = r"((blanca|negra|redonda|semicorchea|corchea|semifusa|fusa)?(\.))"
-t_NOTENAME=r"((do|re|mi|fa|sol|la|si)?(\+|\-))"
+t_SILENCEBEGIN =r"((silence|silence|silence|silence|silence|silence|silence|silence))"
+#t_SHAPE = r"((blanca|negra|redonda|semicorchea|corchea|semifusa|fusa)(\.)?)"
+t_PUNTO = r"\."
+t_SHAPE2 = r"blanca|negra|redonda|semicorchea|corchea|semifusa|fusa"
+t_NOTENAME=r"((do|re|mi|fa|sol|la|si)(\+|\-)?)"
 t_COMMA =r"\,"
-t_CNAME =r"([a-z]|[A-Z])([0-9]|[a-z]|[A-Z])*"
+#t_CNAME =r"([a-z]|[A-Z])([0-9]|[a-z]|[A-Z])*"
 
 def t_NUM(token):
 	r"([0]|[1-9][0-9]*)"
