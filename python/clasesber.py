@@ -15,16 +15,30 @@ class Expression(object):
     pass
 
 
+#Representa una lista como un valor y un puntero a otra lista
+#Por ejemplo, A -> id, A -> A id. Notar que los elementos de la lista están en orden inverso
 class ExpressionList(Expression):
     def _init(self, current, nextList):
         self._current = current
         self._nextList = nextList
 
+    #Devuelve el elemento en la cabeza del nodo
     def getCurrent(self):
         return self._current
 
+    #Devuelve la recuesión (cola de la lista)
     def getNext(self):
         return self._nextList
+
+    #Hace la recursión sobre un nodo de una producción recursiva a izquierda y devuelve una lista lineal
+    def getList(self):
+        ret = [self._current]
+        next = self._nextList
+        while (next != None):
+            ret.insert(0, next.getCurrent())
+            next = next.getNext()
+
+        return ret
 
 
 class Const(Expression):

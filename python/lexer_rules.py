@@ -54,6 +54,7 @@ def t_EQUALS(token):
 
 def t_SEMICOLON(token):
   r"\;"
+  #print ("semicolon")
   return token
 
 def t_VOICEBEGIN(token):
@@ -101,10 +102,12 @@ def t_SILENCEBEGIN(token):
   return token
 
 def t_PUNTO(token):
-  r"."
+  r"\."
+  return token
 
 def t_ALTER(token):
   r"\+|\-"
+  return token
 
 def t_SHAPE(token):
   r"blanca|negra|redonda|semicorchea|corchea|semifusa|fusa"
@@ -120,12 +123,13 @@ def t_COMMA(token):
 
 def t_CNAME(token):
   r"(([a-z]|[A-Z])([0-9]|[a-z]|[A-Z])*)"
+  #print ("cname")
   return token
 
 def t_NUM(token):
-	r"([0]|[1-9][0-9]*)"
-	token.value = int(token.value)
-	return token
+    r"([0]|[1-9][0-9]*)"
+    token.value = int(token.value)
+    return token
 
 def t_error(token):
     message = "Token desconocido:"
