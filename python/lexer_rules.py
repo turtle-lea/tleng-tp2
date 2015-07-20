@@ -39,28 +39,81 @@ def t_NEWLINE(token):
 #Chequear regexs con: https://regex101.com/#python
 # Tener en cuenta poner las expresiones que matchean strings mas largos primero cuando hay ambiguedad.
 # Usamos '\s' para matchear espacios en blanco
-t_COMODIN = r"oct1|oct2|oct3|oct4|violin|piano"
-t_TEMPOBEGIN = r"\#tempo"
-t_CONST = r"const"
-t_EQUALS = r"\="
-t_SEMICOLON = r"\;"
-t_VOICEBEGIN = r"voz"
-t_LEFTPAR = r"\("
-t_RIGHTPAR =r"\)"
-t_LEFTCURL =r"\{"
-t_RIGHTCURL =r"\}"
-t_COMPASHEADERBEGIN =r"\#compas"
-t_COMPASBEGIN =r"compas"
-t_LOOPBEGIN =r"repetir"
-t_SLASH =r"/"
-t_NOTEBEGIN =r"nota"
-t_SILENCEBEGIN =r"((silence|silence|silence|silence|silence|silence|silence|silence))"
-#t_SHAPE = r"((blanca|negra|redonda|semicorchea|corchea|semifusa|fusa)(\.)?)"
-t_PUNTO = r"\."
-t_SHAPE2 = r"blanca|negra|redonda|semicorchea|corchea|semifusa|fusa"
-t_NOTENAME=r"((do|re|mi|fa|sol|la|si)(\+|\-)?)"
-t_COMMA =r"\,"
-#t_CNAME =r"([a-z]|[A-Z])([0-9]|[a-z]|[A-Z])*"
+def t_TEMPOBEGIN(token):
+  r"\#tempo"
+  return token
+
+def t_CONST(token):
+  r"const"
+  return token
+
+def t_EQUALS(token):
+  r"\="
+  return token
+
+def t_SEMICOLON(token):
+  r"\;"
+  return token
+
+def t_VOICEBEGIN(token):
+  r"voz"
+  return token
+
+def t_LEFTPAR(token):
+  r"\("
+  return token
+
+def t_RIGHTPAR(token):
+  r"\)"
+  return token
+
+def t_LEFTCURL(token):
+  r"\{"
+  return token
+
+def t_RIGHTCURL(token):
+  r"\}"
+  return token
+
+def t_COMPASHEADERBEGIN(token):
+  r"\#compas"
+  return token
+
+def t_COMPASBEGIN(token):
+  r"compas"
+  return token
+
+def t_LOOPBEGIN(token):
+  r"repetir"
+  return token
+
+def t_SLASH(token):
+  r"/"
+  return token
+
+def t_NOTEBEGIN(token):
+  r"nota"
+  return token
+
+def t_SILENCEBEGIN(token):
+  r"silencio"
+  return token
+
+def t_SHAPE(token):
+  r"((blanca|negra|redonda|semicorchea|corchea|semifusa|fusa)(\.)?)"
+  return token
+
+def t_NOTENAME(token):
+  r"((do|re|mi|fa|sol|la|si)(\+|\-)?)"
+  return token
+
+def t_COMMA(token):
+  r"\,"
+  return token
+
+def t_CNAME(token):
+  r"(([a-z]|[A-Z])([0-9]|[a-z]|[A-Z])*)"
+  return token
 
 def t_NUM(token):
 	r"([0]|[1-9][0-9]*)"
