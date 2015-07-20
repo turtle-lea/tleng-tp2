@@ -4,7 +4,7 @@ tokens = [
    'EQUALS',
    'CNAME',
    'SEMICOLON',
-   'VOZBEGIN',
+   'VOICEBEGIN',
    'LEFTPAR',
    'RIGHTPAR',
    'LEFTCURL',
@@ -40,7 +40,7 @@ t_TEMPOBEGIN = r"\#tempo"
 t_CONST = r"const"
 t_EQUALS = r"\="
 t_SEMICOLON = r"\;"
-t_VOZBEGIN = r"voz"
+t_VOICEBEGIN = r"voz"
 t_LEFTPAR = r"\("
 t_RIGHTPAR =r"\)"
 t_LEFTCURL =r"\{"
