@@ -25,6 +25,28 @@ tokens = [
    'TEMPOBEGIN'
 ]
 
+reserved = {
+   'const' : 'const',
+   'do' : 'do',
+   're' : 're',
+   'mi' : 'mi',
+   'fa' : 'fa',
+   'sol' : 'sol',
+   'la' : 'la',
+   'si' : 'si',
+   'tempo' : 'tempo',
+   'compas' : 'compas',
+   'repetir' : 'repetir',
+   'voz' : 'voz',
+   'negra' : 'negra',
+   'blanca' : 'blanca',
+   'redonda' : 'redonda',
+   'corchea' : 'corchea',
+   'smicorchea' : 'smicorchea',
+   'fusa' : 'fusa',
+   'semifusa' : 'semifusa'
+}
+
 #Ojo, probar que esto ande bien
 #Ignorar comoentarios
 #Ignoro espacios y tabs
@@ -138,3 +160,4 @@ def t_error(token):
     message += "\nline:" + str(token.lineno)
     message += "\nposition:" + str(token.lexpos)
     raise Exception(message)
+

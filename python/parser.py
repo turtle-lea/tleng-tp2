@@ -27,4 +27,4 @@ if __name__ == "__main__":
 
     result = expression.getList()
     cm = ConstantManager(result,[])
-    print (result)
+    print (cm.getValue('oct7'))

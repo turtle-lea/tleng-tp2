@@ -112,16 +112,15 @@ class ConstantManager:
 
             self.Add (c.getName(), c)
 
-        #Fuerzo a que se evaluen las constantes
+        #Pido los valores de todas las ctes para que se validen
         for c in constList:
-            self.GetValue(c.getName())
-
+            self.getValue(c.getName())
 
     def Add(self, cname, const):
         self.dictConst[cname] = const
 
     #Devuelve el valor de una constante. Si es una referencia a otra constante, calcula primero el valor recursivamente (y lo cachea)
-    def GetValue(self, cname):
+    def getValue(self, cname):
         const = self.dictConst.get(cname)
         if const == None:
             raise Exception("Constante no definida")
@@ -130,28 +129,29 @@ class ConstantManager:
 
         return constVal
 
+
     #Calcula el valor de una constante. Si es numérica (caso base), devuelve su valor.
     #Si es un puntero, busca el valor de la constante a la que apunta (recursivamente), chequeando que no hayan loops.
     def resolveVal(self, const):
-        if  const.isPointer():
-            visited = [const.getName()]
-            next = const.getValue()
-            found = False
-            while(not found):
-                if visited.count(next) > 0:
+        if (not const._isPointer):
+            return const.getValue()
+
+        found = False;
+        visited = [const.getName()]
+        next = const
+        while(not found):
+            if (next.isPointer()):
+                nextcname = next.getValue()
+                if visited.count(nextcname) > 0:
                     raise Exception("Definición circular de constante <{0}>".format(const.getName()))
 
-                visited.append(next)
+                next = self.dictConst.get(nextcname)
+                if (next == None):
+                    raise Exception("La constante <{0}> apunta al nombre <{1}> que no está definido".format(const.getName(),nextcname))
+                visited.append(nextcname)
+            else:
+                #const.setValue(next.getValue())
+                found = True
 
-                constnext = self.dictConst.get(next)
+        return next.getValue()
 
-                if (constnext == None):
-                    raise Exception("La constante <{0}> apunta al nombre <{1}> que no está definido".format(const.getName(),next))
-
-                if (constnext.isPointer()):
-                    next = constnext.getValue()
-                else:
-                    const.setValue(constnext.getValue())
-                    found = True
-
-        return const.getValue()
