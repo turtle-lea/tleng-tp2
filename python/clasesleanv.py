@@ -19,9 +19,6 @@ class Tempo(Expression):
 		self._shape = shape
 		self._num = num
 
-	def getTempoBegin(self):
-		return "#tempo"
-
 	def getFigure(self):
 		return self._shape
 
@@ -33,7 +30,7 @@ class Voice(Expression):
 
 	def __init__(self, value, VoiceContent):
 		self._value = value
-		self._compasses = VoiceContent.getCompasses()
+		self._compasses = VoiceContent.getList()
 
 	def getInstrument(self):
 		return self._value
@@ -47,11 +44,19 @@ class CompasLoop(Expression):
 		self._value = value
 		self._duration = CompasList.getDuration()
 
+		for 
+
 	def getRepeat(self):
 		return self._value
 
+	def getCompasses(self):
+		return CompasList
+
 	def getDuration(self):
 		return self._duration
+
+	def isLoop(self):
+		return True
 
 
 
@@ -61,7 +66,7 @@ class Note(Expression):
 		self._height = notename+alter
 		self._value = value
 		self._duration = 0
-		#duda de como usar el puntillo
+
 		if shape == 'redonda':
 			self._duration = 1
 		if shape == 'blanca':
@@ -78,6 +83,12 @@ class Note(Expression):
 			self._duration = 1/64
 		if self._duration == 0:
 			raise Exception("Figura no definida")
+
+		if puntillo == ".":
+			self._duration = self._duration*(3/2)
+		if puntillo != None or puntillo != ".":
+			raise Exception("Puntillo no definido")
+
 
 	def getOctave(self):
 		return self._value
