@@ -29,6 +29,8 @@ class VoiceList(Expression):
             ### Un compás de la nueva voz tiene que durar lo mismo que un compás de la lista
             if (voice.getCompasses().first.getDuration() != voicelist.first.getCompasses().first.getTempo()):
                 raise Exception("La duracion de los compases de las voces son distintas")
+            if len(voicelist)>=16:
+            	raise Exception("La cantidad de voces supera 16")
         self._voicelist = voicelist ++ voice
 
     def getList(self):
