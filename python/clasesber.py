@@ -65,13 +65,15 @@ class Const(Expression):
 class LexerValue(Expression):
     def getValue(self):
         pass
+    def __eq__(self, other):
+        return self.getValue() == other.getValue()
 
 class ConstValue(LexerValue):
     def __init__(self, cname):
         self._cname = cname
     def getValue(self):
         #Devolver el valor de la constante usando constant manager
-        pass
+        return ConstantManager.getInstance().getValue(self._cname)
 
 
 class NumValue(LexerValue):
@@ -104,6 +106,17 @@ class Silence(Expression):
 
 
 class ConstantManager:
+    @staticmethod
+    def createInstance(constList, reserved):
+        ConstantManager._instance = ConstantManager(constList, reserved)
+
+    @staticmethod
+    def getInstance():
+        if ConstantManager._instance == None:
+            ConstantManager.createInstance([],[])
+        return ConstantManager._instance
+
+
     def __init__(self, constList, reserved):
         self.dictConst = {}
         for c in constList:
