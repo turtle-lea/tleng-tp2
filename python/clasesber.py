@@ -21,27 +21,10 @@ class Expression(object):
 #Por ejemplo, A -> id, A -> A id. Notar que los elementos de la lista están en orden inverso
 class ExpressionList(Expression):
     def __init__(self, current, nextList):
-        self._current = current
-        self._nextList = nextList
+        self._list = [current] ++ nextList
 
-    #Devuelve el elemento en la cabeza del nodo
-    def getCurrent(self):
-        return self._current
-
-    #Devuelve la recuesión (cola de la lista)
-    def getNext(self):
-        return self._nextList
-
-    #Hace la recursión sobre un nodo de una producción recursiva a izquierda y devuelve una lista lineal
     def getList(self):
-        ret = [self._current]
-        next = self._nextList
-        while (next != None):
-            ret.insert(0, next.getCurrent())
-            next = next.getNext()
-
-        return ret
-
+        return self._list
 
 class Const(Expression):
     def __init__(self, cname, val, isPointer):
@@ -87,10 +70,28 @@ class ConstList(ExpressionList):
     pass
 
 class VoiceContent(ExpressionList):
-    pass
+    def __init__(self, content, vclist):
+        if (content.)
+        super.__init__(content, vclist)
+
+
+
+#C2 = C1
+#C1 = 3
+
+#C1 = C2
 
 class CompasList(ExpressionList):
-    pass
+    def __init__(self, current, nextList):
+        if nextList != [] and current.getDuration() != nextList.first().getDuration():
+            raise Exception("Los compases no tienen la misma duración.")
+
+        self._duration = current.getDuration()
+        super.__init__(current, nextList)
+
+    def getDuration(self):
+        return self._duration
+
 
 
 class Silence(Expression):

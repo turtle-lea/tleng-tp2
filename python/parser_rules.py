@@ -9,6 +9,9 @@ def p_root(subexpressions):
     'h : tempo compasheader constlistinit voicelist'
     subexpressions[0] = Root(subexpressions[1], subexpressions[2], subexpressions[3], subexpressions[4])
 
+def p_tempo(subexpression):
+    'tempo : TEMPOBEGIN SHAPE NUM'
+    subexpression[0] = Tempo(subexpression[2], int(subexpression[3]))
 def p_voice_list_base(subexpression):
     'voicelist : voice'
     subexpression[0] = VoiceList(subexpression[1])
@@ -16,7 +19,7 @@ def p_voice_list_base(subexpression):
 def p_voice_list_rec(subexpressions):
     'voicelist : voicelist voice'
     ### Invierto parametros intencionalmente. voicelist param es opcional en el new de la clase
-    subexpressions[0] = VoiceList(subexpressions[2], subexpressions[1])
+    subexpressions[0] = VoiceList(subexpressions[2], subexpressions[1].getList())
 
 def p_compas(subexpressions):
     'compas: COMPASBEGIN LEFTCURL notelist RIGHTCURL'
@@ -63,24 +66,28 @@ def p_const_list_init(subexpressions):
 
 def p_const_list_base(subexpressions):
     'constlist : const'
-    subexpressions[0] = ConstList(subexpressions[1],None)
+    subexpressions[0] = ConstList(subexpressions[1],[])
 
 def p_const_list_rec(subexpressions):
     'constlist : constlist const'
-    subexpressions[0] = ConstList(subexpressions[2],subexpressions[1])
+    subexpressions[0] = ConstList(subexpressions[2],subexpressions[1].getList())
 
+
+def p_voice_content_base_loop(subexpressions):
+    'voicecontent : compasloop'
+    subexpressions[0] = VoiceContent(subexpressions[1],[])
 
 def p_voice_content_base_compas(subexpressions):
     'voicecontent : compas'
-    subexpressions[0] = VoiceContent(subexpressions[1],None)
+    subexpressions[0] = VoiceContent(subexpressions[1],[])
 
 def p_voice_content_rec_compasloop(subexpressions):
     'voicecontent : voicecontent compasloop'
-    subexpressions[0] = VoiceContent(subexpressions[2],subexpressions[1])
+    subexpressions[0] = VoiceContent(subexpressions[2],subexpressions[1].getList())
 
 def p_voice_content_rec_compas(subexpressions):
     'voicecontent : voicecontent compas'
-    subexpressions[0] = VoiceContent(subexpressions[2],subexpressions[1])
+    subexpressions[0] = VoiceContent(subexpressions[2],subexpressions[1].getList())
 
 
 def p_error(subexpressions):
