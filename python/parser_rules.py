@@ -12,6 +12,44 @@ def p_root(subexpressions):
 def p_tempo(subexpression):
     'tempo : TEMPOBEGIN SHAPE NUM'
     subexpression[0] = Tempo(subexpression[2], int(subexpression[3]))
+
+def p_compasheader(subexpression):
+    'tempo : COMPASHEADERBEGIN NUM SLASH NUM'
+    subexpression[0] = CompasHeader(int(subexpression[2]), int(subexpression[4]))
+
+def p_voice(subexpression):
+    'voice : value voicecontent'
+    subexpression[0] = Voice(subexpression[1], subexpression[2])
+
+def p_compasloop(subexpression):
+    'compasloop : value compaslist'
+    subexpression[0] = CompasLoop(subexpression[1], subexpression[2])
+
+def p_note(subexpression):
+    'note : NOTENAME value SHAPE'
+    subexpression[0] = Note(subexpression[1], None, subexpression[2], subexpression[3], False)
+
+def p_note_alter(subexpression):
+    'note : NOTENAME ALTER value SHAPE'
+    subexpression[0] = Note(subexpression[1], subexpression[2], subexpression[3], subexpression[4], False)
+
+def p_note_punto(subexpression):
+    'note : NOTENAME value SHAPE PUNTO'
+    subexpression[0] = Note(subexpression[1], None, subexpression[2], subexpression[3], True)
+
+def p_note_alter_punto(subexpression):
+    'note : NOTENAME ALTER value SHAPE PUNTO'
+    subexpression[0] = Note(subexpression[1], subexpression[2], subexpression[3], subexpression[4], True)
+
+def p_compaslist_base:(subexpression):
+    'compaslist : compas'
+    subexpressions[0] = CompasList(subexpressions[1], [])
+
+def p_compaslist_rec:(subexpression):
+    'compaslist : compaslist compas'
+    subexpressions[0] = CompasList(subexpressions[2], subexpressions[1].getList())
+
+    
 def p_voice_list_base(subexpression):
     'voicelist : voice'
     subexpression[0] = VoiceList(subexpression[1])

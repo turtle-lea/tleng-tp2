@@ -1,17 +1,3 @@
-#2)TEMPO
-#5)VOICE
-#8)COMPASLOOP
-#11)NOTE
-
-#tempo -> {#tempo}{shape}{num}
-
-#voice -> voice ( value ) { voicecontent }
-
-#compasloop -> compasloop ( value ) { compaslist }
-
-#note -> note ( notename , value , shape ) ;
-
-#value -> num|cname
 
 class Tempo(Expression):
 
@@ -24,6 +10,18 @@ class Tempo(Expression):
 
 	def getCount(self):
 		return self._num
+
+class CompasHeader(Expression):
+
+	def __init__(self, num1, num2):
+		self._numerator = num1
+		self._denominator = num2
+
+	def getNumerator(self):
+		return self._numerator
+
+	def getDenominator(self):
+		return self._denominator
 
 
 class Voice(Expression):
@@ -63,7 +61,11 @@ class CompasLoop(Expression):
 class Note(Expression):
 	def __init__(self, notename, alter, value, shape, puntillo):
 		#concatenacion de string
-		self._height = notename+alter
+		if alter != None:
+			self._height = notename+alter
+		else:
+			self._height = notename
+
 		self._value = value
 		self._duration = 0
 
@@ -84,10 +86,8 @@ class Note(Expression):
 		if self._duration == 0:
 			raise Exception("Figura no definida")
 
-		if puntillo == ".":
+		if puntillo:
 			self._duration = self._duration*(3/2)
-		if puntillo != None or puntillo != ".":
-			raise Exception("Puntillo no definido")
 
 
 	def getOctave(self):
