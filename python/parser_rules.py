@@ -3,11 +3,31 @@
 from clasesber import *
 from lexer_rules import tokens
 
+def p_root(subexpressions):
+    'h : tempo compasheader constlist voicelist'
+    subexpression[0] = Root(subexpressions[1], subexpressions[2], subexpressions[3], subexpressions[4])
 
-#Una constante que es un número
-def p_initial(subexpressions):
-    'expr : constlist'
-    subexpressions[0] = subexpressions[1]
+def p_voice_list_base(subexpression):
+    'voicelist : voice'
+    subexpression[0] = VoiceList(subexpression[1])
+
+def p_voice_list_rec(subexpressions):
+    'voicelist : voicelist voice'
+    ### Invierto parametros intencionalmente. voicelist param es opcional en el new de la clase
+    subexpression[0] = VoiceList(subexpressions[2], subexpressions[1])
+
+def p_compas(subexpressions):
+    'compas: COMPASBEGIN LEFTCURL notelist RIGHTCURL'
+    subexpressions[0] = Compas(subexpressions[3])
+
+def p_note_list_base(subexpression):
+    'notelist : note'
+    subexpression[0] = NoteList(subexpression[1])
+
+def p_note_list_rec(subexpressions):
+    'notelist : notelist note'
+    ### Invierto parametros intencionalmente. notelist param es opcional en el new de la clase
+    subexpressions[0] = NoteList(subexpressions[2], subexpressions[1])
 
 def p_val_num(subexpression):
     'value : NUM'
@@ -17,7 +37,6 @@ def p_val_cname(subexpression):
     'value : CNAME'
     subexpression[0] = ConstValue(subexpression[1])
 
-
 def p_const(subexpressions):
     'const : CONST CNAME EQUALS NUM SEMICOLON'
     subexpressions[0] = Const(subexpressions[2],subexpressions[4], False)
@@ -26,7 +45,6 @@ def p_const(subexpressions):
 def p_const_cname(subexpressions):
     'const : CONST CNAME EQUALS CNAME SEMICOLON'
     subexpressions[0] = Const(subexpressions[2],subexpressions[4], True)
-
 
 def p_const_list_base(subexpressions):
     'constlist : const'
