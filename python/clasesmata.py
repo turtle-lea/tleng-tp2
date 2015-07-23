@@ -59,13 +59,7 @@ class Compas(Expression):
 
 class NoteList(Expression):
     def __init__(self, note, notelist):
-        self._notelist = notelist ++ note
+        self._notelist = notelist + [note]
 
     def getNoteList(self):
       return self._notelist
-
-
-
-
-
-
