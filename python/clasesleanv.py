@@ -81,9 +81,10 @@ def duration_from_shape(shape):
 
 
 class Silence(Expression):
-    def __init__(self,duration, shape):
-        self._shape = shape
-        self._duration = duration_from_shape(shape)
+    def __init__(self,duration, puntillo):
+        self._duration = duration_from_shape(duration)
+        if puntillo:
+					self._duration = self._duration*(3/2)
 
     def getDuration(self):
         return self._duration

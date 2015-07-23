@@ -46,7 +46,7 @@ class Compas(Expression):
     def __init__(self, notelist):
         self._notelist = notelist
         ### Calculo la duracion del compas
-        duration = 0
+        duration = 0.0
         for note in notelist:
             duration += note.getDuration()
         self._duration = duration

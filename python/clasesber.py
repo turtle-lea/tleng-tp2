@@ -83,18 +83,6 @@ class CompasList(ExpressionList):
     def getDuration(self):
         return self._duration
 
-class Silence(Expression):
-    def __init__(self,duration, shape):
-        self._shape = shape
-        self._duration = duration
-
-    def getDuration(self):
-        return self._duration
-
-    def getShape(self):
-        return self._shape
-
-
 class ConstantManager:
     @staticmethod
     def createInstance(constList, reserved):
