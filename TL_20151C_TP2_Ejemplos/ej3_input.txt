@@ -60,7 +60,7 @@ voz (piano)
 			nota(do, oct1, corchea);
 			nota(si, oct2, corchea);
 			nota(la, oct2, corchea);
-		}	
+		}
 
 		compas
 		{
@@ -69,7 +69,7 @@ voz (piano)
 			nota(si, oct2, corchea);
 			nota(la, oct2, corchea);
 			nota(sol, oct2, corchea);
-		}	
+		}
 
 		compas
 		{
@@ -78,7 +78,7 @@ voz (piano)
 			nota(la, oct2, corchea);
 			nota(si, oct2, corchea);
 			nota(sol, oct2, corchea);
-		}	
+		}
 
 		compas
 		{
@@ -131,7 +131,7 @@ voz (piano)
 			nota(do, oct1, corchea);
 			nota(si, oct2, corchea);
 			nota(la, oct2, corchea);
-		}	
+		}
 
 		compas
 		{
@@ -140,7 +140,7 @@ voz (piano)
 			nota(si, oct2, corchea);
 			nota(la, oct2, corchea);
 			nota(sol, oct2, corchea);
-		}	
+		}
 
 		compas
 		{
@@ -149,7 +149,7 @@ voz (piano)
 			nota(la, oct2, corchea);
 			nota(sol, oct2, corchea);
 			nota(fa+, oct2, corchea);
-		}	
+		}
 
 		compas
 		{
@@ -162,7 +162,7 @@ voz (piano)
 {
 	compas
 	{
-		nota(sol, oct3, blanca);	
+		nota(sol, oct3, blanca);
 		nota(la, oct3, negra);
 	}
 
@@ -271,12 +271,12 @@ voz (piano)
 }
 
 // Esta voz esta solo para hacer el acorde del primer compas
-// Si no validamos que todas las voces tengan la misma cantidad 
+// Si no validamos que todas las voces tengan la misma cantidad
 // de compases anda. Si no se puede volar directamente esta voz...
 voz (piano)
 {
 	compas
 	{
-		nota(si, oct3, blanca.);	
+		nota(si, oct3, blanca.);
 	}
 }

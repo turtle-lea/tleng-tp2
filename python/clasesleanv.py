@@ -42,21 +42,23 @@ class Voice(Expression):
 
 
 class CompasLoop(Expression):
-	def __init__(self, value, CompasList):
-		self._value = value
-		self._duration = CompasList.getDuration()
+    def __init__(self, value, compasList):
+        self._compasList = compasList
+        self._value = value
+        self._duration = compasList.getDuration()
 
-	def getRepeat(self):
-		return self._value
 
-	def getCompasses(self):
-		return CompasList
+    def getRepeat(self):
+        return self._value
 
-	def getDuration(self):
-		return self._duration
+    def getCompasses(self):
+        return self._compasList
 
-	def isLoop(self):
-		return True
+    def getDuration(self):
+        return self._duration
+
+    def isLoop(self):
+        return True
 
 
 
