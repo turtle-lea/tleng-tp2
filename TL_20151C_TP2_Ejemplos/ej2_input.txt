@@ -98,7 +98,7 @@ voz (piano)
 	compas
 	{
 		nota(fa, oct3, negra);
-		nota(sol, oct3, blanca);	
+		nota(sol, oct3, blanca);
 	}
 
 	compas
@@ -111,7 +111,7 @@ voz (piano)
 	{
 		nota(fa, oct3, negra);
 		nota(sol, oct3, negra);
-		silencio(negra);	
+		silencio(negra);
 	}
 
 	compas

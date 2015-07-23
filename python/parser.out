@@ -12,7 +12,7 @@ Rule 1     h -> tempo compasheader constlistinit voicelist
 Rule 2     tempo -> TEMPOBEGIN SHAPE NUM
 Rule 3     compasheader -> COMPASHEADERBEGIN NUM SLASH NUM
 Rule 4     voice -> VOICEBEGIN LEFTPAR value RIGHTPAR LEFTCURL voicecontent RIGHTCURL
-Rule 5     compasloop -> LOOPBEGIN LEFTPAR value RIGHTPAR compaslist
+Rule 5     compasloop -> LOOPBEGIN LEFTPAR value RIGHTPAR LEFTCURL compaslist RIGHTCURL
 Rule 6     note -> NOTEBEGIN LEFTPAR NOTENAME COMMA value COMMA SHAPE RIGHTPAR SEMICOLON
 Rule 7     note -> NOTEBEGIN LEFTPAR NOTENAME ALTER COMMA value COMMA SHAPE RIGHTPAR SEMICOLON
 Rule 8     note -> NOTEBEGIN LEFTPAR NOTENAME COMMA value COMMA SHAPE PUNTO RIGHTPAR SEMICOLON
@@ -50,7 +50,7 @@ COMPASBEGIN          : 14
 COMPASHEADERBEGIN    : 3
 CONST                : 21 22
 EQUALS               : 21 22
-LEFTCURL             : 4 14
+LEFTCURL             : 4 5 14
 LEFTPAR              : 4 5 6 7 8 9 30 31
 LOOPBEGIN            : 5
 NEWLINE              : 
@@ -58,7 +58,7 @@ NOTEBEGIN            : 6 7 8 9
 NOTENAME             : 6 7 8 9
 NUM                  : 2 3 3 19 21
 PUNTO                : 8 9 31
-RIGHTCURL            : 4 14
+RIGHTCURL            : 4 5 14
 RIGHTPAR             : 4 5 6 7 8 9 30 31
 SEMICOLON            : 6 7 8 9 21 22 30 31
 SHAPE                : 2 6 7 8 9 30 31
@@ -356,7 +356,7 @@ state 31
     (27) voicecontent -> . compas
     (28) voicecontent -> . voicecontent compasloop
     (29) voicecontent -> . voicecontent compas
-    (5) compasloop -> . LOOPBEGIN LEFTPAR value RIGHTPAR compaslist
+    (5) compasloop -> . LOOPBEGIN LEFTPAR value RIGHTPAR LEFTCURL compaslist RIGHTCURL
     (14) compas -> . COMPASBEGIN LEFTCURL notelist RIGHTCURL
 
     LOOPBEGIN       shift and go to state 34
@@ -386,7 +386,7 @@ state 33
 
 state 34
 
-    (5) compasloop -> LOOPBEGIN . LEFTPAR value RIGHTPAR compaslist
+    (5) compasloop -> LOOPBEGIN . LEFTPAR value RIGHTPAR LEFTCURL compaslist RIGHTCURL
 
     LEFTPAR         shift and go to state 37
 
@@ -403,7 +403,7 @@ state 36
     (4) voice -> VOICEBEGIN LEFTPAR value RIGHTPAR LEFTCURL voicecontent . RIGHTCURL
     (28) voicecontent -> voicecontent . compasloop
     (29) voicecontent -> voicecontent . compas
-    (5) compasloop -> . LOOPBEGIN LEFTPAR value RIGHTPAR compaslist
+    (5) compasloop -> . LOOPBEGIN LEFTPAR value RIGHTPAR LEFTCURL compaslist RIGHTCURL
     (14) compas -> . COMPASBEGIN LEFTCURL notelist RIGHTCURL
 
     RIGHTCURL       shift and go to state 40
@@ -415,7 +415,7 @@ state 36
 
 state 37
 
-    (5) compasloop -> LOOPBEGIN LEFTPAR . value RIGHTPAR compaslist
+    (5) compasloop -> LOOPBEGIN LEFTPAR . value RIGHTPAR LEFTCURL compaslist RIGHTCURL
     (19) value -> . NUM
     (20) value -> . CNAME
 
@@ -473,7 +473,7 @@ state 41
 
 state 42
 
-    (5) compasloop -> LOOPBEGIN LEFTPAR value . RIGHTPAR compaslist
+    (5) compasloop -> LOOPBEGIN LEFTPAR value . RIGHTPAR LEFTCURL compaslist RIGHTCURL
 
     RIGHTPAR        shift and go to state 48
 
@@ -535,15 +535,10 @@ state 47
 
 state 48
 
-    (5) compasloop -> LOOPBEGIN LEFTPAR value RIGHTPAR . compaslist
-    (10) compaslist -> . compas
-    (11) compaslist -> . compaslist compas
-    (14) compas -> . COMPASBEGIN LEFTCURL notelist RIGHTCURL
+    (5) compasloop -> LOOPBEGIN LEFTPAR value RIGHTPAR . LEFTCURL compaslist RIGHTCURL
 
-    COMPASBEGIN     shift and go to state 35
+    LEFTCURL        shift and go to state 54
 
-    compaslist                     shift and go to state 54
-    compas                         shift and go to state 55
 
 state 49
 
@@ -552,15 +547,15 @@ state 49
     (8) note -> NOTEBEGIN LEFTPAR . NOTENAME COMMA value COMMA SHAPE PUNTO RIGHTPAR SEMICOLON
     (9) note -> NOTEBEGIN LEFTPAR . NOTENAME ALTER COMMA value COMMA SHAPE PUNTO RIGHTPAR SEMICOLON
 
-    NOTENAME        shift and go to state 56
+    NOTENAME        shift and go to state 55
 
 
 state 50
 
     (14) compas -> COMPASBEGIN LEFTCURL notelist RIGHTCURL .
 
-    COMPASBEGIN     reduce using rule 14 (compas -> COMPASBEGIN LEFTCURL notelist RIGHTCURL .)
     RIGHTCURL       reduce using rule 14 (compas -> COMPASBEGIN LEFTCURL notelist RIGHTCURL .)
+    COMPASBEGIN     reduce using rule 14 (compas -> COMPASBEGIN LEFTCURL notelist RIGHTCURL .)
     LOOPBEGIN       reduce using rule 14 (compas -> COMPASBEGIN LEFTCURL notelist RIGHTCURL .)
 
 
@@ -587,34 +582,22 @@ state 53
     (30) silence -> SILENCEBEGIN LEFTPAR . SHAPE RIGHTPAR SEMICOLON
     (31) silence -> SILENCEBEGIN LEFTPAR . SHAPE PUNTO RIGHTPAR SEMICOLON
 
-    SHAPE           shift and go to state 57
+    SHAPE           shift and go to state 56
 
 
 state 54
 
-    (5) compasloop -> LOOPBEGIN LEFTPAR value RIGHTPAR compaslist .
-    (11) compaslist -> compaslist . compas
+    (5) compasloop -> LOOPBEGIN LEFTPAR value RIGHTPAR LEFTCURL . compaslist RIGHTCURL
+    (10) compaslist -> . compas
+    (11) compaslist -> . compaslist compas
     (14) compas -> . COMPASBEGIN LEFTCURL notelist RIGHTCURL
 
-  ! shift/reduce conflict for COMPASBEGIN resolved as shift
-    RIGHTCURL       reduce using rule 5 (compasloop -> LOOPBEGIN LEFTPAR value RIGHTPAR compaslist .)
-    LOOPBEGIN       reduce using rule 5 (compasloop -> LOOPBEGIN LEFTPAR value RIGHTPAR compaslist .)
     COMPASBEGIN     shift and go to state 35
 
-  ! COMPASBEGIN     [ reduce using rule 5 (compasloop -> LOOPBEGIN LEFTPAR value RIGHTPAR compaslist .) ]
-
+    compaslist                     shift and go to state 57
     compas                         shift and go to state 58
 
 state 55
-
-    (10) compaslist -> compas .
-
-    COMPASBEGIN     reduce using rule 10 (compaslist -> compas .)
-    RIGHTCURL       reduce using rule 10 (compaslist -> compas .)
-    LOOPBEGIN       reduce using rule 10 (compaslist -> compas .)
-
-
-state 56
 
     (6) note -> NOTEBEGIN LEFTPAR NOTENAME . COMMA value COMMA SHAPE RIGHTPAR SEMICOLON
     (7) note -> NOTEBEGIN LEFTPAR NOTENAME . ALTER COMMA value COMMA SHAPE RIGHTPAR SEMICOLON
@@ -625,7 +608,7 @@ state 56
     ALTER           shift and go to state 60
 
 
-state 57
+state 56
 
     (30) silence -> SILENCEBEGIN LEFTPAR SHAPE . RIGHTPAR SEMICOLON
     (31) silence -> SILENCEBEGIN LEFTPAR SHAPE . PUNTO RIGHTPAR SEMICOLON
@@ -634,13 +617,23 @@ state 57
     PUNTO           shift and go to state 61
 
 
+state 57
+
+    (5) compasloop -> LOOPBEGIN LEFTPAR value RIGHTPAR LEFTCURL compaslist . RIGHTCURL
+    (11) compaslist -> compaslist . compas
+    (14) compas -> . COMPASBEGIN LEFTCURL notelist RIGHTCURL
+
+    RIGHTCURL       shift and go to state 63
+    COMPASBEGIN     shift and go to state 35
+
+    compas                         shift and go to state 64
+
 state 58
 
-    (11) compaslist -> compaslist compas .
+    (10) compaslist -> compas .
 
-    COMPASBEGIN     reduce using rule 11 (compaslist -> compaslist compas .)
-    RIGHTCURL       reduce using rule 11 (compaslist -> compaslist compas .)
-    LOOPBEGIN       reduce using rule 11 (compaslist -> compaslist compas .)
+    RIGHTCURL       reduce using rule 10 (compaslist -> compas .)
+    COMPASBEGIN     reduce using rule 10 (compaslist -> compas .)
 
 
 state 59
@@ -653,39 +646,56 @@ state 59
     NUM             shift and go to state 27
     CNAME           shift and go to state 26
 
-    value                          shift and go to state 63
+    value                          shift and go to state 65
 
 state 60
 
     (7) note -> NOTEBEGIN LEFTPAR NOTENAME ALTER . COMMA value COMMA SHAPE RIGHTPAR SEMICOLON
     (9) note -> NOTEBEGIN LEFTPAR NOTENAME ALTER . COMMA value COMMA SHAPE PUNTO RIGHTPAR SEMICOLON
 
-    COMMA           shift and go to state 64
+    COMMA           shift and go to state 66
 
 
 state 61
 
     (31) silence -> SILENCEBEGIN LEFTPAR SHAPE PUNTO . RIGHTPAR SEMICOLON
 
-    RIGHTPAR        shift and go to state 65
+    RIGHTPAR        shift and go to state 67
 
 
 state 62
 
     (30) silence -> SILENCEBEGIN LEFTPAR SHAPE RIGHTPAR . SEMICOLON
 
-    SEMICOLON       shift and go to state 66
+    SEMICOLON       shift and go to state 68
 
 
 state 63
 
-    (6) note -> NOTEBEGIN LEFTPAR NOTENAME COMMA value . COMMA SHAPE RIGHTPAR SEMICOLON
-    (8) note -> NOTEBEGIN LEFTPAR NOTENAME COMMA value . COMMA SHAPE PUNTO RIGHTPAR SEMICOLON
+    (5) compasloop -> LOOPBEGIN LEFTPAR value RIGHTPAR LEFTCURL compaslist RIGHTCURL .
 
-    COMMA           shift and go to state 67
+    RIGHTCURL       reduce using rule 5 (compasloop -> LOOPBEGIN LEFTPAR value RIGHTPAR LEFTCURL compaslist RIGHTCURL .)
+    LOOPBEGIN       reduce using rule 5 (compasloop -> LOOPBEGIN LEFTPAR value RIGHTPAR LEFTCURL compaslist RIGHTCURL .)
+    COMPASBEGIN     reduce using rule 5 (compasloop -> LOOPBEGIN LEFTPAR value RIGHTPAR LEFTCURL compaslist RIGHTCURL .)
 
 
 state 64
+
+    (11) compaslist -> compaslist compas .
+
+    RIGHTCURL       reduce using rule 11 (compaslist -> compaslist compas .)
+    COMPASBEGIN     reduce using rule 11 (compaslist -> compaslist compas .)
+
+
+state 65
+
+    (6) note -> NOTEBEGIN LEFTPAR NOTENAME COMMA value . COMMA SHAPE RIGHTPAR SEMICOLON
+    (8) note -> NOTEBEGIN LEFTPAR NOTENAME COMMA value . COMMA SHAPE PUNTO RIGHTPAR SEMICOLON
+
+    COMMA           shift and go to state 69
+
+
+state 66
 
     (7) note -> NOTEBEGIN LEFTPAR NOTENAME ALTER COMMA . value COMMA SHAPE RIGHTPAR SEMICOLON
     (9) note -> NOTEBEGIN LEFTPAR NOTENAME ALTER COMMA . value COMMA SHAPE PUNTO RIGHTPAR SEMICOLON
@@ -695,16 +705,16 @@ state 64
     NUM             shift and go to state 27
     CNAME           shift and go to state 26
 
-    value                          shift and go to state 68
+    value                          shift and go to state 70
 
-state 65
+state 67
 
     (31) silence -> SILENCEBEGIN LEFTPAR SHAPE PUNTO RIGHTPAR . SEMICOLON
 
-    SEMICOLON       shift and go to state 69
+    SEMICOLON       shift and go to state 71
 
 
-state 66
+state 68
 
     (30) silence -> SILENCEBEGIN LEFTPAR SHAPE RIGHTPAR SEMICOLON .
 
@@ -713,23 +723,23 @@ state 66
     SILENCEBEGIN    reduce using rule 30 (silence -> SILENCEBEGIN LEFTPAR SHAPE RIGHTPAR SEMICOLON .)
 
 
-state 67
+state 69
 
     (6) note -> NOTEBEGIN LEFTPAR NOTENAME COMMA value COMMA . SHAPE RIGHTPAR SEMICOLON
     (8) note -> NOTEBEGIN LEFTPAR NOTENAME COMMA value COMMA . SHAPE PUNTO RIGHTPAR SEMICOLON
 
-    SHAPE           shift and go to state 70
+    SHAPE           shift and go to state 72
 
 
-state 68
+state 70
 
     (7) note -> NOTEBEGIN LEFTPAR NOTENAME ALTER COMMA value . COMMA SHAPE RIGHTPAR SEMICOLON
     (9) note -> NOTEBEGIN LEFTPAR NOTENAME ALTER COMMA value . COMMA SHAPE PUNTO RIGHTPAR SEMICOLON
 
-    COMMA           shift and go to state 71
+    COMMA           shift and go to state 73
 
 
-state 69
+state 71
 
     (31) silence -> SILENCEBEGIN LEFTPAR SHAPE PUNTO RIGHTPAR SEMICOLON .
 
@@ -738,47 +748,47 @@ state 69
     SILENCEBEGIN    reduce using rule 31 (silence -> SILENCEBEGIN LEFTPAR SHAPE PUNTO RIGHTPAR SEMICOLON .)
 
 
-state 70
+state 72
 
     (6) note -> NOTEBEGIN LEFTPAR NOTENAME COMMA value COMMA SHAPE . RIGHTPAR SEMICOLON
     (8) note -> NOTEBEGIN LEFTPAR NOTENAME COMMA value COMMA SHAPE . PUNTO RIGHTPAR SEMICOLON
 
-    RIGHTPAR        shift and go to state 72
-    PUNTO           shift and go to state 73
-
-
-state 71
-
-    (7) note -> NOTEBEGIN LEFTPAR NOTENAME ALTER COMMA value COMMA . SHAPE RIGHTPAR SEMICOLON
-    (9) note -> NOTEBEGIN LEFTPAR NOTENAME ALTER COMMA value COMMA . SHAPE PUNTO RIGHTPAR SEMICOLON
-
-    SHAPE           shift and go to state 74
-
-
-state 72
-
-    (6) note -> NOTEBEGIN LEFTPAR NOTENAME COMMA value COMMA SHAPE RIGHTPAR . SEMICOLON
-
-    SEMICOLON       shift and go to state 75
+    RIGHTPAR        shift and go to state 74
+    PUNTO           shift and go to state 75
 
 
 state 73
 
-    (8) note -> NOTEBEGIN LEFTPAR NOTENAME COMMA value COMMA SHAPE PUNTO . RIGHTPAR SEMICOLON
+    (7) note -> NOTEBEGIN LEFTPAR NOTENAME ALTER COMMA value COMMA . SHAPE RIGHTPAR SEMICOLON
+    (9) note -> NOTEBEGIN LEFTPAR NOTENAME ALTER COMMA value COMMA . SHAPE PUNTO RIGHTPAR SEMICOLON
 
-    RIGHTPAR        shift and go to state 76
+    SHAPE           shift and go to state 76
 
 
 state 74
 
-    (7) note -> NOTEBEGIN LEFTPAR NOTENAME ALTER COMMA value COMMA SHAPE . RIGHTPAR SEMICOLON
-    (9) note -> NOTEBEGIN LEFTPAR NOTENAME ALTER COMMA value COMMA SHAPE . PUNTO RIGHTPAR SEMICOLON
+    (6) note -> NOTEBEGIN LEFTPAR NOTENAME COMMA value COMMA SHAPE RIGHTPAR . SEMICOLON
 
-    RIGHTPAR        shift and go to state 77
-    PUNTO           shift and go to state 78
+    SEMICOLON       shift and go to state 77
 
 
 state 75
+
+    (8) note -> NOTEBEGIN LEFTPAR NOTENAME COMMA value COMMA SHAPE PUNTO . RIGHTPAR SEMICOLON
+
+    RIGHTPAR        shift and go to state 78
+
+
+state 76
+
+    (7) note -> NOTEBEGIN LEFTPAR NOTENAME ALTER COMMA value COMMA SHAPE . RIGHTPAR SEMICOLON
+    (9) note -> NOTEBEGIN LEFTPAR NOTENAME ALTER COMMA value COMMA SHAPE . PUNTO RIGHTPAR SEMICOLON
+
+    RIGHTPAR        shift and go to state 79
+    PUNTO           shift and go to state 80
+
+
+state 77
 
     (6) note -> NOTEBEGIN LEFTPAR NOTENAME COMMA value COMMA SHAPE RIGHTPAR SEMICOLON .
 
@@ -787,28 +797,28 @@ state 75
     SILENCEBEGIN    reduce using rule 6 (note -> NOTEBEGIN LEFTPAR NOTENAME COMMA value COMMA SHAPE RIGHTPAR SEMICOLON .)
 
 
-state 76
+state 78
 
     (8) note -> NOTEBEGIN LEFTPAR NOTENAME COMMA value COMMA SHAPE PUNTO RIGHTPAR . SEMICOLON
 
-    SEMICOLON       shift and go to state 79
-
-
-state 77
-
-    (7) note -> NOTEBEGIN LEFTPAR NOTENAME ALTER COMMA value COMMA SHAPE RIGHTPAR . SEMICOLON
-
-    SEMICOLON       shift and go to state 80
-
-
-state 78
-
-    (9) note -> NOTEBEGIN LEFTPAR NOTENAME ALTER COMMA value COMMA SHAPE PUNTO . RIGHTPAR SEMICOLON
-
-    RIGHTPAR        shift and go to state 81
+    SEMICOLON       shift and go to state 81
 
 
 state 79
+
+    (7) note -> NOTEBEGIN LEFTPAR NOTENAME ALTER COMMA value COMMA SHAPE RIGHTPAR . SEMICOLON
+
+    SEMICOLON       shift and go to state 82
+
+
+state 80
+
+    (9) note -> NOTEBEGIN LEFTPAR NOTENAME ALTER COMMA value COMMA SHAPE PUNTO . RIGHTPAR SEMICOLON
+
+    RIGHTPAR        shift and go to state 83
+
+
+state 81
 
     (8) note -> NOTEBEGIN LEFTPAR NOTENAME COMMA value COMMA SHAPE PUNTO RIGHTPAR SEMICOLON .
 
@@ -817,7 +827,7 @@ state 79
     SILENCEBEGIN    reduce using rule 8 (note -> NOTEBEGIN LEFTPAR NOTENAME COMMA value COMMA SHAPE PUNTO RIGHTPAR SEMICOLON .)
 
 
-state 80
+state 82
 
     (7) note -> NOTEBEGIN LEFTPAR NOTENAME ALTER COMMA value COMMA SHAPE RIGHTPAR SEMICOLON .
 
@@ -826,14 +836,14 @@ state 80
     SILENCEBEGIN    reduce using rule 7 (note -> NOTEBEGIN LEFTPAR NOTENAME ALTER COMMA value COMMA SHAPE RIGHTPAR SEMICOLON .)
 
 
-state 81
+state 83
 
     (9) note -> NOTEBEGIN LEFTPAR NOTENAME ALTER COMMA value COMMA SHAPE PUNTO RIGHTPAR . SEMICOLON
 
-    SEMICOLON       shift and go to state 82
+    SEMICOLON       shift and go to state 84
 
 
-state 82
+state 84
 
     (9) note -> NOTEBEGIN LEFTPAR NOTENAME ALTER COMMA value COMMA SHAPE PUNTO RIGHTPAR SEMICOLON .
 
@@ -841,7 +851,3 @@ state 82
     NOTEBEGIN       reduce using rule 9 (note -> NOTEBEGIN LEFTPAR NOTENAME ALTER COMMA value COMMA SHAPE PUNTO RIGHTPAR SEMICOLON .)
     SILENCEBEGIN    reduce using rule 9 (note -> NOTEBEGIN LEFTPAR NOTENAME ALTER COMMA value COMMA SHAPE PUNTO RIGHTPAR SEMICOLON .)
 
-WARNING: 
-WARNING: Conflicts:
-WARNING: 
-WARNING: shift/reduce conflict for COMPASBEGIN in state 54 resolved as shift

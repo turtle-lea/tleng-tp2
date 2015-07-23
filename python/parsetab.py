@@ -5,9 +5,9 @@ _tabversion = '3.5'
 
 _lr_method = 'LALR'
 
-_lr_signature = '050BDBCDD214165DFE8B8DE3B17DD5FF'
+_lr_signature = '225765C6C4E3B245AC0559B5D796CC03'
     
-_lr_action_items = {'CONST':([5,8,9,14,19,28,29,],[10,10,-24,-25,-3,-21,-22,]),'LOOPBEGIN':([31,32,33,36,39,41,50,54,55,58,],[34,-26,-27,34,-28,-29,-14,-5,-10,-11,]),'CNAME':([10,20,22,37,59,64,],[15,24,26,26,26,26,]),'LEFTCURL':([30,35,],[31,38,]),'PUNTO':([57,70,74,],[61,73,78,]),'ALTER':([56,],[60,]),'SEMICOLON':([23,24,62,65,72,76,77,81,],[28,29,66,69,75,79,80,82,]),'RIGHTPAR':([25,26,27,42,57,61,70,73,74,78,],[30,-20,-19,48,62,65,72,76,77,81,]),'SHAPE':([3,53,67,71,],[6,57,70,74,]),'NUM':([4,6,13,20,22,37,59,64,],[7,12,19,23,27,27,27,27,]),'COMMA':([26,27,56,60,63,68,],[-20,-19,59,64,67,71,]),'$end':([1,16,17,21,40,],[0,-1,-12,-13,-4,]),'RIGHTCURL':([32,33,36,39,41,43,45,47,50,51,52,54,55,58,66,69,75,79,80,82,],[-26,-27,40,-28,-29,-15,50,-16,-14,-17,-18,-5,-10,-11,-30,-31,-6,-8,-7,-9,]),'COMPASBEGIN':([31,32,33,36,39,41,48,50,54,55,58,],[35,-26,-27,35,-28,-29,35,-14,35,-10,-11,]),'EQUALS':([15,],[20,]),'TEMPOBEGIN':([0,],[3,]),'NOTEBEGIN':([38,43,45,47,51,52,66,69,75,79,80,82,],[44,-15,44,-16,-17,-18,-30,-31,-6,-8,-7,-9,]),'SLASH':([7,],[13,]),'SILENCEBEGIN':([38,43,45,47,51,52,66,69,75,79,80,82,],[46,-15,46,-16,-17,-18,-30,-31,-6,-8,-7,-9,]),'COMPASHEADERBEGIN':([2,12,],[4,-2,]),'LEFTPAR':([18,34,44,46,],[22,37,49,53,]),'NOTENAME':([49,],[56,]),'VOICEBEGIN':([8,9,11,14,16,17,21,28,29,40,],[-23,-24,18,-25,18,-12,-13,-21,-22,-4,]),}
+_lr_action_items = {'CONST':([5,8,9,14,19,28,29,],[10,10,-24,-25,-3,-21,-22,]),'LOOPBEGIN':([31,32,33,36,39,41,50,63,],[34,-26,-27,34,-28,-29,-14,-5,]),'CNAME':([10,20,22,37,59,66,],[15,24,26,26,26,26,]),'LEFTCURL':([30,35,48,],[31,38,54,]),'PUNTO':([56,72,76,],[61,75,80,]),'ALTER':([55,],[60,]),'SEMICOLON':([23,24,62,67,74,78,79,83,],[28,29,68,71,77,81,82,84,]),'RIGHTPAR':([25,26,27,42,56,61,72,75,76,80,],[30,-20,-19,48,62,67,74,78,79,83,]),'SHAPE':([3,53,69,73,],[6,56,72,76,]),'NUM':([4,6,13,20,22,37,59,66,],[7,12,19,23,27,27,27,27,]),'COMMA':([26,27,55,60,65,70,],[-20,-19,59,66,69,73,]),'$end':([1,16,17,21,40,],[0,-1,-12,-13,-4,]),'RIGHTCURL':([32,33,36,39,41,43,45,47,50,51,52,57,58,63,64,68,71,77,81,82,84,],[-26,-27,40,-28,-29,-15,50,-16,-14,-17,-18,63,-10,-5,-11,-30,-31,-6,-8,-7,-9,]),'COMPASBEGIN':([31,32,33,36,39,41,50,54,57,58,63,64,],[35,-26,-27,35,-28,-29,-14,35,35,-10,-5,-11,]),'EQUALS':([15,],[20,]),'TEMPOBEGIN':([0,],[3,]),'NOTEBEGIN':([38,43,45,47,51,52,68,71,77,81,82,84,],[44,-15,44,-16,-17,-18,-30,-31,-6,-8,-7,-9,]),'SLASH':([7,],[13,]),'SILENCEBEGIN':([38,43,45,47,51,52,68,71,77,81,82,84,],[46,-15,46,-16,-17,-18,-30,-31,-6,-8,-7,-9,]),'COMPASHEADERBEGIN':([2,12,],[4,-2,]),'LEFTPAR':([18,34,44,46,],[22,37,49,53,]),'NOTENAME':([49,],[55,]),'VOICEBEGIN':([8,9,11,14,16,17,21,28,29,40,],[-23,-24,18,-25,18,-12,-13,-21,-22,-4,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -16,7 +16,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'constlist':([5,],[8,]),'compasloop':([31,36,],[32,39,]),'compaslist':([48,],[54,]),'const':([5,8,],[9,14,]),'compas':([31,36,48,54,],[33,41,55,58,]),'h':([0,],[1,]),'voicelist':([11,],[16,]),'tempo':([0,],[2,]),'value':([22,37,59,64,],[25,42,63,68,]),'voicecontent':([31,],[36,]),'note':([38,45,],[43,51,]),'notelist':([38,],[45,]),'compasheader':([2,],[5,]),'voice':([11,16,],[17,21,]),'constlistinit':([5,],[11,]),'silence':([38,45,],[47,52,]),}
+_lr_goto_items = {'constlist':([5,],[8,]),'compasloop':([31,36,],[32,39,]),'compaslist':([54,],[57,]),'const':([5,8,],[9,14,]),'compas':([31,36,54,57,],[33,41,58,64,]),'h':([0,],[1,]),'voicelist':([11,],[16,]),'tempo':([0,],[2,]),'value':([22,37,59,66,],[25,42,65,70,]),'voicecontent':([31,],[36,]),'note':([38,45,],[43,51,]),'notelist':([38,],[45,]),'compasheader':([2,],[5,]),'voice':([11,16,],[17,21,]),'constlistinit':([5,],[11,]),'silence':([38,45,],[47,52,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -30,7 +30,7 @@ _lr_productions = [
   ('tempo -> TEMPOBEGIN SHAPE NUM','tempo',3,'p_tempo','parser_rules.py',13),
   ('compasheader -> COMPASHEADERBEGIN NUM SLASH NUM','compasheader',4,'p_compasheader','parser_rules.py',17),
   ('voice -> VOICEBEGIN LEFTPAR value RIGHTPAR LEFTCURL voicecontent RIGHTCURL','voice',7,'p_voice','parser_rules.py',21),
-  ('compasloop -> LOOPBEGIN LEFTPAR value RIGHTPAR compaslist','compasloop',5,'p_compasloop','parser_rules.py',25),
+  ('compasloop -> LOOPBEGIN LEFTPAR value RIGHTPAR LEFTCURL compaslist RIGHTCURL','compasloop',7,'p_compasloop','parser_rules.py',25),
   ('note -> NOTEBEGIN LEFTPAR NOTENAME COMMA value COMMA SHAPE RIGHTPAR SEMICOLON','note',9,'p_note','parser_rules.py',29),
   ('note -> NOTEBEGIN LEFTPAR NOTENAME ALTER COMMA value COMMA SHAPE RIGHTPAR SEMICOLON','note',10,'p_note_alter','parser_rules.py',33),
   ('note -> NOTEBEGIN LEFTPAR NOTENAME COMMA value COMMA SHAPE PUNTO RIGHTPAR SEMICOLON','note',10,'p_note_punto','parser_rules.py',37),
