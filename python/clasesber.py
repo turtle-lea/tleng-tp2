@@ -84,12 +84,12 @@ class CompasList(ExpressionList):
         return self._duration
 
 class Silence(Expression):
-    def __init__(self,time, shape):
+    def __init__(self,duration, shape):
         self._shape = shape
-        self._time = time
+        self._duration = duration
 
-    def getTime(self):
-        return self._time
+    def getDuration(self):
+        return self._duration
 
     def getShape(self):
         return self._shape
