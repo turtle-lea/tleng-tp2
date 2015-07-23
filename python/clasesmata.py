@@ -7,7 +7,7 @@ from clasesleanv import *
 class Root(Expression):
     def __init__(self, tempo, compasheader,constlist,voicelist):
         ### El tiempo del primer compas de la primera voz debe coincidir con el compasheader
-        if (getDuration(voicelist[0].getCompasses()[0]) != compasheader.getDuration()):
+        if voicelist.getList()[0].getCompasses()[0].getDuration() != compasheader.getDuration():
           raise Exception("La duracion de los compases es distinta a la del encabezado")
         self._tempo = tempo
         self._compasheader = compasheader

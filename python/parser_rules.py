@@ -22,8 +22,8 @@ def p_voice(subexpression):
     subexpression[0] = Voice(subexpression[3], subexpression[6])
 
 def p_compasloop(subexpression):
-    'compasloop : LOOPBEGIN LEFTPAR value RIGHTPAR compaslist'
-    subexpression[0] = CompasLoop(subexpression[3], subexpression[5])
+    'compasloop : LOOPBEGIN LEFTPAR value RIGHTPAR LEFTCURL compaslist RIGHTCURL'
+    subexpression[0] = CompasLoop(subexpression[3], subexpression[6])
 
 def p_note(subexpression):
     'note : NOTEBEGIN LEFTPAR NOTENAME COMMA value COMMA SHAPE RIGHTPAR SEMICOLON'
@@ -144,7 +144,7 @@ def p_silence_punto(subexpression):
     subexpression[0] = Silence(subexpression[3],True)
 
 def p_error(subexpressions):
-    print "----------------------------"
-    print "----------------------------"
-    print subexpressions
+    print ("----------------------------")
+    print ("----------------------------")
+    print (subexpressions)
     raise Exception("Syntax error.")

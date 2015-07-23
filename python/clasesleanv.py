@@ -25,7 +25,7 @@ class CompasHeader(Expression):
 
 
 	def getDuration(self):
-		return float(num1)/float(num2)
+		return float(self._numerator)/float(self._denominator)
 
 
 class Voice(Expression):
@@ -84,7 +84,7 @@ class Silence(Expression):
     def __init__(self,duration, puntillo):
         self._duration = duration_from_shape(duration)
         if puntillo:
-					self._duration = self._duration*(3/2)
+            self._duration = self._duration*(3/2)
 
     def getDuration(self):
         return self._duration
