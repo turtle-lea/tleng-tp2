@@ -127,6 +127,13 @@ def p_voice_content_rec_compas(subexpressions):
     'voicecontent : voicecontent compas'
     subexpressions[0] = VoiceContent(subexpressions[2],subexpressions[1].getList())
 
+def p_silence(subexpression):
+    'silence : SILENCEBEGIN LEFTPAR SHAPE RIGHTPAR SEMICOLON'
+    subexpression[0] = Silence(subexpression[3],None)
+
+def p_silence_punto(subexpression):
+    'silence : SILENCEBEGIN LEFTPAR SHAPE PUNTO RIGHTPAR SEMICOLON'
+    subexpression[0] = Silence(subexpression[3],True)
 
 def p_error(subexpressions):
     raise Exception("Syntax error.")
