@@ -63,12 +63,21 @@ def p_compas(subexpressions):
     'compas : COMPASBEGIN LEFTCURL notelist RIGHTCURL'
     subexpressions[0] = Compas(subexpressions[3].getNoteList())
 
-def p_note_list_base(subexpression):
+def p_note_list_base_note(subexpression):
     'notelist : note'
     subexpression[0] = NoteList(subexpression[1], [])
 
-def p_note_list_rec(subexpressions):
+def p_note_list_base_silence(subexpression):
+    'notelist : silence'
+    subexpression[0] = NoteList(subexpression[1], [])
+
+def p_note_list_rec_note(subexpressions):
     'notelist : notelist note'
+    ### Invierto parametros intencionalmente. notelist param es opcional en el new de la clase
+    subexpressions[0] = NoteList(subexpressions[2], subexpressions[1].getNoteList())
+
+def p_note_list_rec_silence(subexpressions):
+    'notelist : notelist silence'
     ### Invierto parametros intencionalmente. notelist param es opcional en el new de la clase
     subexpressions[0] = NoteList(subexpressions[2], subexpressions[1].getNoteList())
 
