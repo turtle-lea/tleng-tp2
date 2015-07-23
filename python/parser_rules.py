@@ -18,12 +18,12 @@ def p_compasheader(subexpression):
     subexpression[0] = CompasHeader(int(subexpression[2]), int(subexpression[4]))
 
 def p_voice(subexpression):
-    'voice : value voicecontent'
-    subexpression[0] = Voice(subexpression[1], subexpression[2])
+    'voice : VOICEBEGIN LEFTPAR value RIGHTPAR voicecontent'
+    subexpression[0] = Voice(subexpression[3], subexpression[5])
 
 def p_compasloop(subexpression):
-    'compasloop : value compaslist'
-    subexpression[0] = CompasLoop(subexpression[1], subexpression[2])
+    'compasloop : LOOPBEGIN LEFTPAR value RIGHTPAR compaslist'
+    subexpression[0] = CompasLoop(subexpression[3], subexpression[5])
 
 def p_note(subexpression):
     'note : NOTENAME value SHAPE'

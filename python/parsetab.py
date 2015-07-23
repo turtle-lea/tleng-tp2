@@ -5,9 +5,9 @@ _tabversion = '3.5'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'B35348D97B42C037F24F95004344CFF2'
+_lr_signature = 'F771B0E5432635FDA6C3F6D09267D15A'
     
-_lr_action_items = {'CONST':([5,8,9,14,21,36,37,],[10,10,-22,-23,-3,-19,-20,]),'RIGHTCURL':([38,39,43,46,48,49,50,],[-15,42,-16,-6,-8,-7,-9,]),'SEMICOLON':([29,30,],[36,37,]),'COMPASBEGIN':([17,18,19,24,26,27,28,32,33,34,35,41,42,],[25,-17,-18,-24,-25,25,25,25,-10,-26,-27,-11,-14,]),'NOTENAME':([31,38,39,43,46,48,49,50,],[40,-15,40,-16,-6,-8,-7,-9,]),'COMPASHEADERBEGIN':([2,12,],[4,-2,]),'EQUALS':([15,],[22,]),'TEMPOBEGIN':([0,],[3,]),'PUNTO':([46,49,],[48,50,]),'SHAPE':([3,18,19,44,47,],[6,-17,-18,46,49,]),'NUM':([4,6,8,9,11,13,14,16,17,18,19,20,22,23,24,26,28,32,33,34,35,36,37,40,41,42,45,],[7,12,-21,-22,18,21,-23,18,18,-17,-18,-12,29,-13,-24,-25,18,-5,-10,-26,-27,-19,-20,18,-11,-14,18,]),'CNAME':([8,9,10,11,14,16,17,18,19,20,22,23,24,26,28,32,33,34,35,36,37,40,41,42,45,],[-21,-22,15,19,-23,19,19,-17,-18,-12,30,-13,-24,-25,19,-5,-10,-26,-27,-19,-20,19,-11,-14,19,]),'LEFTCURL':([25,],[31,]),'SLASH':([7,],[13,]),'ALTER':([40,],[45,]),'$end':([1,16,20,23,24,26,28,32,33,34,35,41,42,],[0,-1,-12,-13,-24,-25,-4,-5,-10,-26,-27,-11,-14,]),}
+_lr_action_items = {'CONST':([5,8,9,14,19,28,29,],[10,10,-22,-23,-3,-19,-20,]),'RIGHTCURL':([41,42,46,51,54,55,56,],[-15,45,-16,-6,-8,-7,-9,]),'SEMICOLON':([23,24,],[28,29,]),'COMPASBEGIN':([30,31,32,35,38,39,44,45,49,50,53,],[34,-24,-25,34,-26,-27,34,-14,34,-10,-11,]),'LOOPBEGIN':([30,31,32,35,38,39,45,49,50,53,],[33,-24,-25,33,-26,-27,-14,-5,-10,-11,]),'LEFTPAR':([18,33,],[22,36,]),'COMPASHEADERBEGIN':([2,12,],[4,-2,]),'EQUALS':([15,],[20,]),'TEMPOBEGIN':([0,],[3,]),'RIGHTPAR':([25,26,27,40,],[30,-18,-17,44,]),'SHAPE':([3,26,27,47,52,],[6,-18,-17,51,55,]),'NUM':([4,6,13,20,22,36,43,48,],[7,12,19,23,27,27,27,27,]),'CNAME':([10,20,22,36,43,48,],[15,24,26,26,26,26,]),'LEFTCURL':([34,],[37,]),'SLASH':([7,],[13,]),'PUNTO':([51,55,],[54,56,]),'NOTENAME':([37,41,42,46,51,54,55,56,],[43,-15,43,-16,-6,-8,-7,-9,]),'VOICEBEGIN':([8,9,11,14,16,17,21,28,29,31,32,35,38,39,45,49,50,53,],[-21,-22,18,-23,18,-12,-13,-19,-20,-24,-25,-4,-26,-27,-14,-5,-10,-11,]),'ALTER':([43,],[48,]),'$end':([1,16,17,21,31,32,35,38,39,45,49,50,53,],[0,-1,-12,-13,-24,-25,-4,-26,-27,-14,-5,-10,-11,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -16,7 +16,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'constlist':([5,],[8,]),'compasloop':([17,28,],[24,34,]),'compaslist':([27,],[32,]),'const':([5,8,],[9,14,]),'compas':([17,27,28,32,],[26,33,35,41,]),'h':([0,],[1,]),'voicelist':([11,],[16,]),'tempo':([0,],[2,]),'value':([11,16,17,28,40,45,],[17,17,27,27,44,47,]),'voicecontent':([17,],[28,]),'note':([31,39,],[38,43,]),'notelist':([31,],[39,]),'compasheader':([2,],[5,]),'voice':([11,16,],[20,23,]),'constlistinit':([5,],[11,]),}
+_lr_goto_items = {'constlist':([5,],[8,]),'compasloop':([30,35,],[31,38,]),'compaslist':([44,],[49,]),'const':([5,8,],[9,14,]),'compas':([30,35,44,49,],[32,39,50,53,]),'h':([0,],[1,]),'voicelist':([11,],[16,]),'tempo':([0,],[2,]),'value':([22,36,43,48,],[25,40,47,52,]),'voicecontent':([30,],[35,]),'note':([37,42,],[41,46,]),'notelist':([37,],[42,]),'compasheader':([2,],[5,]),'voice':([11,16,],[17,21,]),'constlistinit':([5,],[11,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -29,8 +29,8 @@ _lr_productions = [
   ('h -> tempo compasheader constlistinit voicelist','h',4,'p_root','parser_rules.py',9),
   ('tempo -> TEMPOBEGIN SHAPE NUM','tempo',3,'p_tempo','parser_rules.py',13),
   ('compasheader -> COMPASHEADERBEGIN NUM SLASH NUM','compasheader',4,'p_compasheader','parser_rules.py',17),
-  ('voice -> value voicecontent','voice',2,'p_voice','parser_rules.py',21),
-  ('compasloop -> value compaslist','compasloop',2,'p_compasloop','parser_rules.py',25),
+  ('voice -> VOICEBEGIN LEFTPAR value RIGHTPAR voicecontent','voice',5,'p_voice','parser_rules.py',21),
+  ('compasloop -> LOOPBEGIN LEFTPAR value RIGHTPAR compaslist','compasloop',5,'p_compasloop','parser_rules.py',25),
   ('note -> NOTENAME value SHAPE','note',3,'p_note','parser_rules.py',29),
   ('note -> NOTENAME ALTER value SHAPE','note',4,'p_note_alter','parser_rules.py',33),
   ('note -> NOTENAME value SHAPE PUNTO','note',4,'p_note_punto','parser_rules.py',37),
