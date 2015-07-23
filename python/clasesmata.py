@@ -37,7 +37,7 @@ class VoiceList(Expression):
                 raise Exception("La duracion de los compases de las voces son distintas")
             if len(voicelist)>=16:
             	raise Exception("La cantidad de voces supera 16")
-        self._voicelist = voicelist ++ voice
+        self._voicelist = voicelist + [voice]
 
     def getList(self):
         return self._voicelist
