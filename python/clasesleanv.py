@@ -18,14 +18,14 @@ class Tempo(Expression):
 class CompasHeader(Expression):
 
 	def __init__(self, num1, num2):
+		if num2 == 0:
+			raise Exception("El denominador del compas debe ser mayor a cero")
 		self._numerator = num1
 		self._denominator = num2
 
-	def getNumerator(self):
-		return self._numerator
 
-	def getDenominator(self):
-		return self._denominator
+	def getDuration(self):
+		return float(num1)/float(num2)
 
 
 class Voice(Expression):
