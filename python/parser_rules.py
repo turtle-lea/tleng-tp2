@@ -18,8 +18,8 @@ def p_compasheader(subexpression):
     subexpression[0] = CompasHeader(int(subexpression[2]), int(subexpression[4]))
 
 def p_voice(subexpression):
-    'voice : VOICEBEGIN LEFTPAR value RIGHTPAR voicecontent'
-    subexpression[0] = Voice(subexpression[3], subexpression[5])
+    'voice : VOICEBEGIN LEFTPAR value RIGHTPAR LEFTCURL voicecontent RIGHTCURL'
+    subexpression[0] = Voice(subexpression[3], subexpression[6])
 
 def p_compasloop(subexpression):
     'compasloop : LOOPBEGIN LEFTPAR value RIGHTPAR compaslist'
@@ -48,7 +48,6 @@ def p_compaslist_base(subexpression):
 def p_compaslist_rec(subexpression):
     'compaslist : compaslist compas'
     subexpression[0] = CompasList(subexpression[2], subexpression[1].getList())
-
 
 def p_voice_list_base(subexpression):
     'voicelist : voice'
@@ -145,4 +144,7 @@ def p_silence_punto(subexpression):
     subexpression[0] = Silence(subexpression[3],True)
 
 def p_error(subexpressions):
+    print "----------------------------"
+    print "----------------------------"
+    print subexpressions
     raise Exception("Syntax error.")
