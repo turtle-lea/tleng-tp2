@@ -1,3 +1,9 @@
+#!/usr/bin/python
+# -*- coding: latin-1 -*-
+
+from clasesber import *
+from clasesleanv import *
+
 class Root(Expression):
     def __init__(self, tempo, compasheader,constlist,voicelist):
         ### El tiempo del primer compas de la primera voz debe coincidir con el compasheader
@@ -23,10 +29,10 @@ class Root(Expression):
 class VoiceList(Expression):
     def __init__(self, voice, voicelist=[]):
         if len(voicelist)>0:
-            ### DeberÃ­amos reescribir esto. Encapsular mediante funciones
+            ### Deberíamos reescribir esto. Encapsular mediante funciones
             #if (len(voice.getCompasses() != len(voicelist.first.getCompasses()):
             #    raise Exception("Las voces tienen distinta cantidad de compases")
-            ### Un compÃ¡s de la nueva voz tiene que durar lo mismo que un compÃ¡s de la lista
+            ### Un compás de la nueva voz tiene que durar lo mismo que un compás de la lista
             if (voice.getCompasses().first.getDuration() != voicelist.first.getCompasses().first.getTempo()):
                 raise Exception("La duracion de los compases de las voces son distintas")
             if len(voicelist)>=16:
@@ -52,7 +58,7 @@ class Compas(Expression):
         return False
 
 class NoteList(Expression):
-    def __init__(self, note, notelist = []):
+    def __init__(self, note, notelist):
         self._notelist = notelist ++ note
 
     def getNoteList(self):

@@ -25,6 +25,3 @@ if __name__ == "__main__":
 
     expression = parser.parse(text, lexer)
 
-    result = expression.getList()
-    cm = ConstantManager(result,[])
-    print (cm.getValue('oct7'))

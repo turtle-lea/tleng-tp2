@@ -3,7 +3,7 @@ from clasesmata import  *
 from clasesleanv import  *
 __author__ = 'bernapanarello'
 class MidiTranslator:
-    def generateMIDIFile(self, Root):
+    def generateMIDIFile(self, root):
 
 
         strFormatHeader1 = "MFile 1 {0} 384"
@@ -21,4 +21,6 @@ class MidiTranslator:
 
         strFormatVoyNoteOn = '{0:000}:{1}:{2} On ch={3} note={4} vol=70'
         strFormatVoyNoteOff = '{0}:{1}:{2} Off ch={3} note={4} vol=0'
+
+
 

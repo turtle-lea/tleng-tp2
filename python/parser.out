@@ -1,0 +1,91 @@
+Created by PLY version 3.6 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    VOICEBEGIN
+    SILENCEBEGIN
+    NOTEBEGIN
+    COMMENT
+    NEWLINE
+    RIGHTPAR
+    LOOPBEGIN
+    COMMA
+    LEFTPAR
+
+Grammar
+
+Rule 0     S' -> h
+Rule 1     h -> tempo compasheader constlistinit voicelist
+Rule 2     tempo -> TEMPOBEGIN SHAPE NUM
+Rule 3     tempo -> COMPASHEADERBEGIN NUM SLASH NUM
+Rule 4     voice -> value voicecontent
+Rule 5     compasloop -> value compaslist
+Rule 6     note -> NOTENAME value SHAPE
+Rule 7     note -> NOTENAME ALTER value SHAPE
+Rule 8     note -> NOTENAME value SHAPE PUNTO
+Rule 9     note -> NOTENAME ALTER value SHAPE PUNTO
+Rule 10    compaslist -> compas
+Rule 11    compaslist -> compaslist compas
+Rule 12    voicelist -> voice
+Rule 13    voicelist -> voicelist voice
+Rule 14    compas -> COMPASBEGIN LEFTCURL notelist RIGHTCURL
+Rule 15    notelist -> note
+Rule 16    notelist -> notelist note
+Rule 17    value -> NUM
+Rule 18    value -> CNAME
+Rule 19    const -> CONST CNAME EQUALS NUM SEMICOLON
+Rule 20    const -> CONST CNAME EQUALS CNAME SEMICOLON
+Rule 21    constlistinit -> constlist
+Rule 22    constlist -> const
+Rule 23    constlist -> constlist const
+Rule 24    voicecontent -> compasloop
+Rule 25    voicecontent -> compas
+Rule 26    voicecontent -> voicecontent compasloop
+Rule 27    voicecontent -> voicecontent compas
+
+Terminals, with rules where they appear
+
+ALTER                : 7 9
+CNAME                : 18 19 20 20
+COMMA                : 
+COMMENT              : 
+COMPASBEGIN          : 14
+COMPASHEADERBEGIN    : 3
+CONST                : 19 20
+EQUALS               : 19 20
+LEFTCURL             : 14
+LEFTPAR              : 
+LOOPBEGIN            : 
+NEWLINE              : 
+NOTEBEGIN            : 
+NOTENAME             : 6 7 8 9
+NUM                  : 2 3 3 17 19
+PUNTO                : 8 9
+RIGHTCURL            : 14
+RIGHTPAR             : 
+SEMICOLON            : 19 20
+SHAPE                : 2 6 7 8 9
+SILENCEBEGIN         : 
+SLASH                : 3
+TEMPOBEGIN           : 2
+VOICEBEGIN           : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+compas               : 10 11 25 27
+compasheader         : 1
+compaslist           : 5 11
+compasloop           : 24 26
+const                : 22 23
+constlist            : 21 23
+constlistinit        : 1
+h                    : 0
+note                 : 15 16
+notelist             : 14 16
+tempo                : 1
+value                : 4 5 6 7 8 9
+voice                : 12 13
+voicecontent         : 4 26 27
+voicelist            : 1 13
+

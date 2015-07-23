@@ -41,15 +41,15 @@ def p_note_alter_punto(subexpression):
     'note : NOTENAME ALTER value SHAPE PUNTO'
     subexpression[0] = Note(subexpression[1], subexpression[2], subexpression[3], subexpression[4], True)
 
-def p_compaslist_base:(subexpression):
+def p_compaslist_base(subexpression):
     'compaslist : compas'
-    subexpressions[0] = CompasList(subexpressions[1], [])
+    subexpression[0] = CompasList(subexpression[1], [])
 
-def p_compaslist_rec:(subexpression):
+def p_compaslist_rec(subexpression):
     'compaslist : compaslist compas'
-    subexpressions[0] = CompasList(subexpressions[2], subexpressions[1].getList())
+    subexpression[0] = CompasList(subexpression[2], subexpression[1].getList())
 
-    
+
 def p_voice_list_base(subexpression):
     'voicelist : voice'
     subexpression[0] = VoiceList(subexpression[1])
@@ -60,17 +60,17 @@ def p_voice_list_rec(subexpressions):
     subexpressions[0] = VoiceList(subexpressions[2], subexpressions[1].getList())
 
 def p_compas(subexpressions):
-    'compas: COMPASBEGIN LEFTCURL notelist RIGHTCURL'
-    subexpressions[0] = Compas(subexpressions[3])
+    'compas : COMPASBEGIN LEFTCURL notelist RIGHTCURL'
+    subexpressions[0] = Compas(subexpressions[3].getNoteList())
 
 def p_note_list_base(subexpression):
     'notelist : note'
-    subexpression[0] = NoteList(subexpression[1])
+    subexpression[0] = NoteList(subexpression[1], [])
 
 def p_note_list_rec(subexpressions):
     'notelist : notelist note'
     ### Invierto parametros intencionalmente. notelist param es opcional en el new de la clase
-    subexpressions[0] = NoteList(subexpressions[2], subexpressions[1])
+    subexpressions[0] = NoteList(subexpressions[2], subexpressions[1].getNoteList())
 
 def p_val_num(subexpression):
     'value : NUM'
@@ -84,7 +84,7 @@ def p_val_cname(subexpression):
     subexpression[0] = ConstantManager.getInstance().getValue(subexpression[1])
 def p_const(subexpressions):
     'const : CONST CNAME EQUALS NUM SEMICOLON'
-    subexpressions[0] = Const(subexpressions[2],subexpressions[4], False)
+    subexpressions[0] = Const(subexpressions[2],int(subexpressions[4]), False)
 
 #Una constante que es un puntero a otra constante
 def p_const_cname(subexpressions):

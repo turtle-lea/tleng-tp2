@@ -38,8 +38,8 @@ class Const(Expression):
     def getValue(self):
         return self._value
 
-    def setValue(self, value):
-        self._value = value
+ #   def setValue(self, value):
+ #       self._value = value
 
 
     def isPointer(self):
@@ -70,16 +70,7 @@ class ConstList(ExpressionList):
     pass
 
 class VoiceContent(ExpressionList):
-    def __init__(self, content, vclist):
-        if (content.)
-        super.__init__(content, vclist)
-
-
-
-#C2 = C1
-#C1 = 3
-
-#C1 = C2
+    pass
 
 class CompasList(ExpressionList):
     def __init__(self, current, nextList):
@@ -91,8 +82,6 @@ class CompasList(ExpressionList):
 
     def getDuration(self):
         return self._duration
-
-
 
 class Silence(Expression):
     def __init__(self,time, shape):
@@ -150,7 +139,7 @@ class ConstantManager:
         if (not const._isPointer):
             return const.getValue()
 
-        found = False;
+        found = False
         visited = [const.getName()]
         next = const
         while(not found):

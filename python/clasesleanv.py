@@ -1,3 +1,7 @@
+#!/usr/bin/python
+# -*- coding: latin-1 -*-
+from clasesber import *
+from clasesmata import *
 
 class Tempo(Expression):
 
@@ -42,7 +46,7 @@ class CompasLoop(Expression):
 		self._value = value
 		self._duration = CompasList.getDuration()
 
-		for 
+
 
 	def getRepeat(self):
 		return self._value
