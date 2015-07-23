@@ -7,7 +7,7 @@ from clasesleanv import *
 class Root(Expression):
     def __init__(self, tempo, compasheader,constlist,voicelist):
         ### El tiempo del primer compas de la primera voz debe coincidir con el compasheader
-        if (getTempo(voicelist.first.getCompasses().first) != compasheader.getTempo()):
+        if (getTempo(voicelist[0].getCompasses()[0]) != compasheader.getTempo()):
           raise Exception("La duracion de los compases es distinta a la del encabezado")
         self._tempo = tempo
         self._compasheader = compasheader
@@ -33,7 +33,7 @@ class VoiceList(Expression):
             #if (len(voice.getCompasses() != len(voicelist.first.getCompasses()):
             #    raise Exception("Las voces tienen distinta cantidad de compases")
             ### Un compás de la nueva voz tiene que durar lo mismo que un compás de la lista
-            if (voice.getCompasses().first.getDuration() != voicelist.first.getCompasses().first.getTempo()):
+            if (voice.getCompasses()[0].getDuration() != voicelist[0].getCompasses()[0].getTempo()):
                 raise Exception("La duracion de los compases de las voces son distintas")
             if len(voicelist)>=16:
             	raise Exception("La cantidad de voces supera 16")
