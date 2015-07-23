@@ -105,7 +105,7 @@ class Note(Expression):
 		self._duration = duration_from_shape(shape)
 
 		if puntillo:
-			self._duration = self._duration*(3/2)
+			self._duration = self._duration*(3.0/2.0)
 
 
 	def getOctave(self):
