@@ -5,9 +5,9 @@ _tabversion = '3.5'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'A4823B68843E32CF8E1DF0DB05C7DC14'
+_lr_signature = 'B35348D97B42C037F24F95004344CFF2'
     
-_lr_action_items = {'NUM':([0,],[1,]),'CNAME':([0,],[2,]),'$end':([1,2,3,],[-1,-2,0,]),}
+_lr_action_items = {'CONST':([5,8,9,14,21,36,37,],[10,10,-22,-23,-3,-19,-20,]),'RIGHTCURL':([38,39,43,46,48,49,50,],[-15,42,-16,-6,-8,-7,-9,]),'SEMICOLON':([29,30,],[36,37,]),'COMPASBEGIN':([17,18,19,24,26,27,28,32,33,34,35,41,42,],[25,-17,-18,-24,-25,25,25,25,-10,-26,-27,-11,-14,]),'NOTENAME':([31,38,39,43,46,48,49,50,],[40,-15,40,-16,-6,-8,-7,-9,]),'COMPASHEADERBEGIN':([2,12,],[4,-2,]),'EQUALS':([15,],[22,]),'TEMPOBEGIN':([0,],[3,]),'PUNTO':([46,49,],[48,50,]),'SHAPE':([3,18,19,44,47,],[6,-17,-18,46,49,]),'NUM':([4,6,8,9,11,13,14,16,17,18,19,20,22,23,24,26,28,32,33,34,35,36,37,40,41,42,45,],[7,12,-21,-22,18,21,-23,18,18,-17,-18,-12,29,-13,-24,-25,18,-5,-10,-26,-27,-19,-20,18,-11,-14,18,]),'CNAME':([8,9,10,11,14,16,17,18,19,20,22,23,24,26,28,32,33,34,35,36,37,40,41,42,45,],[-21,-22,15,19,-23,19,19,-17,-18,-12,30,-13,-24,-25,19,-5,-10,-26,-27,-19,-20,19,-11,-14,19,]),'LEFTCURL':([25,],[31,]),'SLASH':([7,],[13,]),'ALTER':([40,],[45,]),'$end':([1,16,20,23,24,26,28,32,33,34,35,41,42,],[0,-1,-12,-13,-24,-25,-4,-5,-10,-26,-27,-11,-14,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -16,7 +16,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'value':([0,],[3,]),}
+_lr_goto_items = {'constlist':([5,],[8,]),'compasloop':([17,28,],[24,34,]),'compaslist':([27,],[32,]),'const':([5,8,],[9,14,]),'compas':([17,27,28,32,],[26,33,35,41,]),'h':([0,],[1,]),'voicelist':([11,],[16,]),'tempo':([0,],[2,]),'value':([11,16,17,28,40,45,],[17,17,27,27,44,47,]),'voicecontent':([17,],[28,]),'note':([31,39,],[38,43,]),'notelist':([31,],[39,]),'compasheader':([2,],[5,]),'voice':([11,16,],[20,23,]),'constlistinit':([5,],[11,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -25,8 +25,32 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> value","S'",1,None,None,None),
+  ("S' -> h","S'",1,None,None,None),
+  ('h -> tempo compasheader constlistinit voicelist','h',4,'p_root','parser_rules.py',9),
+  ('tempo -> TEMPOBEGIN SHAPE NUM','tempo',3,'p_tempo','parser_rules.py',13),
+  ('compasheader -> COMPASHEADERBEGIN NUM SLASH NUM','compasheader',4,'p_compasheader','parser_rules.py',17),
+  ('voice -> value voicecontent','voice',2,'p_voice','parser_rules.py',21),
+  ('compasloop -> value compaslist','compasloop',2,'p_compasloop','parser_rules.py',25),
+  ('note -> NOTENAME value SHAPE','note',3,'p_note','parser_rules.py',29),
+  ('note -> NOTENAME ALTER value SHAPE','note',4,'p_note_alter','parser_rules.py',33),
+  ('note -> NOTENAME value SHAPE PUNTO','note',4,'p_note_punto','parser_rules.py',37),
+  ('note -> NOTENAME ALTER value SHAPE PUNTO','note',5,'p_note_alter_punto','parser_rules.py',41),
+  ('compaslist -> compas','compaslist',1,'p_compaslist_base','parser_rules.py',45),
+  ('compaslist -> compaslist compas','compaslist',2,'p_compaslist_rec','parser_rules.py',49),
+  ('voicelist -> voice','voicelist',1,'p_voice_list_base','parser_rules.py',54),
+  ('voicelist -> voicelist voice','voicelist',2,'p_voice_list_rec','parser_rules.py',58),
+  ('compas -> COMPASBEGIN LEFTCURL notelist RIGHTCURL','compas',4,'p_compas','parser_rules.py',63),
+  ('notelist -> note','notelist',1,'p_note_list_base','parser_rules.py',67),
+  ('notelist -> notelist note','notelist',2,'p_note_list_rec','parser_rules.py',71),
   ('value -> NUM','value',1,'p_val_num','parser_rules.py',76),
   ('value -> CNAME','value',1,'p_val_cname','parser_rules.py',82),
   ('const -> CONST CNAME EQUALS NUM SEMICOLON','const',5,'p_const','parser_rules.py',86),
+  ('const -> CONST CNAME EQUALS CNAME SEMICOLON','const',5,'p_const_cname','parser_rules.py',91),
+  ('constlistinit -> constlist','constlistinit',1,'p_const_list_init','parser_rules.py',97),
+  ('constlist -> const','constlist',1,'p_const_list_base','parser_rules.py',106),
+  ('constlist -> constlist const','constlist',2,'p_const_list_rec','parser_rules.py',110),
+  ('voicecontent -> compasloop','voicecontent',1,'p_voice_content_base_loop','parser_rules.py',115),
+  ('voicecontent -> compas','voicecontent',1,'p_voice_content_base_compas','parser_rules.py',119),
+  ('voicecontent -> voicecontent compasloop','voicecontent',2,'p_voice_content_rec_compasloop','parser_rules.py',123),
+  ('voicecontent -> voicecontent compas','voicecontent',2,'p_voice_content_rec_compas','parser_rules.py',127),
 ]

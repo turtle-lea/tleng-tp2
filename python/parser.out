@@ -2,22 +2,22 @@ Created by PLY version 3.6 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
-    VOICEBEGIN
-    SILENCEBEGIN
-    NOTEBEGIN
+    LOOPBEGIN
     COMMENT
     NEWLINE
     RIGHTPAR
-    LOOPBEGIN
     COMMA
+    NOTEBEGIN
+    SILENCEBEGIN
     LEFTPAR
+    VOICEBEGIN
 
 Grammar
 
 Rule 0     S' -> h
 Rule 1     h -> tempo compasheader constlistinit voicelist
 Rule 2     tempo -> TEMPOBEGIN SHAPE NUM
-Rule 3     tempo -> COMPASHEADERBEGIN NUM SLASH NUM
+Rule 3     compasheader -> COMPASHEADERBEGIN NUM SLASH NUM
 Rule 4     voice -> value voicecontent
 Rule 5     compasloop -> value compaslist
 Rule 6     note -> NOTENAME value SHAPE
@@ -89,3 +89,531 @@ voice                : 12 13
 voicecontent         : 4 26 27
 voicelist            : 1 13
 
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . h
+    (1) h -> . tempo compasheader constlistinit voicelist
+    (2) tempo -> . TEMPOBEGIN SHAPE NUM
+
+    TEMPOBEGIN      shift and go to state 3
+
+    h                              shift and go to state 1
+    tempo                          shift and go to state 2
+
+state 1
+
+    (0) S' -> h .
+
+
+
+state 2
+
+    (1) h -> tempo . compasheader constlistinit voicelist
+    (3) compasheader -> . COMPASHEADERBEGIN NUM SLASH NUM
+
+    COMPASHEADERBEGIN shift and go to state 4
+
+    compasheader                   shift and go to state 5
+
+state 3
+
+    (2) tempo -> TEMPOBEGIN . SHAPE NUM
+
+    SHAPE           shift and go to state 6
+
+
+state 4
+
+    (3) compasheader -> COMPASHEADERBEGIN . NUM SLASH NUM
+
+    NUM             shift and go to state 7
+
+
+state 5
+
+    (1) h -> tempo compasheader . constlistinit voicelist
+    (21) constlistinit -> . constlist
+    (22) constlist -> . const
+    (23) constlist -> . constlist const
+    (19) const -> . CONST CNAME EQUALS NUM SEMICOLON
+    (20) const -> . CONST CNAME EQUALS CNAME SEMICOLON
+
+    CONST           shift and go to state 10
+
+    constlist                      shift and go to state 8
+    const                          shift and go to state 9
+    constlistinit                  shift and go to state 11
+
+state 6
+
+    (2) tempo -> TEMPOBEGIN SHAPE . NUM
+
+    NUM             shift and go to state 12
+
+
+state 7
+
+    (3) compasheader -> COMPASHEADERBEGIN NUM . SLASH NUM
+
+    SLASH           shift and go to state 13
+
+
+state 8
+
+    (21) constlistinit -> constlist .
+    (23) constlist -> constlist . const
+    (19) const -> . CONST CNAME EQUALS NUM SEMICOLON
+    (20) const -> . CONST CNAME EQUALS CNAME SEMICOLON
+
+    NUM             reduce using rule 21 (constlistinit -> constlist .)
+    CNAME           reduce using rule 21 (constlistinit -> constlist .)
+    CONST           shift and go to state 10
+
+    const                          shift and go to state 14
+
+state 9
+
+    (22) constlist -> const .
+
+    CONST           reduce using rule 22 (constlist -> const .)
+    NUM             reduce using rule 22 (constlist -> const .)
+    CNAME           reduce using rule 22 (constlist -> const .)
+
+
+state 10
+
+    (19) const -> CONST . CNAME EQUALS NUM SEMICOLON
+    (20) const -> CONST . CNAME EQUALS CNAME SEMICOLON
+
+    CNAME           shift and go to state 15
+
+
+state 11
+
+    (1) h -> tempo compasheader constlistinit . voicelist
+    (12) voicelist -> . voice
+    (13) voicelist -> . voicelist voice
+    (4) voice -> . value voicecontent
+    (17) value -> . NUM
+    (18) value -> . CNAME
+
+    NUM             shift and go to state 18
+    CNAME           shift and go to state 19
+
+    voicelist                      shift and go to state 16
+    value                          shift and go to state 17
+    voice                          shift and go to state 20
+
+state 12
+
+    (2) tempo -> TEMPOBEGIN SHAPE NUM .
+
+    COMPASHEADERBEGIN reduce using rule 2 (tempo -> TEMPOBEGIN SHAPE NUM .)
+
+
+state 13
+
+    (3) compasheader -> COMPASHEADERBEGIN NUM SLASH . NUM
+
+    NUM             shift and go to state 21
+
+
+state 14
+
+    (23) constlist -> constlist const .
+
+    CONST           reduce using rule 23 (constlist -> constlist const .)
+    NUM             reduce using rule 23 (constlist -> constlist const .)
+    CNAME           reduce using rule 23 (constlist -> constlist const .)
+
+
+state 15
+
+    (19) const -> CONST CNAME . EQUALS NUM SEMICOLON
+    (20) const -> CONST CNAME . EQUALS CNAME SEMICOLON
+
+    EQUALS          shift and go to state 22
+
+
+state 16
+
+    (1) h -> tempo compasheader constlistinit voicelist .
+    (13) voicelist -> voicelist . voice
+    (4) voice -> . value voicecontent
+    (17) value -> . NUM
+    (18) value -> . CNAME
+
+    $end            reduce using rule 1 (h -> tempo compasheader constlistinit voicelist .)
+    NUM             shift and go to state 18
+    CNAME           shift and go to state 19
+
+    value                          shift and go to state 17
+    voice                          shift and go to state 23
+
+state 17
+
+    (4) voice -> value . voicecontent
+    (24) voicecontent -> . compasloop
+    (25) voicecontent -> . compas
+    (26) voicecontent -> . voicecontent compasloop
+    (27) voicecontent -> . voicecontent compas
+    (5) compasloop -> . value compaslist
+    (14) compas -> . COMPASBEGIN LEFTCURL notelist RIGHTCURL
+    (17) value -> . NUM
+    (18) value -> . CNAME
+
+    COMPASBEGIN     shift and go to state 25
+    NUM             shift and go to state 18
+    CNAME           shift and go to state 19
+
+    compasloop                     shift and go to state 24
+    compas                         shift and go to state 26
+    value                          shift and go to state 27
+    voicecontent                   shift and go to state 28
+
+state 18
+
+    (17) value -> NUM .
+
+    SHAPE           reduce using rule 17 (value -> NUM .)
+    COMPASBEGIN     reduce using rule 17 (value -> NUM .)
+    NUM             reduce using rule 17 (value -> NUM .)
+    CNAME           reduce using rule 17 (value -> NUM .)
+
+
+state 19
+
+    (18) value -> CNAME .
+
+    SHAPE           reduce using rule 18 (value -> CNAME .)
+    COMPASBEGIN     reduce using rule 18 (value -> CNAME .)
+    NUM             reduce using rule 18 (value -> CNAME .)
+    CNAME           reduce using rule 18 (value -> CNAME .)
+
+
+state 20
+
+    (12) voicelist -> voice .
+
+    NUM             reduce using rule 12 (voicelist -> voice .)
+    CNAME           reduce using rule 12 (voicelist -> voice .)
+    $end            reduce using rule 12 (voicelist -> voice .)
+
+
+state 21
+
+    (3) compasheader -> COMPASHEADERBEGIN NUM SLASH NUM .
+
+    CONST           reduce using rule 3 (compasheader -> COMPASHEADERBEGIN NUM SLASH NUM .)
+
+
+state 22
+
+    (19) const -> CONST CNAME EQUALS . NUM SEMICOLON
+    (20) const -> CONST CNAME EQUALS . CNAME SEMICOLON
+
+    NUM             shift and go to state 29
+    CNAME           shift and go to state 30
+
+
+state 23
+
+    (13) voicelist -> voicelist voice .
+
+    NUM             reduce using rule 13 (voicelist -> voicelist voice .)
+    CNAME           reduce using rule 13 (voicelist -> voicelist voice .)
+    $end            reduce using rule 13 (voicelist -> voicelist voice .)
+
+
+state 24
+
+    (24) voicecontent -> compasloop .
+
+    COMPASBEGIN     reduce using rule 24 (voicecontent -> compasloop .)
+    NUM             reduce using rule 24 (voicecontent -> compasloop .)
+    CNAME           reduce using rule 24 (voicecontent -> compasloop .)
+    $end            reduce using rule 24 (voicecontent -> compasloop .)
+
+
+state 25
+
+    (14) compas -> COMPASBEGIN . LEFTCURL notelist RIGHTCURL
+
+    LEFTCURL        shift and go to state 31
+
+
+state 26
+
+    (25) voicecontent -> compas .
+
+    COMPASBEGIN     reduce using rule 25 (voicecontent -> compas .)
+    NUM             reduce using rule 25 (voicecontent -> compas .)
+    CNAME           reduce using rule 25 (voicecontent -> compas .)
+    $end            reduce using rule 25 (voicecontent -> compas .)
+
+
+state 27
+
+    (5) compasloop -> value . compaslist
+    (10) compaslist -> . compas
+    (11) compaslist -> . compaslist compas
+    (14) compas -> . COMPASBEGIN LEFTCURL notelist RIGHTCURL
+
+    COMPASBEGIN     shift and go to state 25
+
+    compaslist                     shift and go to state 32
+    compas                         shift and go to state 33
+
+state 28
+
+    (4) voice -> value voicecontent .
+    (26) voicecontent -> voicecontent . compasloop
+    (27) voicecontent -> voicecontent . compas
+    (5) compasloop -> . value compaslist
+    (14) compas -> . COMPASBEGIN LEFTCURL notelist RIGHTCURL
+    (17) value -> . NUM
+    (18) value -> . CNAME
+
+  ! shift/reduce conflict for NUM resolved as shift
+  ! shift/reduce conflict for CNAME resolved as shift
+    $end            reduce using rule 4 (voice -> value voicecontent .)
+    COMPASBEGIN     shift and go to state 25
+    NUM             shift and go to state 18
+    CNAME           shift and go to state 19
+
+  ! NUM             [ reduce using rule 4 (voice -> value voicecontent .) ]
+  ! CNAME           [ reduce using rule 4 (voice -> value voicecontent .) ]
+
+    compasloop                     shift and go to state 34
+    compas                         shift and go to state 35
+    value                          shift and go to state 27
+
+state 29
+
+    (19) const -> CONST CNAME EQUALS NUM . SEMICOLON
+
+    SEMICOLON       shift and go to state 36
+
+
+state 30
+
+    (20) const -> CONST CNAME EQUALS CNAME . SEMICOLON
+
+    SEMICOLON       shift and go to state 37
+
+
+state 31
+
+    (14) compas -> COMPASBEGIN LEFTCURL . notelist RIGHTCURL
+    (15) notelist -> . note
+    (16) notelist -> . notelist note
+    (6) note -> . NOTENAME value SHAPE
+    (7) note -> . NOTENAME ALTER value SHAPE
+    (8) note -> . NOTENAME value SHAPE PUNTO
+    (9) note -> . NOTENAME ALTER value SHAPE PUNTO
+
+    NOTENAME        shift and go to state 40
+
+    note                           shift and go to state 38
+    notelist                       shift and go to state 39
+
+state 32
+
+    (5) compasloop -> value compaslist .
+    (11) compaslist -> compaslist . compas
+    (14) compas -> . COMPASBEGIN LEFTCURL notelist RIGHTCURL
+
+  ! shift/reduce conflict for COMPASBEGIN resolved as shift
+    NUM             reduce using rule 5 (compasloop -> value compaslist .)
+    CNAME           reduce using rule 5 (compasloop -> value compaslist .)
+    $end            reduce using rule 5 (compasloop -> value compaslist .)
+    COMPASBEGIN     shift and go to state 25
+
+  ! COMPASBEGIN     [ reduce using rule 5 (compasloop -> value compaslist .) ]
+
+    compas                         shift and go to state 41
+
+state 33
+
+    (10) compaslist -> compas .
+
+    COMPASBEGIN     reduce using rule 10 (compaslist -> compas .)
+    NUM             reduce using rule 10 (compaslist -> compas .)
+    CNAME           reduce using rule 10 (compaslist -> compas .)
+    $end            reduce using rule 10 (compaslist -> compas .)
+
+
+state 34
+
+    (26) voicecontent -> voicecontent compasloop .
+
+    COMPASBEGIN     reduce using rule 26 (voicecontent -> voicecontent compasloop .)
+    NUM             reduce using rule 26 (voicecontent -> voicecontent compasloop .)
+    CNAME           reduce using rule 26 (voicecontent -> voicecontent compasloop .)
+    $end            reduce using rule 26 (voicecontent -> voicecontent compasloop .)
+
+
+state 35
+
+    (27) voicecontent -> voicecontent compas .
+
+    COMPASBEGIN     reduce using rule 27 (voicecontent -> voicecontent compas .)
+    NUM             reduce using rule 27 (voicecontent -> voicecontent compas .)
+    CNAME           reduce using rule 27 (voicecontent -> voicecontent compas .)
+    $end            reduce using rule 27 (voicecontent -> voicecontent compas .)
+
+
+state 36
+
+    (19) const -> CONST CNAME EQUALS NUM SEMICOLON .
+
+    CONST           reduce using rule 19 (const -> CONST CNAME EQUALS NUM SEMICOLON .)
+    NUM             reduce using rule 19 (const -> CONST CNAME EQUALS NUM SEMICOLON .)
+    CNAME           reduce using rule 19 (const -> CONST CNAME EQUALS NUM SEMICOLON .)
+
+
+state 37
+
+    (20) const -> CONST CNAME EQUALS CNAME SEMICOLON .
+
+    CONST           reduce using rule 20 (const -> CONST CNAME EQUALS CNAME SEMICOLON .)
+    NUM             reduce using rule 20 (const -> CONST CNAME EQUALS CNAME SEMICOLON .)
+    CNAME           reduce using rule 20 (const -> CONST CNAME EQUALS CNAME SEMICOLON .)
+
+
+state 38
+
+    (15) notelist -> note .
+
+    RIGHTCURL       reduce using rule 15 (notelist -> note .)
+    NOTENAME        reduce using rule 15 (notelist -> note .)
+
+
+state 39
+
+    (14) compas -> COMPASBEGIN LEFTCURL notelist . RIGHTCURL
+    (16) notelist -> notelist . note
+    (6) note -> . NOTENAME value SHAPE
+    (7) note -> . NOTENAME ALTER value SHAPE
+    (8) note -> . NOTENAME value SHAPE PUNTO
+    (9) note -> . NOTENAME ALTER value SHAPE PUNTO
+
+    RIGHTCURL       shift and go to state 42
+    NOTENAME        shift and go to state 40
+
+    note                           shift and go to state 43
+
+state 40
+
+    (6) note -> NOTENAME . value SHAPE
+    (7) note -> NOTENAME . ALTER value SHAPE
+    (8) note -> NOTENAME . value SHAPE PUNTO
+    (9) note -> NOTENAME . ALTER value SHAPE PUNTO
+    (17) value -> . NUM
+    (18) value -> . CNAME
+
+    ALTER           shift and go to state 45
+    NUM             shift and go to state 18
+    CNAME           shift and go to state 19
+
+    value                          shift and go to state 44
+
+state 41
+
+    (11) compaslist -> compaslist compas .
+
+    COMPASBEGIN     reduce using rule 11 (compaslist -> compaslist compas .)
+    NUM             reduce using rule 11 (compaslist -> compaslist compas .)
+    CNAME           reduce using rule 11 (compaslist -> compaslist compas .)
+    $end            reduce using rule 11 (compaslist -> compaslist compas .)
+
+
+state 42
+
+    (14) compas -> COMPASBEGIN LEFTCURL notelist RIGHTCURL .
+
+    COMPASBEGIN     reduce using rule 14 (compas -> COMPASBEGIN LEFTCURL notelist RIGHTCURL .)
+    NUM             reduce using rule 14 (compas -> COMPASBEGIN LEFTCURL notelist RIGHTCURL .)
+    CNAME           reduce using rule 14 (compas -> COMPASBEGIN LEFTCURL notelist RIGHTCURL .)
+    $end            reduce using rule 14 (compas -> COMPASBEGIN LEFTCURL notelist RIGHTCURL .)
+
+
+state 43
+
+    (16) notelist -> notelist note .
+
+    RIGHTCURL       reduce using rule 16 (notelist -> notelist note .)
+    NOTENAME        reduce using rule 16 (notelist -> notelist note .)
+
+
+state 44
+
+    (6) note -> NOTENAME value . SHAPE
+    (8) note -> NOTENAME value . SHAPE PUNTO
+
+    SHAPE           shift and go to state 46
+
+
+state 45
+
+    (7) note -> NOTENAME ALTER . value SHAPE
+    (9) note -> NOTENAME ALTER . value SHAPE PUNTO
+    (17) value -> . NUM
+    (18) value -> . CNAME
+
+    NUM             shift and go to state 18
+    CNAME           shift and go to state 19
+
+    value                          shift and go to state 47
+
+state 46
+
+    (6) note -> NOTENAME value SHAPE .
+    (8) note -> NOTENAME value SHAPE . PUNTO
+
+    RIGHTCURL       reduce using rule 6 (note -> NOTENAME value SHAPE .)
+    NOTENAME        reduce using rule 6 (note -> NOTENAME value SHAPE .)
+    PUNTO           shift and go to state 48
+
+
+state 47
+
+    (7) note -> NOTENAME ALTER value . SHAPE
+    (9) note -> NOTENAME ALTER value . SHAPE PUNTO
+
+    SHAPE           shift and go to state 49
+
+
+state 48
+
+    (8) note -> NOTENAME value SHAPE PUNTO .
+
+    RIGHTCURL       reduce using rule 8 (note -> NOTENAME value SHAPE PUNTO .)
+    NOTENAME        reduce using rule 8 (note -> NOTENAME value SHAPE PUNTO .)
+
+
+state 49
+
+    (7) note -> NOTENAME ALTER value SHAPE .
+    (9) note -> NOTENAME ALTER value SHAPE . PUNTO
+
+    RIGHTCURL       reduce using rule 7 (note -> NOTENAME ALTER value SHAPE .)
+    NOTENAME        reduce using rule 7 (note -> NOTENAME ALTER value SHAPE .)
+    PUNTO           shift and go to state 50
+
+
+state 50
+
+    (9) note -> NOTENAME ALTER value SHAPE PUNTO .
+
+    RIGHTCURL       reduce using rule 9 (note -> NOTENAME ALTER value SHAPE PUNTO .)
+    NOTENAME        reduce using rule 9 (note -> NOTENAME ALTER value SHAPE PUNTO .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for NUM in state 28 resolved as shift
+WARNING: shift/reduce conflict for CNAME in state 28 resolved as shift
+WARNING: shift/reduce conflict for COMPASBEGIN in state 32 resolved as shift

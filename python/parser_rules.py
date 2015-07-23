@@ -14,7 +14,7 @@ def p_tempo(subexpression):
     subexpression[0] = Tempo(subexpression[2], int(subexpression[3]))
 
 def p_compasheader(subexpression):
-    'tempo : COMPASHEADERBEGIN NUM SLASH NUM'
+    'compasheader : COMPASHEADERBEGIN NUM SLASH NUM'
     subexpression[0] = CompasHeader(int(subexpression[2]), int(subexpression[4]))
 
 def p_voice(subexpression):
