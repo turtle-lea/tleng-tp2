@@ -71,23 +71,23 @@ class Note(Expression):
 			self._height = notename
 
 		self._value = value
-		self._duration = 0
+		self._duration = 0.0
 
 		if shape == 'redonda':
-			self._duration = 1
+			self._duration = 1.0
 		if shape == 'blanca':
-			self._duration = 1/2
+			self._duration = 1.0/2.0
 		if shape == 'negra':
-			self._duration = 1/4
+			self._duration = 1.0/4.0
 		if shape == 'corchea':
-			self._duration = 1/8
+			self._duration = 1.0/8.0
 		if shape == 'semicorchea':
-			self._duration = 1/16
+			self._duration = 1.0/16.0
 		if shape == 'fusa':
-			self._duration = 1/32
+			self._duration = 1.0/32.0
 		if shape == 'semifusa':
-			self._duration = 1/64
-		if self._duration == 0:
+			self._duration = 1.0/64.0
+		if self._duration == 0.0:
 			raise Exception("Figura no definida")
 
 		if puntillo:
