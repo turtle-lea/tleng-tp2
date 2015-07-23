@@ -70,7 +70,15 @@ class ConstList(ExpressionList):
     pass
 
 class VoiceContent(ExpressionList):
-    pass
+    def __init__(self, current, nextList):
+        if nextList != [] and current.getDuration() != nextList[0].getDuration():
+            raise Exception("Los compases no tienen la misma duración.")
+
+        self._duration = current.getDuration()
+        super(VoiceContent,self).__init__(current, nextList)
+
+    def getDuration(self):
+        return self._duration
 
 class CompasList(ExpressionList):
     def __init__(self, current, nextList):
