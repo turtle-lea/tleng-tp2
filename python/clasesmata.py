@@ -52,7 +52,7 @@ class Compas(Expression):
         self._duration = duration
 
     def getDuration(self):
-      return self._duracion
+      return self._duration
 
     def isLoop(self):
         return False

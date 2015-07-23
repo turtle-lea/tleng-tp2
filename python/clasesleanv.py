@@ -46,8 +46,6 @@ class CompasLoop(Expression):
 		self._value = value
 		self._duration = CompasList.getDuration()
 
-
-
 	def getRepeat(self):
 		return self._value
 
@@ -62,6 +60,38 @@ class CompasLoop(Expression):
 
 
 
+def duration_from_shape(shape):
+		if shape == 'redonda':
+			duration = 1.0
+		elif shape == 'blanca':
+			duration = 1.0/2.0
+		elif shape == 'negra':
+			duration = 1.0/4.0
+		elif shape == 'corchea':
+			duration = 1.0/8.0
+		elif shape == 'semicorchea':
+			duration = 1.0/16.0
+		elif shape == 'fusa':
+			duration = 1.0/32.0
+		elif shape == 'semifusa':
+			duration = 1.0/64.0
+		else:
+			raise Exception("Figura no definida")
+		return duration
+
+
+class Silence(Expression):
+    def __init__(self,duration, shape):
+        self._shape = shape
+        self._duration = duration_from_shape(shape)
+
+    def getDuration(self):
+        return self._duration
+
+    def getShape(self):
+        return self._shape
+
+
 class Note(Expression):
 	def __init__(self, notename, alter, value, shape, puntillo):
 		#concatenacion de string
@@ -71,24 +101,7 @@ class Note(Expression):
 			self._height = notename
 
 		self._value = value
-		self._duration = 0.0
-
-		if shape == 'redonda':
-			self._duration = 1.0
-		if shape == 'blanca':
-			self._duration = 1.0/2.0
-		if shape == 'negra':
-			self._duration = 1.0/4.0
-		if shape == 'corchea':
-			self._duration = 1.0/8.0
-		if shape == 'semicorchea':
-			self._duration = 1.0/16.0
-		if shape == 'fusa':
-			self._duration = 1.0/32.0
-		if shape == 'semifusa':
-			self._duration = 1.0/64.0
-		if self._duration == 0.0:
-			raise Exception("Figura no definida")
+		self._duration = duration_from_shape(shape)
 
 		if puntillo:
 			self._duration = self._duration*(3/2)
