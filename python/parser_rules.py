@@ -26,20 +26,20 @@ def p_compasloop(subexpression):
     subexpression[0] = CompasLoop(subexpression[3], subexpression[5])
 
 def p_note(subexpression):
-    'note : NOTENAME value SHAPE'
-    subexpression[0] = Note(subexpression[1], None, subexpression[2], subexpression[3], False)
+    'note : NOTEBEGIN LEFTPAR NOTENAME COMMA value COMMA SHAPE RIGHTPAR SEMICOLON'
+    subexpression[0] = Note(subexpression[3], None, subexpression[5], subexpression[7], False)
 
 def p_note_alter(subexpression):
-    'note : NOTENAME ALTER value SHAPE'
-    subexpression[0] = Note(subexpression[1], subexpression[2], subexpression[3], subexpression[4], False)
+    'note : NOTEBEGIN LEFTPAR NOTENAME ALTER COMMA value COMMA SHAPE RIGHTPAR SEMICOLON'
+    subexpression[0] = Note(subexpression[3], subexpression[4], subexpression[6], subexpression[8], False)
 
 def p_note_punto(subexpression):
-    'note : NOTENAME value SHAPE PUNTO'
-    subexpression[0] = Note(subexpression[1], None, subexpression[2], subexpression[3], True)
+    'note : NOTEBEGIN LEFTPAR NOTENAME COMMA value COMMA SHAPE PUNTO RIGHTPAR SEMICOLON'
+    subexpression[0] = Note(subexpression[3], None, subexpression[5], subexpression[7], True)
 
 def p_note_alter_punto(subexpression):
-    'note : NOTENAME ALTER value SHAPE PUNTO'
-    subexpression[0] = Note(subexpression[1], subexpression[2], subexpression[3], subexpression[4], True)
+    'note : NOTEBEGIN LEFTPAR NOTENAME ALTER COMMA value COMMA SHAPE PUNTO RIGHTPAR SEMICOLON'
+    subexpression[0] = Note(subexpression[3], subexpression[4], subexpression[6], subexpression[8], True)
 
 def p_compaslist_base(subexpression):
     'compaslist : compas'
