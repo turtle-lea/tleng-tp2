@@ -29,7 +29,7 @@ class MidiTranslator:
 
         vlist = root.getVoiceList().getList()
 
-        for i in range(0, len(vlist) - 1):
+        for i in range(0, len(vlist)):
             #Encabezado de la Voz
             v = vlist[i]
             channel = i + 1
@@ -38,7 +38,7 @@ class MidiTranslator:
             self.writeMidi(strFormatVoyHeader3.format(channel, v.getInstrument()))
             compasId = 0
             vc = v.getCompasses()
-            for j in range(0, len(vc) - 1):
+            for j in range(0, len(vc)):
                 content = vc[i]
 
                 if content.isLoop():
@@ -48,7 +48,7 @@ class MidiTranslator:
                     repeat = 1
                     contentList = [content]
 
-                for k in range(1, repeat):
+                for k in range(0, repeat):
                     for c in contentList:
                         self.writeCompass(c, root, compasId, channel)
                         compasId = compasId + 1
@@ -58,12 +58,12 @@ class MidiTranslator:
 
 
     def writeMidi(self, line):
-        pass
+        print(line)
 
     def writeCompass(self, compass, root, compassId, channel):
 
-        strFormatVoyNoteOn = '{0:03d}:{1:02d}:{2:02d} On ch={3} note={4}{5} vol=70'
-        strFormatVoyNoteOff = '{0:03d}:{1:02d}:{2:02d} Off ch={3} note={4}{5} vol=0'
+        strFormatVoyNoteOn = '{0:03d}:{1:02d}:{2:03d} On ch={3} note={4}{5} vol=70'
+        strFormatVoyNoteOff = '{0:03d}:{1:02d}:{2:03d} Off ch={3} note={4}{5} vol=0'
 
         clickOffset = 0
         pulseOffset = 0
@@ -72,7 +72,7 @@ class MidiTranslator:
             finalClick = (clicks + clickOffset + 1) % 384
             finalPulse = (clicks + clickOffset + 1) // 384
 
-            noteName = fromLatinToAmerican(n.getHeight())
+            noteName = self.fromLatinToAmerican(n.getHeight())
             octave = n.getOctave()
 
             if not n.isSilence():
@@ -85,3 +85,16 @@ class MidiTranslator:
 
 
 
+    def calculateTempo(self, tempo):
+        return int(1000000 * 60 / (tempo.getShapeDuration() * 4 * tempo.getCount()))
+
+    def fromLatinToAmerican(self, noteName):
+        #A: la
+        #B: si
+        #C: do
+        #D: re
+        #E: mi
+        #F: fa
+        #G: sol.
+
+        return noteName.replace('la', 'A').replace('si','B').replace('do', 'C').replace('re', 'D').replace('mi', 'E').replace('fa', 'F').replace('sol', "G")

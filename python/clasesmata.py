@@ -17,6 +17,9 @@ class Root(Expression):
     def getDuration(self):
         return self._tempo
 
+    def getTempo(self):
+        return self._tempo
+
     def getCompasHeader(self):
         return self._compasheader
 
@@ -58,7 +61,7 @@ class Compas(Expression):
         return False
 
     def getNoteList(self):
-        return self._notelist.getNoteList()
+        return self._notelist
 
 class NoteList(Expression):
     def __init__(self, note, notelist):

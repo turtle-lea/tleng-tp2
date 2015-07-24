@@ -1,9 +1,10 @@
 from clasesber import ConstantManager
+
 import lexer_rules
 import parser_rules
 
 from sys import argv, exit
-
+from midi import *
 from ply.lex import lex
 from ply.yacc import yacc
 
@@ -24,4 +25,6 @@ if __name__ == "__main__":
     parser = yacc(module=parser_rules)
 
     expression = parser.parse(text, lexer)
+    midi = MidiTranslator()
+    midi.generateMIDIFile(expression)
 

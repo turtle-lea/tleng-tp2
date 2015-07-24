@@ -15,6 +15,9 @@ class Tempo(Expression):
     def getCount(self):
         return self._num
 
+    def getShapeDuration(self):
+        return duration_from_shape(self.getFigure())
+
 
 class CompasHeader(Expression):
     def __init__(self, num1, num2):
