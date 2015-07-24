@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: latin-1 -*-
 from clasesber import  *
 from clasesmata import  *
 from clasesleanv import  *
@@ -5,10 +7,10 @@ __author__ = 'bernapanarello'
 class MidiTranslator:
     def generateMIDIFile(self, root):
 
-
-        strFormatHeader1 = "MFile 1 {0} 384"
-        strFormatHeader2 = "000:00:000 TimeSig {0}/{1} 24 8"
-        strFormatHeader3 = "000:00:000 Tempo {0}"
+        strFormatHeader0 = "MFile 1 {0} 384"
+        strFormatHeader1 = "MTrk"
+        strFormatHeader2 = "000:00:000 Tempo {0}"
+        strFormatHeader3 = "000:00:000 TimeSig {0}/{1} 24 8"
         strFormatHeader4 = "000:00:000 Meta TrkEnd"
         strFormatHeader5 = "TrkEnd"
 
@@ -21,10 +23,10 @@ class MidiTranslator:
         strFormatVoyHeader4 = '{0:03d}:{1:02d}:{2:03d} Meta TrkEnd'
         strFormatVoyHeader5 = "TrkEnd"
 
-
-        self.writeMidi(strFormatHeader1.format(len(root.getVoiceList().getList()) + 1))
-        self.writeMidi(strFormatHeader2.format(root.getCompasHeader().getNumerator(), root.getCompasHeader().getDenominator()))
-        self.writeMidi(strFormatHeader3.format(self.calculateTempo(root.getTempo())))
+        self.writeMidi(strFormatHeader0.format(len(root.getVoiceList().getList()) + 1))
+        self.writeMidi(strFormatHeader1)
+        self.writeMidi(strFormatHeader2.format(self.calculateTempo(root.getTempo())))
+        self.writeMidi(strFormatHeader3.format(root.getCompasHeader().getNumerator(), root.getCompasHeader().getDenominator()))
         self.writeMidi(strFormatHeader4)
         self.writeMidi(strFormatHeader5)
 
@@ -54,7 +56,7 @@ class MidiTranslator:
                         self.writeCompass(c, root, compasId, channel)
                         compasId = compasId + 1
 
-            self.writeMidi(strFormatVoyHeader5)
+            self.writeMidi(strFormatVoyHeader4)
 
             self.writeMidi(strFormatVoyHeader5)
 
@@ -70,17 +72,24 @@ class MidiTranslator:
 
         clickOffset = 0
         pulseOffset = 0
-        for n in compass.getNoteList():
+        nList = compass.getNoteList()
+        for i in range (0, len(nList)):
+            n = nList[i]
             clicks = int(n.getDuration() * root.getCompasHeader().getDenominator() * 384)
             finalClick = (clicks + clickOffset) % 384
             finalPulse = (clicks + clickOffset) // 384
 
-            #TODO : HAY QUE ARREGLAR EL TEMA DEL COMPAS SILENCIOSO (VER COMPAS 13 DEL EJ1)
             if not n.isSilence():
                 noteName = self.fromLatinToAmerican(n.getHeight())
                 octave = n.getOctave()
                 self.writeMidi(strFormatVoyNoteOn.format(compassId, pulseOffset, clickOffset, channel, noteName, octave))
-                self.writeMidi(strFormatVoyNoteOff.format(compassId, finalPulse, finalClick, channel, noteName, octave))
+
+                #Imprimo la nota en el archivo. Si la nota es la última del compás, entonces imprimo el Off al comienzo del próximo compas
+                if i < len(nList) - 1:
+                    self.writeMidi(strFormatVoyNoteOff.format(compassId, finalPulse, finalClick, channel, noteName, octave))
+                else:
+                    self.writeMidi(strFormatVoyNoteOff.format(compassId + 1, 0, 0, channel, noteName, octave))
+
 
             clickOffset = finalClick
             pulseOffset = finalPulse
@@ -100,4 +109,4 @@ class MidiTranslator:
         #F: fa
         #G: sol.
 
-        return noteName.replace('la', 'A').replace('si','B').replace('do', 'C').replace('re', 'D').replace('mi', 'E').replace('fa', 'F').replace('sol', "G")
+        return noteName.replace('la', 'a').replace('si','b').replace('do', 'c').replace('re', 'd').replace('mi', 'e').replace('fa', 'f').replace('sol', "g")
