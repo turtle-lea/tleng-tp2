@@ -51,7 +51,7 @@ class MidiTranslator:
 
                 for k in range(1, repeat):
                     for c in contentList:
-                        writeCompass(c)
+                        self.writeCompass(c)
 
             self.writeMidi(strFormatVoyHeader4)
 
@@ -61,6 +61,6 @@ class MidiTranslator:
         pass
 
     def writeCompass(self, compass):
-        
+
 
 
