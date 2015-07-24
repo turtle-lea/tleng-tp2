@@ -75,12 +75,11 @@ class MidiTranslator:
             finalClick = (clicks + clickOffset) % 384
             finalPulse = (clicks + clickOffset) // 384
 
+            #TODO : HAY QUE ARREGLAR EL TEMA DEL COMPAS SILENCIOSO (VER COMPAS 13 DEL EJ1)
             if not n.isSilence():
                 noteName = self.fromLatinToAmerican(n.getHeight())
                 octave = n.getOctave()
                 self.writeMidi(strFormatVoyNoteOn.format(compassId, pulseOffset, clickOffset, channel, noteName, octave))
-                self.writeMidi(strFormatVoyNoteOff.format(compassId, finalPulse, finalClick, channel, noteName, octave))
-            else
                 self.writeMidi(strFormatVoyNoteOff.format(compassId, finalPulse, finalClick, channel, noteName, octave))
 
             clickOffset = finalClick
