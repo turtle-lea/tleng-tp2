@@ -56,7 +56,7 @@ class MidiTranslator:
                         self.writeCompass(c, root, compasId, channel)
                         compasId = compasId + 1
 
-            self.writeMidi(strFormatVoyHeader4)
+            self.writeMidi(strFormatVoyHeader4.format(compasId, 0, 0))
 
             self.writeMidi(strFormatVoyHeader5)
 
@@ -77,7 +77,9 @@ class MidiTranslator:
             n = nList[i]
             clicks = int(n.getDuration() * root.getCompasHeader().getDenominator() * 384)
             finalClick = (clicks + clickOffset) % 384
-            finalPulse = (clicks + clickOffset) // 384
+
+            finalPulse = pulseOffset + (clicks + clickOffset) // 384
+
 
             if not n.isSilence():
                 noteName = self.fromLatinToAmerican(n.getHeight())
@@ -86,6 +88,7 @@ class MidiTranslator:
 
                 #Imprimo la nota en el archivo. Si la nota es la última del compás, entonces imprimo el Off al comienzo del próximo compas
                 if i < len(nList) - 1:
+
                     self.writeMidi(strFormatVoyNoteOff.format(compassId, finalPulse, finalClick, channel, noteName, octave))
                 else:
                     self.writeMidi(strFormatVoyNoteOff.format(compassId + 1, 0, 0, channel, noteName, octave))
