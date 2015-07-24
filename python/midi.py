@@ -17,8 +17,6 @@ class MidiTranslator:
         strFormatVoyHeader2 = '000:00:000 Meta TrkName "Voz {0}"'
         strFormatVoyHeader3 = '000:00:000 ProgCh ch={0} prog={1}'
 
-        strFormatVoyNoteOn = '{0:03d}:{1:02d}:{2:02d} On ch={3} note={4} vol=70'
-        strFormatVoyNoteOff = '{0:03d}:{1:02d}:{2:02d} Off ch={3} note={4} vol=0'
 
         strFormatVoyHeader4 = "TrkEnd"
 
@@ -34,9 +32,10 @@ class MidiTranslator:
         for i in range(0, len(vlist) - 1):
             #Encabezado de la Voz
             v = vlist[i]
+            channel = i + 1
             self.writeMidi(strFormatVoyHeader1)
-            self.writeMidi(strFormatVoyHeader2.format(i + 1))
-            self.writeMidi(strFormatVoyHeader3.format(i + 1, v.getInstrument()))
+            self.writeMidi(strFormatVoyHeader2.format(channel))
+            self.writeMidi(strFormatVoyHeader3.format(channel, v.getInstrument()))
             compasId = 0
             vc = v.getCompasses()
             for j in range(0, len(vc) - 1):
@@ -51,7 +50,8 @@ class MidiTranslator:
 
                 for k in range(1, repeat):
                     for c in contentList:
-                        self.writeCompass(c)
+                        self.writeCompass(c, root, compasId, channel)
+                        compasId = compasId + 1
 
             self.writeMidi(strFormatVoyHeader4)
 
@@ -60,7 +60,28 @@ class MidiTranslator:
     def writeMidi(self, line):
         pass
 
-    def writeCompass(self, compass):
+    def writeCompass(self, compass, root, compassId, channel):
+
+        strFormatVoyNoteOn = '{0:03d}:{1:02d}:{2:02d} On ch={3} note={4}{5} vol=70'
+        strFormatVoyNoteOff = '{0:03d}:{1:02d}:{2:02d} Off ch={3} note={4}{5} vol=0'
+
+        clickOffset = 0
+        pulseOffset = 0
+        for n in compass.getNoteList():
+            clicks = int(n.getDuration() * root.getCompasHeader().getDenominator() * 384)
+            finalClick = (clicks + clickOffset + 1) % 384
+            finalPulse = (clicks + clickOffset + 1) // 384
+
+            noteName = fromLatinToAmerican(n.getHeight())
+            octave = n.getOctave()
+
+            if not n.isSilence():
+                self.writeMidi(strFormatVoyNoteOn.format(compassId, pulseOffset, clickOffset, channel, noteName, octave))
+                self.writeMidi(strFormatVoyNoteOff.format(compassId, finalPulse, finalClick, channel, noteName, octave))
+
+            clickOffset = finalClick
+            pulseOffset = finalPulse
+
 
 
 

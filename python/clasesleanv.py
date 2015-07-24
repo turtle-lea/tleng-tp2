@@ -101,6 +101,9 @@ class Silence(Expression):
     def getShape(self):
         return self._shape
 
+    def isSilence(self):
+        return True
+
 
 class Note(Expression):
     def __init__(self, notename, alter, value, shape, puntillo):
@@ -125,3 +128,6 @@ class Note(Expression):
 
     def getDuration(self):
         return self._duration
+
+    def isSilence(self):
+        return False

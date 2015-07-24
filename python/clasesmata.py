@@ -57,6 +57,9 @@ class Compas(Expression):
     def isLoop(self):
         return False
 
+    def getNoteList(self):
+        return self._notelist.getNoteList()
+
 class NoteList(Expression):
     def __init__(self, note, notelist):
         self._notelist = notelist + [note]
