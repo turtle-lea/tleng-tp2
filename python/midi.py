@@ -46,7 +46,7 @@ class MidiTranslator:
 
                 if content.isLoop():
                     repeat = content.getRepeat()
-                    contentList = content.getCompasses()
+                    contentList = content.getCompasses().getList()
                 else:
                     repeat = 1
                     contentList = [content]
