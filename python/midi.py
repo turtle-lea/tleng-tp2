@@ -18,7 +18,8 @@ class MidiTranslator:
         strFormatVoyHeader3 = '000:00:000 ProgCh ch={0} prog={1}'
 
 
-        strFormatVoyHeader4 = "TrkEnd"
+        strFormatVoyHeader4 = '{0:03d}:{1:02d}:{2:03d} Meta TrkEnd'
+        strFormatVoyHeader5 = "TrkEnd"
 
 
         self.writeMidi(strFormatHeader1.format(len(root.getVoiceList().getList()) + 1))
@@ -39,7 +40,7 @@ class MidiTranslator:
             compasId = 0
             vc = v.getCompasses()
             for j in range(0, len(vc)):
-                content = vc[i]
+                content = vc[j]
 
                 if content.isLoop():
                     repeat = content.getRepeat()
@@ -53,7 +54,9 @@ class MidiTranslator:
                         self.writeCompass(c, root, compasId, channel)
                         compasId = compasId + 1
 
-            self.writeMidi(strFormatVoyHeader4)
+            self.writeMidi(strFormatVoyHeader5)
+
+            self.writeMidi(strFormatVoyHeader5)
 
 
 
@@ -69,14 +72,15 @@ class MidiTranslator:
         pulseOffset = 0
         for n in compass.getNoteList():
             clicks = int(n.getDuration() * root.getCompasHeader().getDenominator() * 384)
-            finalClick = (clicks + clickOffset + 1) % 384
-            finalPulse = (clicks + clickOffset + 1) // 384
-
-            noteName = self.fromLatinToAmerican(n.getHeight())
-            octave = n.getOctave()
+            finalClick = (clicks + clickOffset) % 384
+            finalPulse = (clicks + clickOffset) // 384
 
             if not n.isSilence():
+                noteName = self.fromLatinToAmerican(n.getHeight())
+                octave = n.getOctave()
                 self.writeMidi(strFormatVoyNoteOn.format(compassId, pulseOffset, clickOffset, channel, noteName, octave))
+                self.writeMidi(strFormatVoyNoteOff.format(compassId, finalPulse, finalClick, channel, noteName, octave))
+            else
                 self.writeMidi(strFormatVoyNoteOff.format(compassId, finalPulse, finalClick, channel, noteName, octave))
 
             clickOffset = finalClick

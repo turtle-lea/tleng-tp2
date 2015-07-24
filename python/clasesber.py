@@ -21,7 +21,7 @@ class Expression(object):
 #Por ejemplo, A -> id, A -> A id. Notar que los elementos de la lista están en orden inverso
 class ExpressionList(Expression):
     def __init__(self, current, nextList):
-        self._list = [current] + nextList
+        self._list = nextList + [current]
 
     def getList(self):
         return self._list
