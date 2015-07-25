@@ -1,0 +1,202 @@
+\documentclass[a4paper, 10pt, twoside]{article}
+
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish, es-ucroman, es-noquoting]{babel}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{enumitem} % Provee macro \setlist
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{hyperref}
+\usepackage{multicol}
+\usepackage[toc, page]{appendix}
+\usepackage{ulem} % para subrayados especiales
+\usepackage{color}
+\usepackage{framed}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{graphicx}
+\usepackage{float}
+
+
+\definecolor{shadecolor}{rgb}{0.95,0.95,0.95}
+
+
+%%%%%%%%%% Configuración de Fancyhdr - Inicio %%%%%%%%%%
+\pagestyle{fancy}
+\thispagestyle{fancy}
+\lhead{Trabajo Práctico 2 · Teoría de Lenguajes}
+\rhead{Matayoshi · Panarello · Vega}
+\renewcommand{\footrulewidth}{0.4pt}
+\cfoot{\thepage /\pageref{LastPage}}
+
+\fancypagestyle{caratula} {
+   \fancyhf{}
+   %\cfoot{\thepage /\pageref{LastPage}}
+   \renewcommand{\headrulewidth}{0pt}
+   \renewcommand{\footrulewidth}{0pt}
+}
+%%%%%%%%%% Configuración de Fancyhdr - Fin %%%%%%%%%%
+
+
+%%%%%%%%%% Configuración de Hyperref - Inicio %%%%%%%%%%
+\hypersetup{%
+ % Para que el PDF se abra a pagina completa.
+  pdfstartview= {FitH \hypercalcbp{\paperheight-\topmargin-1in-\headheight}},
+  pdfauthor={Matayoshi,Panarello,Vega},
+  pdfsubject={Tleng-TP1},
+ %pdfkeywords={keyword1} {key2} {key3},
+ colorlinks=true,
+  linkcolor=black,
+  urlcolor=blue
+}
+%%%%%%%%%% Configuración de Hyperref - Fin %%%%%%%%%%
+
+
+%%%%%%%%%% Miscelánea - Inicio %%%%%%%%%%
+% Evita que el documento se estire verticalmente para ocupar el espacio vacío
+% en cada página.
+\raggedbottom
+
+% Deshabilita sangría en la primer línea de un párrafo.
+\setlength{\parindent}{0em}
+
+% Separación entre párrafos.
+\setlength{\parskip}{0.5em}
+
+% Separación entre elementos de listas.
+\setlist{itemsep=0.5em}
+
+% Asigna la traducción de la palabra 'Appendices'.
+\renewcommand{\appendixtocname}{Apéndices}
+\renewcommand{\appendixpagename}{Apéndices}
+%%%%%%%%%% Miscelánea - Fin %%%%%%%%%%
+
+
+%%%%%%%%%% Insertar diagrama - Inicio %%%%%%%%%%
+\newcommand{\diagramav}[1]{
+  \includegraphics[type=png,ext=.png,read=.png,width=16cm]{#1}
+}
+
+\newcommand{\diagramah}[1]{
+  \includegraphics[type=png,ext=.png,read=.png,height=12.8cm,angle=90]{#1}
+}
+%%%%%%%%%% Insertar diagrama - Fin %%%%%%%%%%
+
+
+\begin{document}
+\pagenumbering{gobble}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Carátula                                                                  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\thispagestyle{caratula}
+
+\begin{center}
+
+\includegraphics[height=2cm]{caratula/DC.png}
+\hfill
+\includegraphics[height=2cm]{caratula/UBA.jpg}
+
+\vspace{2cm}
+
+Departamento de Computación,\\
+Facultad de Ciencias Exactas y Naturales,\\
+Universidad de Buenos Aires
+
+\vspace{4cm}
+
+\begin{Huge}
+Trabajo Práctico 2
+\end{Huge}
+
+\vspace{0.5cm}
+
+\begin{huge}
+Compositor Musical
+\end{huge}
+
+\vspace{0.5cm}
+
+\begin{Large}
+Teoría de Lenguajes
+\end{Large}
+
+\vspace{1cm}
+
+Primer Cuatrimestre de 2015
+
+\vspace{3.5cm}
+
+\begin{Large}
+Grupo: Autores del Autómata Automático Autodestructivo
+\end{Large}
+
+\vspace{0.5cm}
+
+\begin{tabular}{|c|c|c|}
+\hline
+Apellido y Nombre & LU & E-mail\\
+\hline
+Matayoshi, Leandro  & 79/11 & {\tt leandro.matayoshi@gmail.com}\\
+Panarello, Bernabé  & FALTA LU & {\tt bpanarello@gmail.com}\\
+Vega, Leandro    & 698/11 & {\tt leandrogvega@gmail.com}\\
+\hline
+\end{tabular}
+
+\end{center}
+
+\newpage
+\pagenumbering{arabic}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Índice                                                                    %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\tableofcontents
+
+\newpage
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Descripción del informe			                                        %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introducción del problema a resolver}
+\input{introduccion.tex}
+\newpage
+
+\section{Descripción del problema resuelto}
+\input{descripcion.tex}
+\newpage
+
+\section{Gramática}
+\input{gramatica.tex}
+\newpage
+
+\section{Tests}
+\input{tests.tex}
+\newpage
+
+\section{Manual del programa}
+\input{manual_programa.tex}
+\newpage
+
+\section{Conclusiones}
+\input{conclusiones.tex}
+
+
+\end{document}
+

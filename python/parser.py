@@ -10,7 +10,7 @@ from ply.yacc import yacc
 
 
 if __name__ == "__main__":
-    if len(argv) != 2:
+    if len(argv) != 3:
         print ("Invalid arguments.")
         print ("Use:")
         print ("  parser.py expression")
@@ -18,13 +18,18 @@ if __name__ == "__main__":
 
     inputfile = argv[1]
 
+    outputfile = argv[2]
+
     with open (inputfile, "r") as myfile:
         text=myfile.read()
+
 
     lexer = lex(module=lexer_rules)
     parser = yacc(module=parser_rules)
 
     expression = parser.parse(text, lexer)
     midi = MidiTranslator()
-    midi.generateMIDIFile(expression)
+
+    with open (outputfile, "w") as file_output:
+        midi.generateMIDIFile(expression,file_output)
 
