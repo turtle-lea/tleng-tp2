@@ -147,4 +147,4 @@ def p_error(subexpressions):
     print ("----------------------------")
     print ("----------------------------")
     print (subexpressions)
-    raise Exception("Syntax error.")
+    raise Exception("[Parser] Error de sintaxis Linea: {0}, Pos (absoluta): {1}, Caracter: {2}: ".format(subexpressions.lineno, subexpressions.lexpos, subexpressions.value))

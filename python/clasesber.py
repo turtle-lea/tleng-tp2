@@ -122,7 +122,7 @@ class ConstantManager:
     def getValue(self, cname):
         const = self.dictConst.get(cname)
         if const == None:
-            raise Exception("Constante no definida")
+            raise Exception("Constante no definida: {0}".format(cname))
         else:
             constVal = self.resolveVal(const)
 

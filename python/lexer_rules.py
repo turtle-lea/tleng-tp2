@@ -25,27 +25,48 @@ tokens = [
    'TEMPOBEGIN'
 ]
 
-reserved = {
-   'const' : 'const',
-   'do' : 'do',
-   're' : 're',
-   'mi' : 'mi',
-   'fa' : 'fa',
-   'sol' : 'sol',
-   'la' : 'la',
-   'si' : 'si',
-   'tempo' : 'tempo',
-   'compas' : 'compas',
-   'repetir' : 'repetir',
-   'voz' : 'voz',
-   'negra' : 'negra',
-   'blanca' : 'blanca',
-   'redonda' : 'redonda',
-   'corchea' : 'corchea',
-   'smicorchea' : 'smicorchea',
-   'fusa' : 'fusa',
-   'semifusa' : 'semifusa'
-}
+# reserved = {
+#    'const' : 'const',
+#    'do' : 'do',
+#    're' : 're',
+#    'mi' : 'mi',
+#    'fa' : 'fa',
+#    'sol' : 'sol',
+#    'la' : 'la',
+#    'si' : 'si',
+#    'tempo' : 'tempo',
+#    'compas' : 'compas',
+#    'repetir' : 'repetir',
+#    'voz' : 'voz',
+#    'negra' : 'negra',
+#    'blanca' : 'blanca',
+#    'redonda' : 'redonda',
+#    'corchea' : 'corchea',
+#    'smicorchea' : 'smicorchea',
+#    'fusa' : 'fusa',
+#    'semifusa' : 'semifusa'
+# }
+
+def isReserved(token):
+    return token in ('const',
+    'do',
+    're',
+    'mi',
+    'fa',
+    'sol',
+    'la',
+    'si',
+    'tempo',
+    'compas',
+    'repetir',
+    'voz',
+    'negra',
+    'blanca',
+    'redonda',
+    'corchea',
+    'smicorchea',
+    'fusa',
+    'semifusa')
 
 #Ojo, probar que esto ande bien
 #Ignorar comoentarios
@@ -145,7 +166,6 @@ def t_COMMA(token):
 
 def t_CNAME(token):
   r"(([a-z]|[A-Z])([0-9]|[a-z]|[A-Z])*)"
-  #print ("cname")
   return token
 
 def t_NUM(token):
@@ -154,9 +174,17 @@ def t_NUM(token):
     return token
 
 def t_error(token):
-    message = "Token desconocido:"
-    message += "\ntype:" + token.type
-    message += "\nvalue:" + str(token.value)
+    message = "[Lexer] Token desconocido"
+    #message += "\ntype:" + token.type
+#    message += "\nvalue:" + str(token.value)
+    message += "\nline:" + str(token.lineno)
+    message += "\nposition:" + str(token.lexpos)
+    raise Exception(message)
+
+def notifyInvalidCNAME(token):
+    message = "[Lexer] Nombre de constante reservado"
+    #message += "\ntype:" + token.type
+#    message += "\nvalue:" + str(token.value)
     message += "\nline:" + str(token.lineno)
     message += "\nposition:" + str(token.lexpos)
     raise Exception(message)

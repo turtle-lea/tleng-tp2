@@ -7,6 +7,7 @@
 
 const oct1 = 5;
 const oct2 = 6;
+const la = 3;
 
 // Instrumentos
 const clarinete = 71;
@@ -15,7 +16,7 @@ voz (clarinete)
 {
   compas
   {
-    nota(re, oct1, blanca);
+    nota(re, oct3, blanca.);
     nota(re, oct1, negra);
   }
 

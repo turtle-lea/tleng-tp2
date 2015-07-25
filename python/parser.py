@@ -13,23 +13,28 @@ if __name__ == "__main__":
     if len(argv) != 3:
         print ("Invalid arguments.")
         print ("Use:")
-        print ("  parser.py expression")
-        exit()
+        print ("  parser.py <archivo_entrada> <archivo_salida>")
+        exit(1)
 
-    inputfile = argv[1]
+    try:
+        inputfile = argv[1]
+        outputfile = argv[2]
 
-    outputfile = argv[2]
-
-    with open (inputfile, "r") as myfile:
-        text=myfile.read()
+        with open (inputfile, "r") as myfile:
+            text=myfile.read()
 
 
-    lexer = lex(module=lexer_rules)
-    parser = yacc(module=parser_rules)
+        lexer = lex(module=lexer_rules)
+        parser = yacc(module=parser_rules)
 
-    expression = parser.parse(text, lexer)
-    midi = MidiTranslator()
+        expression = parser.parse(text, lexer)
+        midi = MidiTranslator()
 
-    with open (outputfile, "w") as file_output:
-        midi.generateMIDIFile(expression,file_output)
+        with open (outputfile, "w") as file_output:
+            midi.generateMIDIFile(expression,file_output)
+
+
+    except Exception as ex:
+        print ('ERROR: ' + ex.args[0])
+        exit(1)
 
