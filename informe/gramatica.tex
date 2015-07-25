@@ -1,0 +1,135 @@
+%\subsection{Gramática derivada del enunciado}
+%
+%H $\rightarrow$ Tempo Compasheader (Constinit)? Voicelist\newline
+%
+%Tempo $\rightarrow$ \# tempo Shape Num\newline
+%
+%Compasheader $\rightarrow$ \# compas Num / Num\newline
+%
+%Constinit $\rightarrow$ Constlist\newline
+%
+%Constlist $\rightarrow$ (Const)$^+$\newline
+%
+%Const $\rightarrow$ const Value = Value ;\newline
+%
+%Voicelist $\rightarrow$ (Voice)$^+$\newline
+%
+%Voice $\rightarrow$ voz ( Value ) \{ VoiceContent \}\newline
+%
+%Voicecontent $\rightarrow$ (Compas$|$Compasloop)$^+$\newline
+%
+%Compasloop $\rightarrow$ repetir ( Value ) \{ Compaslist \}\newline
+%
+%Compas $\rightarrow$ compas \{ Notelist \}\newline
+%
+%Notelist $\rightarrow$ (Note$|$Silence)$^+$\newline
+%
+%Note $\rightarrow$ nota ( Notename (+$|$-)? , Value , Shape (.)? ) ;\newline
+%
+%Value $\rightarrow$ Cname$|$Num\newline
+%
+%Silence $\rightarrow$ silencio ( Shape (.)? ) ;\newline
+%
+%Shape $\rightarrow$ blanca$|$negra$|$redonda$|$semicorchea$|$corchea$|$semifusa$|$fusa \newline
+%
+%Notename $\rightarrow$ do$|$re$|$mi$|$fa$|$sol$|$la$|$si \newline
+%
+%Cname $\rightarrow$ ([a-z] $|$ [A-Z]) ([0-9] $|$ [a-z] $|$ [A-Z])$^*$\newline
+%
+%Num $\rightarrow$ [0] $|$ ([1-9] [0-9])$^*$\newline
+
+\subsection{Gramática deducida}
+H $\rightarrow$ \{TEMPO\}\{COMPASHEADER\}\{CONSTINIT\}\{VOICELIST\}\newline
+H $\rightarrow$ \{TEMPO\}\{COMPASHEADER\}\{VOICELIST\}\newline
+
+TEMPO $\rightarrow$ \{tempobegin\}\{shape\}\{num\}\newline
+
+COMPASHEADER $\rightarrow$ \{compasheaderbegin\}\{num\}\{slash\}\{num\}\newline
+
+CONSTINIT $\rightarrow$ \{CONSTLIST\}\newline
+
+CONSTLIST $\rightarrow$ \{CONST\}\newline
+CONSTLIST $\rightarrow$ \{CONSTLIST\}\{CONST\}\newline
+
+CONST $\rightarrow$ \{const\}\{VALUE\}\{equals\}\{VALUE\}\{semicolon\}\newline
+
+VOICELIST $\rightarrow$ \{VOICE\}\newline
+VOICELIST $\rightarrow$ \{VOICELIST\}\{VOICE\}\newline
+
+VOICE $\rightarrow$ \{voicebegin\}\{leftpar\}\{VALUE\} \{rightpar\}\{leftcurl\}\{VOICECONTENT\}\{rightcurl\}\newline
+
+VOICECONTENT $\rightarrow$ \{COMPAS\}\newline
+VOICECONTENT $\rightarrow$ \{COMPASLOOP\}\newline
+VOICECONTENT $\rightarrow$ \{VOICECONTENT\}\{COMPAS\}\newline
+VOICECONTENT $\rightarrow$ \{VOICECONTENT\}\{COMPASLOOP\}\newline
+
+COMPASLOOP $\rightarrow$ \{loopbegin\}\{leftpar\}\{VALUE\}\ {rightpar\}\{leftcurl\}\{COMPASLIST\}\{rightcurl\}\newline
+
+COMPASLIST $\rightarrow$ \{COMPAS\}\newline
+COMPASLIST $\rightarrow$ \{COMPASLIST\}\{COMPAS\}\newline
+
+COMPAS $\rightarrow$ \{compasbegin\}\{leftcurl\}\{NOTELIST\}\{rightcurl\}\newline
+
+NOTELIST $\rightarrow$ \{NOTE\}\newline
+NOTELIST $\rightarrow$ \{SILENCE\}\newline
+NOTELIST $\rightarrow$ \{NOTELIST\}\{NOTE\}\newline
+NOTELIST $\rightarrow$ \{NOTELIST\}\{SILENCE\}\newline
+
+NOTE $\rightarrow$ \{notebegin\}\{leftpar\}\{notename\}\{alter\}\{comma\}\{VALUE\} \{comma\}\{shape\}\{puntillo\}\{rightpar\}\{semicolon\}\newline
+NOTE $\rightarrow$ \{notebegin\}\{leftpar\}\{notename\}\{alter\}\{comma\}\{VALUE\} \{comma\}\{shape\}\{rightpar\}\{semicolon\}\newline
+NOTE $\rightarrow$ \{notebegin\}\{leftpar\}\{notename\}\{comma\}\{VALUE\} \{comma\}\{shape\}\{puntillo\}\{rightpar\}\{semicolon\}\newline
+NOTE $\rightarrow$ \{notebegin\}\{leftpar\}\{notename\}\{comma\}\{VALUE\} \{comma\}\{shape\}\{rightpar\}\{semicolon\}\newline
+
+SILENCE $\rightarrow$ \{silencebegin\}\{leftpar\}\{shape\}\{rightpar\}\{semicolon\}\newline
+SILENCE $\rightarrow$ \{silencebegin\}\{leftpar\}\{shape\}\{puntillo\}\{rightpar\}\{semicolon\}\newline
+
+VALUE $\rightarrow$ \{cname\}\newline
+VALUE $\rightarrow$ \{num\}\newline
+
+\subsection{Tokens}
+\begin{itemize}
+\item TEMPOBEGIN: \# tempo
+
+\item CONST: const
+
+\item EQUALS: $=$
+
+\item SEMICOLON: ;
+
+\item VOICEBEGIN: voz
+
+\item LEFTPAR: (
+
+\item RIGHTPAR: )
+
+\item LEFTCURL: \{
+
+\item RIGHTCURL: \}
+
+\item COMPASHEADERBEGIN: \# compas
+
+\item COMPASBEGIN: compas
+
+\item LOOPBEGIN: repetir
+
+\item SLASH: $/$
+
+\item NOTEBEGIN: nota
+
+\item SILENCEBEGIN: silencio
+
+\item PUNTO: .
+
+\item ALTER: $+|-$
+
+\item SHAPE: $blanca|negra|redonda|semicorchea|corchea|semifusa|fusa$
+
+\item NOTENAME: $do|re|mi|fa|sol|la|si$
+
+\item COMMA: ,
+
+\item CNAME: $(([a-z]|[A-Z])([0-9]|[a-z]|[A-Z])*)$
+
+\item NUM: $([0]|[1-9][0-9]*)$
+
+\end{itemize}
