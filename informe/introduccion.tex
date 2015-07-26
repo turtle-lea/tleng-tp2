@@ -1,0 +1,10 @@
+El objetivo de nuestro tp es, dado un archivo de entrada, parsearlo para poder tener un archivo de salida, respetando restricciones solicitadas para el correcto funcionamiento.
+
+\subsection{Paso a paso introductivo de la resolución}
+\begin{itemize}
+\item En primera instancia definiremos una gramática necesaria para interpretar, de manera correcta, nuestro archivo de entrada. 
+\item Luego definiremos cada expresion regular como tokens en el lexer\_rules, de esta manera cargamos en la computadora nuestras expresiones regulares definidas en la gramática.
+\item El siguiente paso será definir las producciones correspondiente, las cuales gracias a los tokens definidos en el paso anterior, podremos construir, diferenciarlas una de las otras y filtrar aquellas que no sean válidas.
+\item Cada producción llamará a su función interna, formando el árbol decado desde las hojas hasta su raiz, usando en cada una atributos sintetizados o heredados para poder intercambiar valores de una rama a la otra y poder validar las condiciones especificadas en nuestro lenguaje.
+\item Una vez corroborado y habiendo obtenido con éxito todo lo anterior, procederemos a escribir el archivo MIDI cumpliendo las normas del mismo sin dificultades.
+\end{itemize}

@@ -1,0 +1,30 @@
+\subsection{Modo de uso}
+Aportar un archivo de entrada con extensión mus, el cual debe contener internamente: (no se si vale la pena detallar lo mencionado en el enunciado, pero si es un manual puede ser, empece a escribirlo y me entró la duda)
+%\begin{itemize}
+%\item En la primera línea: #tempo FIGURA N (Falta desarrollar)
+%\item En la segunda línea: #compas N/M
+%\item En las siguientes líneas definiremos las constantes de las octavas, por ejemplo: "$const oct1 = 6;$"
+%\item Luego de las octavas definiremos las constantes de instrumentos, por ejemplo: "$const piano = 31;$"
+%\item Más adelante seguirán una lista de voces, a las cuales se les asignarán su respectivo instrumento definido anteriormente
+%\item En cada voz definiremos una lista de compases o un loop de compases.
+%\item Un loop de compases se define mediante un repetir, el cual cuenta con un número entero que indicará la cantidad de veces que se repetirá, seguido de una lista de compases que son los que se repetirán la cantidad de mencionada en el número entero.
+%\item Un compás tiene una lista de notas o/y silencios.
+%\item 
+%\end{itemize}
+
+\subsection{Opciones que acepta}
+Se aceptan archivos de entrada que contengan:
+\begin{itemize}
+\item Todos los compases deben tener la misma duración al sumar la duración de sus notas y/o silencios.
+\item Todas las voces deben tener la misma cantidad de compases.
+\item No deben existir constantes indefinidas o definidas circularmente. Ejemplo constante no definida: $const$ $eval = hola;$ (hola jamás se definió). Ejemplo constante definida circularmente: $const$ $eval1 = eval2$ $;$ $const$ $eval2 = eval1$ $;$.
+\item La suma de la duración de cada compas debe ser igual a $num1/num2$, donde $num1$ y $num2$ son los números definidos en $\#compas$ $num1/num2$ en el encabezado.
+\end{itemize}
+En caso contrario que no se respete lo mencionado anteriormente, nuestro programa especificará el error cometido para que pueda solucionarlo.
+
+\subsection{Requerimientos necesarios para ejecutar}
+\begin{itemize}
+\item Programa: Python
+\item Versión: 2.7
+\item Línea de ejecución: ./musileng entrada.mus salida.txt
+\end{itemize}

@@ -1,0 +1,315 @@
+\lstset{
+  frame=none,
+  xleftmargin=2pt,
+  stepnumber=1,
+  numbers=left,
+  numbersep=5pt,
+  numberstyle=\ttfamily\tiny\color[gray]{0.3},
+  belowcaptionskip=\bigskipamount,
+  captionpos=b,
+  escapeinside={*'}{'*},
+  language=prolog,
+  tabsize=2,
+  emphstyle={\bf},
+  commentstyle=\it,
+  stringstyle=\mdseries\rmfamily,
+  showspaces=false,
+  keywordstyle=\bfseries\rmfamily,
+  columns=flexible,
+  basicstyle=\small\sffamily,
+  showstringspaces=false,
+  morecomment=[l]\%,
+}
+
+\subsection{Tests con fallas}
+
+\subsubsection{Test 1: Tiene compaces con distinta duración}
+
+\begin{lstlisting}
+#tempo negra 30
+#compas 3/4
+
+const oct1 = 2;
+const oct2 = 6;
+const oct3 = 1;
+
+// Instrumentos
+const flauta = 51;
+
+voz (flauta)
+{
+  compas
+  {
+    nota(do, oct3, blanca.);
+    nota(re, oct1, redonda);
+  }
+
+  compas
+  {
+    nota(mi, oct2, blanca);
+    nota(la, oct1, negra);
+  }
+}
+\end{lstlisting}
+\vspace{5mm}
+
+\subsubsection{Test 2: Tiene voces con compaces de distinta duración}
+
+\begin{lstlisting}
+#tempo negra 120
+#compas 2/2
+
+const oct1 = 10;
+const oct2 = 2;
+const oct3 = 4;
+
+// Instrumentos
+const violin = 20;
+const guitarra = 12;
+
+voz (violin)
+{
+  compas
+  {
+    nota(do, oct3, blanca.);
+    nota(re, oct1, negra);
+  }
+
+  compas
+  {
+    nota(mi, oct2, blanca.);
+    nota(la, oct1, negra);
+  }
+}
+
+voz (guitarra)
+{
+  compas
+  {
+    nota(do, oct3, fusa);
+    nota(re, oct1, semifusa.);
+  }
+
+  compas
+  {
+    nota(mi, oct2, fusa);
+    nota(la, oct1, semifusa.);
+  }
+}
+\end{lstlisting}
+\vspace{5mm}
+
+\subsubsection{Test 3: Constante que apunta a una constante no definida}
+
+\begin{lstlisting}
+#tempo negra 60
+#compas 1/1
+
+const oct1 = 3;
+const oct2 = ConstanteTrucha;
+
+// Instrumentos
+const bajo = 20;
+
+voz (bajo)
+{
+  compas
+  {
+    nota(do, oct1, blanca.);
+    nota(re, oct1, negra);
+  }
+
+  compas
+  {
+    nota(mi, oct2, blanca.);
+    nota(la, oct2, negra);
+  }
+}
+\end{lstlisting}
+\vspace{5mm}
+
+\subsubsection{Test 4: Constante definida circularmente}
+
+\begin{lstlisting}
+#tempo negra 60
+#compas 2/8
+
+const oct1 = 3;
+const oct2 = 5;
+
+// Instrumentos
+const bajo = 20;
+const malPensado = malPensado;
+
+voz (bajo)
+{
+  compas
+  {
+    nota(do, oct1, corchea.);
+    nota(re, oct1, semicorchea);
+  }
+
+  compas
+  {
+    nota(mi, oct2, semicorchea);
+    nota(la, oct2, corchea.);
+  }
+}
+\end{lstlisting}
+\vspace{5mm}
+
+\subsection{Tests correctos}
+
+\subsubsection{Test 1: Simple}
+
+\begin{lstlisting}
+#tempo negra 30
+#compas 2/4
+
+const oct1 = 2;
+const oct2 = 6;
+const oct3 = 1;
+
+// Instrumentos
+const flauta = 51;
+
+voz (flauta)
+{
+  compas
+  {
+    nota(do, oct3, negra);
+    nota(re, oct1, negra);
+  }
+
+  compas
+  {
+    nota(mi, oct2, blanca);
+  }
+}
+\end{lstlisting}
+\vspace{5mm}
+
+\subsubsection{Test 2: Con varias voces}
+
+\begin{lstlisting}
+#tempo negra 120
+#compas 3/4
+
+const oct1 = 2;
+const oct2 = 6;
+const oct3 = 1;
+const oct4 = 3
+
+// Instrumentos
+const piano = 65;
+const violin = 31;
+
+voz (piano)
+{
+  compas
+  {
+    nota(sol, oct3, blanca);
+    nota(fa+, oct2, negra);
+  }
+
+  compas
+  {
+    nota(mi, oct2, negra.);
+    nota(fa, oct4, corchea);
+    nota(mi, oct2, negra);
+  }
+  compas
+  {
+    silencio(negra);
+    nota(sol-, oct1, negra);
+    nota(sol-, oct1, negra);
+  }
+}
+
+voz (violin)
+{
+  compas
+  {
+    nota(la, oct1, blanca.);
+  }
+  
+  compas
+  {
+    nota(mi, oct2, negra.);
+    nota(fa, oct4, corchea);
+    nota(mi, oct2, negra);
+  }
+  compas
+  {
+    silencio(semicorchea);
+    nota(mi, oct1, semicorchea);
+    nota(sol, oct4, corchea);
+    nota(sol, oct4, blanca);
+  }
+}
+\end{lstlisting}
+\vspace{5mm}
+
+\subsubsection{Test 3: Con repeticiones}
+
+\begin{lstlisting}
+#tempo negra 120
+#compas 2/4
+
+const oct1 = 2;
+const oct2 = 6;
+const oct3 = 1;
+const oct4 = 3
+
+// Instrumentos
+const flauta = 10;
+const violin = 31;
+
+voz (flauta)
+{
+  repetir (5)
+  {
+  	compas
+  	{
+    		nota(sol, oct3, negra);
+    		nota(fa+, oct2, negra);
+  	}
+
+  	compas
+  	{
+    		nota(mi, oct2, negra.);
+    		nota(fa, oct4, corchea);
+  	}
+  	compas
+  	{
+    		nota(sol, oct1, blanca);
+  	}
+  }
+}
+
+voz (violin)
+{
+  compas
+  {
+    nota(la, oct1, blanca);
+  }
+  
+  compas
+  {
+    nota(mi, oct2, negra.);
+    nota(fa, oct4, corchea);
+    nota(mi, oct2, negra);
+  }
+  compas
+  {
+    silencio(semifusa);
+    nota(si+, oct1, semifusa);
+    nota(si, oct4, semifusa);
+    nota(fa, oct4, semifusa);
+    nota(sol, oct4, semicorchea);
+    nota(mi-, oct4, corchea);
+    nota(re, oct4, negra);
+  }
+}
+\end{lstlisting}
+\vspace{5mm}
