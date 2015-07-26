@@ -35,6 +35,9 @@ if __name__ == "__main__":
 
 
     except Exception as ex:
-        print ('ERROR: ' + ex.args[0])
+        print('ERROR:')
+        for v in ex.args:
+            print(str(v))
+
         exit(1)
 

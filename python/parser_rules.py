@@ -143,8 +143,38 @@ def p_silence_punto(subexpression):
     'silence : SILENCEBEGIN LEFTPAR SHAPE PUNTO RIGHTPAR SEMICOLON'
     subexpression[0] = Silence(subexpression[3],True)
 
+
+def isReserved(token):
+    return token in ('const',
+    'do',
+    're',
+    'mi',
+    'fa',
+    'sol',
+    'la',
+    'si',
+    'tempo',
+    'compas',
+    'repetir',
+    'voz',
+    'negra',
+    'blanca',
+    'redonda',
+    'corchea',
+    'smicorchea',
+    'fusa',
+    'semifusa')
+
 def p_error(subexpressions):
-    print ("----------------------------")
-    print ("----------------------------")
-    print (subexpressions)
-    raise Exception("[Parser] Error de sintaxis Linea: {0}, Pos (absoluta): {1}, Caracter: {2}: ".format(subexpressions.lineno, subexpressions.lexpos, subexpressions.value))
+    #print ("----------------------------")
+    #print ("----------------------------")
+    #print (subexpressions)
+
+    if isReserved(subexpressions.value):
+        strReservedMsg = '(palabra reservada)'
+    else:
+        strReservedMsg = ''
+
+
+
+    raise Exception("[Parser] Error de sintaxis Linea: {0}, Pos (absoluta): {1}, Token: <{2}>{3} ".format(subexpressions.lineno, subexpressions.lexpos, subexpressions.value, strReservedMsg))

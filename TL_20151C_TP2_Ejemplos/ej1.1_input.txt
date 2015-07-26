@@ -7,7 +7,7 @@
 
 const oct1 = 5;
 const oct2 = 6;
-const la = 3;
+const oct3 = 3;
 
 // Instrumentos
 const clarinete = 71;

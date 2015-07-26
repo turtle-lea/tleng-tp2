@@ -72,7 +72,7 @@ class ConstList(ExpressionList):
 class VoiceContent(ExpressionList):
     def __init__(self, current, nextList):
         if nextList != [] and current.getDuration() != nextList[0].getDuration():
-            raise Exception("Los compases no tienen la misma duración.")
+            raise Exception("Se detectó un compas dentro de una voz con duración distinta al resto de los compases dentro de la misma.")
 
         self._duration = current.getDuration()
         super(VoiceContent,self).__init__(current, nextList)
@@ -83,7 +83,7 @@ class VoiceContent(ExpressionList):
 class CompasList(ExpressionList):
     def __init__(self, current, nextList):
         if nextList != [] and current.getDuration() != nextList[0].getDuration():
-            raise Exception("Los compases no tienen la misma duración.")
+            raise Exception("Se detectaron compases con distinta duración dentro de un bucle.")
 
         self._duration = current.getDuration()
         super(CompasList,self).__init__(current, nextList)
@@ -146,7 +146,7 @@ class ConstantManager:
 
                 next = self.dictConst.get(nextcname)
                 if (next == None):
-                    raise Exception("La constante <{0}> apunta al nombre <{1}> que no está definido".format(const.getName(),nextcname))
+                    raise Exception("La constante <{0}> apunta (directa o indirectamente) al nombre <{1}> que no está definido".format(const.getName(),nextcname))
                 visited.append(nextcname)
             else:
                 #const.setValue(next.getValue())
