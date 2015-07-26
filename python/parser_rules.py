@@ -1,8 +1,6 @@
 #!/usr/bin/python
 # -*- coding: latin-1 -*-
-from clasesber import *
-from clasesleanv import *
-from clasesmata import *
+from parserobjects import *
 from lexer_rules import tokens
 
 def p_root(subexpressions):

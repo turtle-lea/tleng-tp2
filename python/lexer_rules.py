@@ -25,15 +25,10 @@ tokens = [
    'TEMPOBEGIN'
 ]
 
-
-
-
-
-#Ojo, probar que esto ande bien
-#Ignorar comoentarios
 #Ignoro espacios y tabs
 t_ignore  = ' \t'
 
+#Ignorar comoentarios
 def t_COMMENT(token):
   r'//.*'
 
@@ -136,8 +131,6 @@ def t_NUM(token):
 
 def t_error(token):
     message = "[Lexer] Token desconocido"
-    #message += "\ntype:" + token.type
-#    message += "\nvalue:" + str(token.value)
     message += "\nline:" + str(token.lineno)
     message += "\nposition:" + str(token.lexpos)
     raise Exception(message)

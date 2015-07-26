@@ -1,9 +1,8 @@
 #!/usr/bin/python
 # -*- coding: latin-1 -*-
-from clasesber import  *
-from clasesmata import  *
-from clasesleanv import  *
-__author__ = 'bernapanarello'
+from parserobjects import *
+
+__author__ = 'AAAA'
 class MidiTranslator:
     def generateMIDIFile(self, root, file_output):
 
