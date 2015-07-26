@@ -2,7 +2,10 @@
 # -*- coding: latin-1 -*-
 __author__ = 'AAAA'
 
+#En este archivo implementamos todas las clases que representan los objetos que se van parseando (no terminales),
+#algunas clases auxiliares y el manejador de constantes.
 
+#Clase abstracta que representa expresiones (nodos en a gramática)
 class Expression(object):
     pass
 
@@ -16,6 +19,7 @@ class ExpressionList(Expression):
     def getList(self):
         return self._list
 
+#Representa un nodo del elmento const en la gramática
 class Const(Expression):
     def __init__(self, cname, val, isPointer):
         self._cname = cname
@@ -28,34 +32,16 @@ class Const(Expression):
     def getValue(self):
         return self._value
 
-
+    #indica si la constante apunta a otra constante
     def isPointer(self):
         return self._isPointer
 
-class LexerValue(Expression):
-    def getValue(self):
-        pass
-    def __eq__(self, other):
-        return self.getValue() == other.getValue()
 
-class ConstValue(LexerValue):
-    def __init__(self, cname):
-        self._cname = cname
-    def getValue(self):
-        #Devolver el valor de la constante usando constant manager
-        return ConstantManager.getInstance().getValue(self._cname)
-
-
-class NumValue(LexerValue):
-    def __init__(self, val):
-        self._val = val
-    def getValue(self):
-        return self._val
-
-
+#Representa una lista de constantes
 class ConstList(ExpressionList):
     pass
 
+#Representa la lista de contenido de una voz (compaces o loops)
 class VoiceContent(ExpressionList):
     def __init__(self, current, nextList):
         if nextList != [] and current.getDuration() != nextList[0].getDuration():
@@ -67,6 +53,7 @@ class VoiceContent(ExpressionList):
     def getDuration(self):
         return self._duration
 
+#Representa una lista de constantes dentro de un loop
 class CompasList(ExpressionList):
     def __init__(self, current, nextList):
         if nextList != [] and current.getDuration() != nextList[0].getDuration():
@@ -78,7 +65,11 @@ class CompasList(ExpressionList):
     def getDuration(self):
         return self._duration
 
+#Manejador de constantes. Mantiene una lista de todas las constantes declaradas y permite obtener
+#los valores de las mismas dado un nombre de constante.
 class ConstantManager:
+    #Inicializa el manejador de constantes dada una lista de objetos tipo Const.
+
     @staticmethod
     def createInstance(constList, reserved):
         ConstantManager._instance = ConstantManager(constList, reserved)
@@ -90,6 +81,7 @@ class ConstantManager:
         return ConstantManager._instance
 
 
+    #Inicialización y validación de consistencia de la declaración de constantes
     def __init__(self, constList, reserved):
         self.dictConst = {}
         for c in constList:
@@ -105,7 +97,7 @@ class ConstantManager:
     def Add(self, cname, const):
         self.dictConst[cname] = const
 
-    #Devuelve el valor de una constante. Si es una referencia a otra constante, calcula primero el valor recursivamente (y lo cachea)
+    #Devuelve el valor de una constante. Si es una referencia a otra constante, calcula primero el valor recursivamente
     def getValue(self, cname):
         const = self.dictConst.get(cname)
         if const == None:
@@ -157,7 +149,7 @@ class Tempo(Expression):
     def getShapeDuration(self):
         return duration_from_shape(self.getFigure())
 
-
+#Representa el nodo que define la duración de los compaces para toda la partitura
 class CompasHeader(Expression):
     def __init__(self, num1, num2):
         if num2 == 0:
@@ -166,6 +158,7 @@ class CompasHeader(Expression):
         self._denominator = num2
 
 
+    #Devuelve la duración del compas, en redondas
     def getDuration(self):
         return float(self._numerator) / float(self._denominator)
 
@@ -177,7 +170,7 @@ class CompasHeader(Expression):
     def getNumerator(self):
         return self._numerator
 
-
+#Representa un nodo voz(N)
 class Voice(Expression):
     def __init__(self, value, voiceContent):
         self._value = value
@@ -190,7 +183,7 @@ class Voice(Expression):
         return self._compasses
 
 
-
+#Representa un nodo repetir(N) con una lista de compaces adentro
 class CompasLoop(Expression):
     def __init__(self, value, compasList):
         self._compasList = compasList

@@ -80,13 +80,11 @@ def p_note_list_rec_silence(subexpressions):
 
 def p_val_num(subexpression):
     'value : NUM'
-    #subexpression[0] = NumValue(int(subexpression[1]))
     subexpression[0] = int(subexpression[1])
 
 
 def p_val_cname(subexpression):
     'value : CNAME'
-    #subexpression[0] = ConstValue(subexpression[1])
     subexpression[0] = ConstantManager.getInstance().getValue(subexpression[1])
 def p_const(subexpressions):
     'const : CONST CNAME EQUALS NUM SEMICOLON'
