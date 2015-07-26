@@ -1,5 +1,24 @@
 \subsection{Modo de uso}
-Aportar un archivo de entrada con extensión mus, el cual debe contener internamente: (no se si vale la pena detallar lo mencionado en el enunciado, pero si es un manual puede ser, empece a escribirlo y me entró la duda)
+Línea de ejecución: ./musileng entrada.mus salida.txt
+
+\subsubsection{Reglas para evitar posibles errores}
+Se aceptan archivos de entrada que contengan:
+\begin{itemize}
+\item Todos los compases deben tener la misma duración al sumar la duración de sus notas y/o silencios.
+\item Todas las voces deben tener la misma cantidad de compases.
+\item No deben existir constantes indefinidas o definidas circularmente. Ejemplo constante no definida: $const$ $eval = hola;$ (hola jamás se definió). Ejemplo constante definida circularmente: $const$ $eval1 = eval2$ $;$ $const$ $eval2 = eval1$ $;$.
+\item La suma de la duración de cada compas debe ser igual a $num1/num2$, donde $num1$ y $num2$ son los números definidos en $\#compas$ $num1/num2$ en el encabezado.
+\end{itemize}
+En caso contrario que no se respete lo mencionado anteriormente, nuestro programa especificará el error cometido para que pueda solucionarlo.
+
+Para más información sobre los archivos de entrada y salida puede mirarse el siguiente pdf \url{www.dc.uba.ar/materias/tl/2015/c1/tp2-enunciado-compositor-musical/at_download/file}.
+
+\subsection{Requerimientos necesarios para ejecutar}
+\begin{itemize}
+\item Programa: Python
+\item Versión: 2.7
+\end{itemize}
+
 %\begin{itemize}
 %\item En la primera línea: #tempo FIGURA N (Falta desarrollar)
 %\item En la segunda línea: #compas N/M
@@ -11,20 +30,3 @@ Aportar un archivo de entrada con extensión mus, el cual debe contener internam
 %\item Un compás tiene una lista de notas o/y silencios.
 %\item 
 %\end{itemize}
-
-\subsection{Opciones que acepta}
-Se aceptan archivos de entrada que contengan:
-\begin{itemize}
-\item Todos los compases deben tener la misma duración al sumar la duración de sus notas y/o silencios.
-\item Todas las voces deben tener la misma cantidad de compases.
-\item No deben existir constantes indefinidas o definidas circularmente. Ejemplo constante no definida: $const$ $eval = hola;$ (hola jamás se definió). Ejemplo constante definida circularmente: $const$ $eval1 = eval2$ $;$ $const$ $eval2 = eval1$ $;$.
-\item La suma de la duración de cada compas debe ser igual a $num1/num2$, donde $num1$ y $num2$ son los números definidos en $\#compas$ $num1/num2$ en el encabezado.
-\end{itemize}
-En caso contrario que no se respete lo mencionado anteriormente, nuestro programa especificará el error cometido para que pueda solucionarlo.
-
-\subsection{Requerimientos necesarios para ejecutar}
-\begin{itemize}
-\item Programa: Python
-\item Versión: 2.7
-\item Línea de ejecución: ./musileng entrada.mus salida.txt
-\end{itemize}
