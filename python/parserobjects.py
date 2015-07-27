@@ -157,6 +157,10 @@ class CompasHeader(Expression):
     def __init__(self, num1, num2):
         if num2 == 0:
             raise Exception("El denominador del compas debe ser mayor a cero")
+        if not num2 in (1,2,4,8,16,32,64):
+            raise Exception("El denominador definido para el tempo de los compaces no corresponde a una figura válida.")
+
+
         self._numerator = num1
         self._denominator = num2
 
