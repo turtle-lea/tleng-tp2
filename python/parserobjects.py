@@ -95,6 +95,9 @@ class ConstantManager:
             self.getValue(c.getName())
 
     def Add(self, cname, const):
+        if self.dictConst.get(cname) != None:
+            raise Exception("Constante duplicada: {0}".format(cname))
+
         self.dictConst[cname] = const
 
     #Devuelve el valor de una constante. Si es una referencia a otra constante, calcula primero el valor recursivamente

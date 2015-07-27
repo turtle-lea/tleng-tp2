@@ -15,7 +15,7 @@ const piano = 0;
 
 voz (piano)
 {
-	repetir (0)
+	repetir (1)
 	{
 		compas
 		{
