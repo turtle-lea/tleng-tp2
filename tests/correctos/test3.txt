@@ -4,7 +4,7 @@
 const oct1 = 2;
 const oct2 = 6;
 const oct3 = 1;
-const oct4 = 3
+const oct4 = 3;
 
 // Instrumentos
 const flauta = 10;
@@ -41,9 +41,8 @@ voz (violin)
   
   compas
   {
-    nota(mi, oct2, negra.);
     nota(fa, oct4, corchea);
-    nota(mi, oct2, negra);
+    nota(mi, oct2, negra.);
   }
   compas
   {

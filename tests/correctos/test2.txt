@@ -4,7 +4,7 @@
 const oct1 = 2;
 const oct2 = 6;
 const oct3 = 1;
-const oct4 = 3
+const oct4 = 3;
 
 // Instrumentos
 const piano = 65;
