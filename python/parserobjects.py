@@ -173,6 +173,9 @@ class CompasHeader(Expression):
 #Representa un nodo voz(N)
 class Voice(Expression):
     def __init__(self, value, voiceContent):
+        if value > 127:
+          raise Exception("El instrumento {0} es inválido".format(value))
+
         self._value = value
         self._compasses = voiceContent.getList()
 
@@ -186,6 +189,9 @@ class Voice(Expression):
 #Representa un nodo repetir(N) con una lista de compaces adentro
 class CompasLoop(Expression):
     def __init__(self, value, compasList):
+        if value < 1:
+            raise Exception("Existe un bucle con cantidad de repeticiones 0. Los bucles deben tener al menos una repeticion.")
+
         self._compasList = compasList
         self._value = value
         self._duration = compasList.getDuration()
@@ -242,6 +248,9 @@ class Silence(Expression):
 
 class Note(Expression):
     def __init__(self, notename, alter, value, shape, puntillo):
+        if value < 1 or value > 9:
+            raise Exception("La octava {0} es inválida".format(value))
+
         # concatenacion de string
         if alter != None:
             self._height = notename + alter
