@@ -1,0 +1,58 @@
+#tempo negra 120
+#compas 2/4
+
+const oct1 = 2;
+const oct2 = 6;
+const oct3 = 1;
+const oct4 = 3
+
+// Instrumentos
+const flauta = 10;
+const violin = 31;
+
+voz (flauta)
+{
+  repetir (5)
+  {
+  	compas
+  	{
+    		nota(sol, oct3, negra);
+    		nota(fa+, oct2, negra);
+  	}
+
+  	compas
+  	{
+    		nota(mi, oct2, negra.);
+    		nota(fa, oct4, corchea);
+  	}
+  	compas
+  	{
+    		nota(sol, oct1, blanca);
+  	}
+  }
+}
+
+voz (violin)
+{
+  compas
+  {
+    nota(la, oct1, blanca);
+  }
+  
+  compas
+  {
+    nota(mi, oct2, negra.);
+    nota(fa, oct4, corchea);
+    nota(mi, oct2, negra);
+  }
+  compas
+  {
+    silencio(semifusa);
+    nota(si+, oct1, semifusa);
+    nota(si, oct4, semifusa);
+    nota(fa, oct4, semifusa);
+    nota(sol, oct4, semicorchea);
+    nota(mi-, oct4, corchea);
+    nota(re, oct4, negra);
+  }
+}

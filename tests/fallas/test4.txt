@@ -1,0 +1,24 @@
+#tempo negra 60
+#compas 2/8
+
+const oct1 = 3;
+const oct2 = 5;
+
+// Instrumentos
+const bajo = 20;
+const malPensado = malPensado;
+
+voz (bajo)
+{
+  compas
+  {
+    nota(do, oct1, corchea.);
+    nota(re, oct1, semicorchea);
+  }
+
+  compas
+  {
+    nota(mi, oct2, semicorchea);
+    nota(la, oct2, corchea.);
+  }
+}

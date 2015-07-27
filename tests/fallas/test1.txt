@@ -1,0 +1,24 @@
+#tempo negra 30
+#compas 3/4
+
+const oct1 = 2;
+const oct2 = 6;
+const oct3 = 1;
+
+// Instrumentos
+const flauta = 51;
+
+voz (flauta)
+{
+  compas
+  {
+    nota(do, oct3, blanca.);
+    nota(re, oct1, redonda);
+  }
+
+  compas
+  {
+    nota(mi, oct2, blanca);
+    nota(la, oct1, negra);
+  }
+}
