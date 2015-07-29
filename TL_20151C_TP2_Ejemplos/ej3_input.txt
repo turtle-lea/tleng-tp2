@@ -279,4 +279,4 @@ voz (piano)
 	{
 		nota(si, oct3, blanca.);
 	}
-}
+} //comentario
