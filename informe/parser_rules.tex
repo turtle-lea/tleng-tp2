@@ -178,14 +178,15 @@ def isReserved(token):
 
 def p_error(subexpressions):
 
-    if isReserved(subexpressions.value):
-        strReservedMsg = '(palabra reservada)'
+    if (subexpressions != None):
+        if isReserved(subexpressions.value):
+            strReservedMsg = '(palabra reservada)'
+        else:
+            strReservedMsg = ''
+
+        raise Exception("[Parser] Error de sintaxis Linea: {0}, Pos (absoluta):
+         {1}, Token: <{2}>{3} ".format(subexpressions.lineno,
+         subexpressions.lexpos, subexpressions.value, strReservedMsg))
     else:
-        strReservedMsg = ''
-
-
-
-    raise Exception("[Parser] Error de sintaxis Linea: {0}, Pos (absoluta): {1},
-                    Token: <{2}>{3} ".format(subexpressions.lineno,
-                    subexpressions.lexpos, subexpressions.value, strReservedMsg))
+        raise Exception("[Parser] Archivo incompleto")
 \end{verbatim}
