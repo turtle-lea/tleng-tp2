@@ -1,0 +1,40 @@
+#tempo negra 120
+#compas 2/2
+
+const oct1 = 5;
+const oct2 = 2;
+const oct3 = 4;
+
+// Instrumentos
+const violin = 20;
+const guitarra = 12;
+
+voz (violin)
+{
+  compas
+  {
+    nota(do, oct3, blanca.);
+    nota(re, oct1, negra);
+  }
+
+  compas
+  {
+    nota(mi, oct2, blanca.);
+    nota(la, oct1, negra);
+  }
+}
+
+voz (guitarra)
+{
+  compas
+  {
+    nota(do, oct3, fusa);
+    nota(re, oct1, semifusa.);
+  }
+
+  compas
+  {
+    nota(mi, oct2, fusa);
+    nota(la, oct1, semifusa.);
+  }
+}

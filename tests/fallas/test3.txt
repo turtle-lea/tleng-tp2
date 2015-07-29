@@ -1,0 +1,23 @@
+#tempo negra 60
+#compas 1/1
+
+const oct1 = 3;
+const oct2 = ConstanteTrucha;
+
+// Instrumentos
+const bajo = 20;
+
+voz (bajo)
+{
+  compas
+  {
+    nota(do, oct1, blanca.);
+    nota(re, oct1, negra);
+  }
+
+  compas
+  {
+    nota(mi, oct2, blanca.);
+    nota(la, oct2, negra);
+  }
+}

@@ -1,0 +1,55 @@
+#tempo negra 120
+#compas 3/4
+
+const oct1 = 2;
+const oct2 = 6;
+const oct3 = 1;
+const oct4 = 3;
+
+// Instrumentos
+const piano = 65;
+const violin = 31;
+
+voz (piano)
+{
+  compas
+  {
+    nota(sol, oct3, blanca);
+    nota(fa+, oct2, negra);
+  }
+
+  compas
+  {
+    nota(mi, oct2, negra.);
+    nota(fa, oct4, corchea);
+    nota(mi, oct2, negra);
+  }
+  compas
+  {
+    silencio(negra);
+    nota(sol-, oct1, negra);
+    nota(sol-, oct1, negra);
+  }
+}
+
+voz (violin)
+{
+  compas
+  {
+    nota(la, oct1, blanca.);
+  }
+  
+  compas
+  {
+    nota(mi, oct2, negra.);
+    nota(fa, oct4, corchea);
+    nota(mi, oct2, negra);
+  }
+  compas
+  {
+    silencio(semicorchea);
+    nota(mi, oct1, semicorchea);
+    nota(sol, oct4, corchea);
+    nota(sol, oct4, blanca);
+  }
+}
