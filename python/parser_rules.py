@@ -7,6 +7,10 @@ def p_root(subexpressions):
     'h : tempo compasheader constlistinit voicelist'
     subexpressions[0] = Root(subexpressions[1], subexpressions[2], subexpressions[3], subexpressions[4])
 
+def p_root_no_const(subexpressions):
+    'h : tempo compasheader voicelist'
+    subexpressions[0] = Root(subexpressions[1], subexpressions[2], None, subexpressions[3])
+
 def p_tempo(subexpression):
     'tempo : TEMPOBEGIN SHAPE NUM'
     subexpression[0] = Tempo(subexpression[2], int(subexpression[3]))
