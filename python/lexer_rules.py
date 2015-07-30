@@ -43,9 +43,6 @@ def t_TEMPOBEGIN(token):
   r"\#tempo"
   return token
 
-def t_CONST(token):
-  r"const"
-  return token
 
 def t_EQUALS(token):
   r"\="
@@ -56,9 +53,6 @@ def t_SEMICOLON(token):
   #print ("semicolon")
   return token
 
-def t_VOICEBEGIN(token):
-  r"voz"
-  return token
 
 def t_LEFTPAR(token):
   r"\("
@@ -80,24 +74,8 @@ def t_COMPASHEADERBEGIN(token):
   r"\#compas"
   return token
 
-def t_COMPASBEGIN(token):
-  r"compas"
-  return token
-
-def t_LOOPBEGIN(token):
-  r"repetir"
-  return token
-
 def t_SLASH(token):
   r"/"
-  return token
-
-def t_NOTEBEGIN(token):
-  r"nota"
-  return token
-
-def t_SILENCEBEGIN(token):
-  r"silencio"
   return token
 
 def t_PUNTO(token):
@@ -108,20 +86,16 @@ def t_ALTER(token):
   r"\+|\-"
   return token
 
-def t_SHAPE(token):
-  r"blanca|negra|redonda|semicorchea|corchea|semifusa|fusa"
-  return token
-
-def t_NOTENAME(token):
-  r"do|re|mi|fa|sol|la|si"
-  return token
-
 def t_COMMA(token):
   r"\,"
   return token
 
 def t_CNAME(token):
-  r"(([a-z]|[A-Z])([0-9]|[a-z]|[A-Z])*)"
+  r"(([a-z]|[A-Z])([0-9]|[a-z]|[A-Z]|\_)*)"
+
+  if reserved.get(token.value) != None:
+      token.type = reserved.get(token.value)
+
   return token
 
 def t_NUM(token):
@@ -137,3 +111,26 @@ def t_error(token):
 
 
 
+reserved = {
+    'const':'CONST',
+    'do' : 'NOTENAME',
+    're' : 'NOTENAME',
+    'mi' : 'NOTENAME',
+    'fa' : 'NOTENAME',
+    'sol': 'NOTENAME',
+    'la' : 'NOTENAME',
+    'si' : 'NOTENAME',
+    'nota' : 'NOTEBEGIN',
+    'compas' : 'COMPASBEGIN',
+    'repetir': 'LOOPBEGIN',
+    'voz': 'VOICEBEGIN',
+    'negra': 'SHAPE',
+    'blanca' :'SHAPE',
+    'redonda' : 'SHAPE',
+    'corchea' : 'SHAPE',
+    'semicorchea' : 'SHAPE',
+    'fusa' : 'SHAPE',
+    'semifusa' : 'SHAPE',
+    'silencio' : 'SILENCEBEGIN',
+
+}
