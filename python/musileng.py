@@ -27,6 +27,7 @@ if __name__ == "__main__":
         with open (inputfile, "r") as myfile:
             text=myfile.read()
 
+        ConstantManager.createInstance([],[])
 
         lexer = lex(module=lexer_rules)
         parser = yacc(module=parser_rules)
