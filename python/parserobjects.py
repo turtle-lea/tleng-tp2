@@ -140,6 +140,9 @@ class ConstantManager:
 
 class Tempo(Expression):
     def __init__(self, shape, num):
+        if num<=0:
+            raise Exception("El tempo debe ser mayor a 0")
+
         self._shape = shape
         self._num = num
 
