@@ -1,4 +1,15 @@
+\lstset{
+ numbers=left,
+ numbersep=5pt,
+ numberstyle=\ttfamily\tiny\color[gray]{0.3},
+ basicstyle=\ttfamily,
+ columns=fullflexible,
+ keepspaces=true,
+ breaklines=true,
+}
+
 \begin{verbatim}
+#!/usr/bin/env python
 from parserobjects import *
 
 
@@ -27,6 +38,7 @@ if __name__ == "__main__":
         with open (inputfile, "r") as myfile:
             text=myfile.read()
 
+        ConstantManager.createInstance([],[])
 
         lexer = lex(module=lexer_rules)
         parser = yacc(module=parser_rules)

@@ -1,18 +1,19 @@
 \begin{verbatim}
 #!/usr/bin/python
 # -*- coding: latin-1 -*-
+__author__ = 'AAAA'
 
-#En este archivo implementamos todas las clases 
-#que representan los objetos que se van parseando (no terminales),
+#En este archivo implementamos todas las clases que representan los objetos 
+#que se van parseando (no terminales),
 #algunas clases auxiliares y el manejador de constantes.
 
-#Clase abstracta que representa expresiones (nodos en a gramatica)
+#Clase abstracta que representa expresiones (nodos en a gramática)
 class Expression(object):
     pass
 
 #Representa una lista como un valor y un puntero a otra lista
 #Por ejemplo, A -> id, A -> A id.
-# Notar que los elementos de la lista estan en orden inverso
+# Notar que los elementos de la lista están en orden inverso
 class ExpressionList(Expression):
     def __init__(self, current, nextList):
         self._list = nextList + [current]
@@ -20,7 +21,7 @@ class ExpressionList(Expression):
     def getList(self):
         return self._list
 
-#Representa un nodo del elemento const en la gramatica
+#Representa un nodo del elmento const en la gramática
 class Const(Expression):
     def __init__(self, cname, val, isPointer):
         self._cname = cname
@@ -46,8 +47,8 @@ class ConstList(ExpressionList):
 class VoiceContent(ExpressionList):
     def __init__(self, current, nextList):
         if nextList != [] and current.getDuration() != nextList[0].getDuration():
-            raise Exception("Se detecto un compas dentro de una voz con duracion
-           	               distinta al resto de los compases dentro de la misma.")
+            raise Exception("Se detectó un compas dentro de una voz con 
+            duración distinta al resto de los compases dentro de la misma.")
 
         self._duration = current.getDuration()
         super(VoiceContent,self).__init__(current, nextList)
@@ -59,8 +60,8 @@ class VoiceContent(ExpressionList):
 class CompasList(ExpressionList):
     def __init__(self, current, nextList):
         if nextList != [] and current.getDuration() != nextList[0].getDuration():
-            raise Exception("Se detectaron compases con distinta duracion dentro 
-                           de un bucle.")
+            raise Exception("Se detectaron compases con distinta duración 
+            dentro de un bucle.")
 
         self._duration = current.getDuration()
         super(CompasList,self).__init__(current, nextList)
@@ -68,8 +69,8 @@ class CompasList(ExpressionList):
     def getDuration(self):
         return self._duration
 
-#Manejador de constantes. Mantiene una lista de todas las constantes declaradas 
-#y permite obtener
+#Manejador de constantes. Mantiene una lista de todas las constantes 
+#declaradas y permite obtener
 #los valores de las mismas dado un nombre de constante.
 class ConstantManager:
     #Inicializa el manejador de constantes dada una lista de objetos tipo Const.
@@ -85,13 +86,13 @@ class ConstantManager:
         return ConstantManager._instance
 
 
-    #Inicializacion y validacion de consistencia de la declaracion de constantes
+    #Inicialización y validación de consistencia de la declaración de constantes
     def __init__(self, constList, reserved):
         self.dictConst = {}
         for c in constList:
             if reserved.count(c.getName()) > 0:
-                raise Exception("El nombre de constante <{0}> es una palabra
-                               reservada".format(c.getName()))
+                raise Exception("El nombre de constante <{0}> es una 
+                palabra reservada".format(c.getName()))
 
             self.Add (c.getName(), c)
 
@@ -105,8 +106,8 @@ class ConstantManager:
 
         self.dictConst[cname] = const
 
-    #Devuelve el valor de una constante. 
-    #Si es una referencia a otra constante, calcula primero el valor recursivamente
+    #Devuelve el valor de una constante. Si es una referencia a otra 
+    #constante, calcula primero el valor recursivamente
     def getValue(self, cname):
         const = self.dictConst.get(cname)
         if const == None:
@@ -117,9 +118,10 @@ class ConstantManager:
         return constVal
 
 
-    #Calcula el valor de una constante. Si es numerica (caso base), devuelve su valor.
-    #Si es un puntero, busca el valor de la constante a la que apunta (recursivamente), 
-    #chequeando que no hayan loops.
+    #Calcula el valor de una constante. Si es numérica (caso base), 
+    #devuelve su valor.
+    #Si es un puntero, busca el valor de la constante a la que apunta
+    #(recursivamente), chequeando que no hayan loops.
     def resolveVal(self, const):
         if (not const._isPointer):
             return const.getValue()
@@ -131,14 +133,14 @@ class ConstantManager:
             if (next.isPointer()):
                 nextcname = next.getValue()
                 if visited.count(nextcname) > 0:
-                    raise Exception("Definicion circular de constante
-                                    <{0}>".format(const.getName()))
+                    raise Exception("Definición circular de 
+                    constante <{0}>".format(const.getName()))
 
                 next = self.dictConst.get(nextcname)
                 if (next == None):
-                    raise Exception("La constante <{0}> apunta (directa
-                                   o indirectamente) al nombre <{1}> que 
-                                   no esta definido".format(const.getName(),nextcname))
+                    raise Exception("La constante <{0}> apunta 
+                    (directa o indirectamente) al nombre <{1}> que no 
+                    está definido".format(const.getName(),nextcname))
                 visited.append(nextcname)
             else:
                 #const.setValue(next.getValue())
@@ -150,6 +152,9 @@ class ConstantManager:
 
 class Tempo(Expression):
     def __init__(self, shape, num):
+        if num<=0:
+            raise Exception("El tempo debe ser mayor a 0")
+
         self._shape = shape
         self._num = num
 
@@ -162,21 +167,21 @@ class Tempo(Expression):
     def getShapeDuration(self):
         return duration_from_shape(self.getFigure())
 
-#Representa el nodo que define la duracion de los compases para toda la partitura
+#Representa el nodo que define la duración de los compaces para toda la partitura
 class CompasHeader(Expression):
     def __init__(self, num1, num2):
         if num2 == 0:
             raise Exception("El denominador del compas debe ser mayor a cero")
         if not num2 in (1,2,4,8,16,32,64):
-            raise Exception("El denominador definido para el tempo de los compaces
-                            no corresponde a una figura valida.")
+            raise Exception("El denominador definido para el tempo de 
+            los compaces no corresponde a una figura válida.")
 
 
         self._numerator = num1
         self._denominator = num2
 
 
-    #Devuelve la duracion del compas, en redondas
+    #Devuelve la duración del compas, en redondas
     def getDuration(self):
         return float(self._numerator) / float(self._denominator)
 
@@ -192,7 +197,7 @@ class CompasHeader(Expression):
 class Voice(Expression):
     def __init__(self, value, voiceContent):
         if value > 127:
-          raise Exception("El instrumento {0} es invalido".format(value))
+          raise Exception("El instrumento {0} es inválido".format(value))
 
         self._value = value
         self._compasses = voiceContent.getList()
@@ -209,7 +214,7 @@ class CompasLoop(Expression):
     def __init__(self, value, compasList):
         if value < 1:
             raise Exception("Existe un bucle con cantidad de repeticiones 0. 
-                            Los bucles deben tener al menos una repeticion.")
+            Los bucles deben tener al menos una repeticion.")
 
         self._compasList = compasList
         self._value = value
@@ -268,7 +273,7 @@ class Silence(Expression):
 class Note(Expression):
     def __init__(self, notename, alter, value, shape, puntillo):
         if value < 1 or value > 9:
-            raise Exception("La octava {0} es invalida".format(value))
+            raise Exception("La octava {0} es inválida".format(value))
 
         # concatenacion de string
         if alter != None:
@@ -299,11 +304,11 @@ class Note(Expression):
 class Root(Expression):
     def __init__(self, tempo, compasheader,constlist,voicelist):
         ### El tiempo del primer compas de la primera voz debe coincidir 
-        ### con el compasheader
-        if voicelist.getList()[0].getCompasses()[0].getDuration()
+        ###con el compasheader
+        if voicelist.getList()[0].getCompasses()[0].getDuration() 
         != compasheader.getDuration():
-          raise Exception("La duracion de los compases es distinta
-                          a la del encabezado")
+          raise Exception("La duracion de los compases es distinta a la 
+          del encabezado")
         self._tempo = tempo
         self._compasheader = compasheader
         self._constlist = constlist
@@ -327,10 +332,17 @@ class Root(Expression):
 class VoiceList(Expression):
     def __init__(self, voice, voicelist=[]):
         if len(voicelist)>0:
+            ### Deberíamos reescribir esto. Encapsular mediante funciones
+            #if (len(voice.getCompasses() !=
+            # len(voicelist.first.getCompasses()):
+            #    raise Exception("Las voces tienen distinta cantidad 
+            #de compases")
+            ### Un compás de la nueva voz tiene que durar lo mismo que un 
+            ### compás de la lista
             if (voice.getCompasses()[0].getDuration() !=
-            voicelist[0].getCompasses()[0].getDuration()):
+             voicelist[0].getCompasses()[0].getDuration()):
                 raise Exception("La duracion de los compases de las voces 
-                                son distintas")
+                son distintas")
             if len(voicelist)>=16:
             	raise Exception("La cantidad de voces supera las 16")
         self._voicelist = voicelist + [voice]
@@ -362,5 +374,6 @@ class NoteList(Expression):
 
     def getNoteList(self):
       return self._notelist
+
 \end{verbatim}
 

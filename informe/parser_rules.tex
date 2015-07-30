@@ -7,7 +7,12 @@ from lexer_rules import tokens
 def p_root(subexpressions):
     'h : tempo compasheader constlistinit voicelist'
     subexpressions[0] = Root(subexpressions[1], subexpressions[2],
-                             subexpressions[3], subexpressions[4])
+     subexpressions[3], subexpressions[4])
+
+def p_root_no_const(subexpressions):
+    'h : tempo compasheader voicelist'
+    subexpressions[0] = Root(subexpressions[1], subexpressions[2], None,
+     subexpressions[3])
 
 def p_tempo(subexpression):
     'tempo : TEMPOBEGIN SHAPE NUM'
@@ -22,32 +27,33 @@ def p_voice(subexpression):
     subexpression[0] = Voice(subexpression[3], subexpression[6])
 
 def p_compasloop(subexpression):
-    'compasloop : LOOPBEGIN LEFTPAR value RIGHTPAR LEFTCURL compaslist RIGHTCURL'
+    'compasloop : LOOPBEGIN LEFTPAR value RIGHTPAR LEFTCURL compaslist
+     RIGHTCURL'
     subexpression[0] = CompasLoop(subexpression[3], subexpression[6])
 
 def p_note(subexpression):
     'note : NOTEBEGIN LEFTPAR NOTENAME COMMA value COMMA SHAPE RIGHTPAR
-            SEMICOLON'
+     SEMICOLON'
     subexpression[0] = Note(subexpression[3], None, subexpression[5],
-                            subexpression[7], False)
+     subexpression[7], False)
 
 def p_note_alter(subexpression):
     'note : NOTEBEGIN LEFTPAR NOTENAME ALTER COMMA value COMMA SHAPE RIGHTPAR
-            SEMICOLON'
-    subexpression[0] = Note(subexpression[3], subexpression[4], subexpression[6],
-                            subexpression[8], False)
+     SEMICOLON'
+    subexpression[0] = Note(subexpression[3], subexpression[4],
+     subexpression[6], subexpression[8], False)
 
 def p_note_punto(subexpression):
     'note : NOTEBEGIN LEFTPAR NOTENAME COMMA value COMMA SHAPE PUNTO RIGHTPAR
-            SEMICOLON'
+     SEMICOLON'
     subexpression[0] = Note(subexpression[3], None, subexpression[5],
-                            subexpression[7], True)
+     subexpression[7], True)
 
 def p_note_alter_punto(subexpression):
     'note : NOTEBEGIN LEFTPAR NOTENAME ALTER COMMA value COMMA SHAPE PUNTO
-            RIGHTPAR SEMICOLON'
-    subexpression[0] = Note(subexpression[3], subexpression[4], subexpression[6],
-                            subexpression[8], True)
+     RIGHTPAR SEMICOLON'
+    subexpression[0] = Note(subexpression[3], subexpression[4],
+     subexpression[6], subexpression[8], True)
 
 def p_compaslist_base(subexpression):
     'compaslist : compas'
@@ -63,8 +69,8 @@ def p_voice_list_base(subexpression):
 
 def p_voice_list_rec(subexpressions):
     'voicelist : voicelist voice'
-    ### Invierto parametros intencionalmente. voicelist param es opcional
-    ### en el new de la clase
+    ### Invierto parametros intencionalmente. voicelist param es opcional en 
+    ### el new de la clase
     subexpressions[0] = VoiceList(subexpressions[2], subexpressions[1].getList())
 
 def p_compas(subexpressions):
@@ -81,14 +87,14 @@ def p_note_list_base_silence(subexpression):
 
 def p_note_list_rec_note(subexpressions):
     'notelist : notelist note'
-    ### Invierto parametros intencionalmente. notelist param es opcional en el
-    ### new de la clase
+    ### Invierto parametros intencionalmente. notelist param es opcional en 
+    ### el new de la clase
     subexpressions[0] = NoteList(subexpressions[2], subexpressions[1].getNoteList())
 
 def p_note_list_rec_silence(subexpressions):
     'notelist : notelist silence'
-    ### Invierto parametros intencionalmente. notelist param es opcional en el
-    ### new de la clase
+    ### Invierto parametros intencionalmente. notelist param es opcional en 
+    ### el new de la clase
     subexpressions[0] = NoteList(subexpressions[2], subexpressions[1].getNoteList())
 
 def p_val_num(subexpression):
@@ -108,14 +114,14 @@ def p_const_cname(subexpressions):
     'const : CONST CNAME EQUALS CNAME SEMICOLON'
     subexpressions[0] = Const(subexpressions[2],subexpressions[4], True)
 
-#Es un pasamanos para poder inicializar el ConstantManager y
-# que pueda ser usado por las otras producciones
+#Es un pasamanos para poder inicializar el ConstantManager y que pueda ser 
+#usado por las otras producciones
 #(esto asume que las constantes se declaran primero en el header)
 def p_const_list_init(subexpressions):
     'constlistinit : constlist'
     subexpressions[0] = subexpressions[1]
-    #Sabemos que subexpressions[0] es un constlist, 
-    #inicializamos el Constantmanager para que el resto
+    #Sabemos que subexpressions[0] es un constlist, inicializamos el
+    # Constantmanager para que el resto
     #de las producciones puedan referenciar constantes.
     #TODO: Pasarle el reserved del Lexer
     ConstantManager.createInstance (subexpressions[0].getList(),[] )
@@ -177,6 +183,9 @@ def isReserved(token):
     'semifusa')
 
 def p_error(subexpressions):
+    #print ("----------------------------")
+    #print ("----------------------------")
+    #print (subexpressions)
 
     if (subexpressions != None):
         if isReserved(subexpressions.value):
@@ -186,7 +195,7 @@ def p_error(subexpressions):
 
         raise Exception("[Parser] Error de sintaxis Linea: {0}, Pos (absoluta):
          {1}, Token: <{2}>{3} ".format(subexpressions.lineno,
-         subexpressions.lexpos, subexpressions.value, strReservedMsg))
+          subexpressions.lexpos, subexpressions.value, strReservedMsg))
     else:
         raise Exception("[Parser] Archivo incompleto")
 \end{verbatim}
